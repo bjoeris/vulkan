@@ -81,7 +81,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkDeviceSize
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkBuffer
+  ( VkBuffer(..)
   )
 
 
@@ -136,8 +136,7 @@ import Graphics.Vulkan.Core10.MemoryManagement
 --
 -- = See Also
 --
--- 'VkBufferCreateInfo', 'Graphics.Vulkan.Core10.Image.VkImageCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkSwapchainCreateInfoKHR'
+-- 'VkBufferCreateInfo', 'Graphics.Vulkan.Core10.Image.VkImageCreateInfo'
 newtype VkSharingMode = VkSharingMode Int32
   deriving (Eq, Ord, Storable)
 
@@ -184,6 +183,9 @@ instance Show VkBufferUsageFlagBits where
   showsPrec _ VK_BUFFER_USAGE_INDEX_BUFFER_BIT = showString "VK_BUFFER_USAGE_INDEX_BUFFER_BIT"
   showsPrec _ VK_BUFFER_USAGE_VERTEX_BUFFER_BIT = showString "VK_BUFFER_USAGE_VERTEX_BUFFER_BIT"
   showsPrec _ VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT = showString "VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT"
+  -- The following values are from extensions, the patterns themselves are exported from the extension modules
+  showsPrec _ (VkBufferUsageFlagBits 0x00000200) = showString "VK_BUFFER_USAGE_CONDITIONAL_RENDERING_BIT_EXT"
+  showsPrec _ (VkBufferUsageFlagBits 0x00000400) = showString "VK_BUFFER_USAGE_RESERVED_10_BIT_NV"
   showsPrec p (VkBufferUsageFlagBits x) = showParen (p >= 11) (showString "VkBufferUsageFlagBits " . showsPrec 11 x)
 
 instance Read VkBufferUsageFlagBits where
@@ -196,6 +198,9 @@ instance Read VkBufferUsageFlagBits where
                              , ("VK_BUFFER_USAGE_INDEX_BUFFER_BIT",         pure VK_BUFFER_USAGE_INDEX_BUFFER_BIT)
                              , ("VK_BUFFER_USAGE_VERTEX_BUFFER_BIT",        pure VK_BUFFER_USAGE_VERTEX_BUFFER_BIT)
                              , ("VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT",      pure VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT)
+                             , -- The following values are from extensions, the patterns themselves are exported from the extension modules
+                               ("VK_BUFFER_USAGE_CONDITIONAL_RENDERING_BIT_EXT", pure (VkBufferUsageFlagBits 0x00000200))
+                             , ("VK_BUFFER_USAGE_RESERVED_10_BIT_NV",            pure (VkBufferUsageFlagBits 0x00000400))
                              ] +++
                       prec 10 (do
                         expectP (Ident "VkBufferUsageFlagBits")
@@ -345,8 +350,9 @@ pattern VK_BUFFER_CREATE_SPARSE_ALIASED_BIT = VkBufferCreateFlagBits 0x00000004
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pBuffer@ points to a @VkBuffer@ handle in which the resulting
---     buffer object is returned.
+-- -   @pBuffer@ points to a
+--     'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer' handle in which
+--     the resulting buffer object is returned.
 --
 -- == Valid Usage
 --
@@ -485,7 +491,7 @@ foreign import ccall
 -- -   If the @pNext@ chain contains an instance of
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory.VkExternalMemoryBufferCreateInfo',
 --     its @handleTypes@ member /must/ only contain bits that are also in
---     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalBufferProperties'::@externalMemoryProperties.pname@:compatibleHandleTypes,
+--     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalBufferProperties'::@externalMemoryProperties.compatibleHandleTypes@,
 --     as returned by
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.vkGetPhysicalDeviceExternalBufferProperties'
 --     with @pExternalBufferInfo@->@handleType@ equal to any one of the
@@ -504,14 +510,8 @@ foreign import ccall
 --
 -- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO@
 --
--- -   Each @pNext@ member of any structure (including this one) in the
---     @pNext@ chain /must/ be either @NULL@ or a pointer to a valid
---     instance of
---     'Graphics.Vulkan.Extensions.VK_NV_dedicated_allocation.VkDedicatedAllocationBufferCreateInfoNV'
---     or
+-- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory.VkExternalMemoryBufferCreateInfo'
---
--- -   Each @sType@ member in the @pNext@ chain /must/ be unique
 --
 -- -   @flags@ /must/ be a valid combination of 'VkBufferCreateFlagBits'
 --     values

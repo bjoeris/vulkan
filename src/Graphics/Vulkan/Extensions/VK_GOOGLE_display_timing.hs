@@ -46,7 +46,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkDevice
   )
 import Graphics.Vulkan.Extensions.VK_KHR_swapchain
-  ( VkSwapchainKHR
+  ( VkSwapchainKHR(..)
   )
 
 
@@ -71,37 +71,14 @@ pattern VK_GOOGLE_DISPLAY_TIMING_EXTENSION_NAME = "VK_GOOGLE_display_timing"
 -- -   @pDisplayTimingProperties@ is a pointer to an instance of the
 --     @VkRefreshCycleDurationGOOGLE@ structure.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @swapchain@ /must/ be a valid @VkSwapchainKHR@ handle
---
--- -   @pDisplayTimingProperties@ /must/ be a valid pointer to a
---     @VkRefreshCycleDurationGOOGLE@ structure
---
--- -   Both of @device@, and @swapchain@ /must/ have been created,
---     allocated, or retrieved from the same @VkInstance@
---
--- == Host Synchronization
---
--- -   Host access to @swapchain@ /must/ be externally synchronized
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_DEVICE_LOST@
---
---     -   @VK_ERROR_SURFACE_LOST_KHR@
+-- Unresolved directive in vkGetRefreshCycleDurationGOOGLE.txt -
+-- include::..\/validity\/protos\/vkGetRefreshCycleDurationGOOGLE.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkRefreshCycleDurationGOOGLE',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkSwapchainKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -121,8 +98,8 @@ foreign import ccall
 --     number of @VkPastPresentationTimingGOOGLE@ structures to query, as
 --     described below.
 --
--- -   @pPresentationTimings@ is either @NULL@ or a pointer to an an array
---     of @VkPastPresentationTimingGOOGLE@ structures.
+-- -   @pPresentationTimings@ is either @NULL@ or a pointer to an array of
+--     @VkPastPresentationTimingGOOGLE@ structures.
 --
 -- = Description
 --
@@ -140,46 +117,12 @@ foreign import ccall
 -- returned instead of @VK_SUCCESS@ to indicate that not all the available
 -- values were returned.
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @swapchain@ /must/ be a valid @VkSwapchainKHR@ handle
---
--- -   @pPresentationTimingCount@ /must/ be a valid pointer to a @uint32_t@
---     value
---
--- -   If the value referenced by @pPresentationTimingCount@ is not @0@,
---     and @pPresentationTimings@ is not @NULL@, @pPresentationTimings@
---     /must/ be a valid pointer to an array of @pPresentationTimingCount@
---     @VkPastPresentationTimingGOOGLE@ structures
---
--- -   Both of @device@, and @swapchain@ /must/ have been created,
---     allocated, or retrieved from the same @VkInstance@
---
--- == Host Synchronization
---
--- -   Host access to @swapchain@ /must/ be externally synchronized
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
---     -   @VK_INCOMPLETE@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_DEVICE_LOST@
---
---     -   @VK_ERROR_OUT_OF_DATE_KHR@
---
---     -   @VK_ERROR_SURFACE_LOST_KHR@
+-- Unresolved directive in vkGetPastPresentationTimingGOOGLE.txt -
+-- include::..\/validity\/protos\/vkGetPastPresentationTimingGOOGLE.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkPastPresentationTimingGOOGLE',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkSwapchainKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -188,9 +131,14 @@ foreign import ccall
 -- | VkRefreshCycleDurationGOOGLE - Structure containing the RC duration of a
 -- display
 --
+-- = Description
+--
+-- Unresolved directive in VkRefreshCycleDurationGOOGLE.txt -
+-- include::..\/validity\/structs\/VkRefreshCycleDurationGOOGLE.txt[]
+--
 -- = See Also
 --
--- 'vkGetRefreshCycleDurationGOOGLE'
+-- No cross-references are available
 data VkRefreshCycleDurationGOOGLE = VkRefreshCycleDurationGOOGLE
   { -- | @refreshDuration@ is the number of nanoseconds from the start of one
   -- refresh cycle to the next.
@@ -231,7 +179,7 @@ instance Storable VkRefreshCycleDurationGOOGLE where
 --
 -- = See Also
 --
--- 'vkGetPastPresentationTimingGOOGLE'
+-- No cross-references are available
 data VkPastPresentationTimingGOOGLE = VkPastPresentationTimingGOOGLE
   { -- | @presentID@ is an application-provided value that was given to a
   -- previous @vkQueuePresentKHR@ command via
@@ -283,18 +231,12 @@ instance Storable VkPastPresentationTimingGOOGLE where
 --     @VkPresentInfoKHR@::@swapchainCount@, where @VkPresentInfoKHR@ is in
 --     the @pNext@ chain of this @VkPresentTimesInfoGOOGLE@ structure.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_PRESENT_TIMES_INFO_GOOGLE@
---
--- -   If @pTimes@ is not @NULL@, @pTimes@ /must/ be a valid pointer to an
---     array of @swapchainCount@ @VkPresentTimeGOOGLE@ structures
---
--- -   @swapchainCount@ /must/ be greater than @0@
+-- Unresolved directive in VkPresentTimesInfoGOOGLE.txt -
+-- include::..\/validity\/structs\/VkPresentTimesInfoGOOGLE.txt[]
 --
 -- = See Also
 --
--- 'VkPresentTimeGOOGLE', 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPresentTimesInfoGOOGLE = VkPresentTimesInfoGOOGLE
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -326,7 +268,7 @@ instance Storable VkPresentTimesInfoGOOGLE where
 --
 -- = See Also
 --
--- 'VkPresentTimesInfoGOOGLE'
+-- No cross-references are available
 data VkPresentTimeGOOGLE = VkPresentTimeGOOGLE
   { -- | @presentID@ is an application-provided identification value, that /can/
   -- be used with the results of 'vkGetPastPresentationTimingGOOGLE', in

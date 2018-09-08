@@ -93,16 +93,16 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkPhysicalDevice
   )
 import Graphics.Vulkan.Core10.Memory
-  ( VkDeviceMemory
+  ( VkDeviceMemory(..)
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkBuffer
-  , VkImage
+  ( VkBuffer(..)
+  , VkImage(..)
   )
 import Graphics.Vulkan.Core10.Queue
-  ( VkFence
+  ( VkFence(..)
+  , VkSemaphore(..)
   , VkQueue
-  , VkSemaphore
   )
 
 
@@ -248,7 +248,8 @@ pattern VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT = VkSparseImageFormatF
 --
 -- -   @device@ is the logical device that owns the image.
 --
--- -   @image@ is the @VkImage@ object to get the memory requirements for.
+-- -   @image@ is the 'Graphics.Vulkan.Core10.MemoryManagement.VkImage'
+--     object to get the memory requirements for.
 --
 -- -   @pSparseMemoryRequirementCount@ is a pointer to an integer related
 --     to the number of sparse memory requirements available or queried, as
@@ -688,7 +689,7 @@ instance Storable VkSparseImageMemoryRequirements where
                 *> poke (ptr `plusPtr` 24) (vkImageMipTailSize (poked :: VkSparseImageMemoryRequirements))
                 *> poke (ptr `plusPtr` 32) (vkImageMipTailOffset (poked :: VkSparseImageMemoryRequirements))
                 *> poke (ptr `plusPtr` 40) (vkImageMipTailStride (poked :: VkSparseImageMemoryRequirements))
--- | VkImageSubresource - Structure specifying a image subresource
+-- | VkImageSubresource - Structure specifying an image subresource
 --
 -- == Valid Usage (Implicit)
 --
@@ -791,12 +792,13 @@ data VkSparseMemoryBind = VkSparseMemoryBind
   vkResourceOffset :: VkDeviceSize
   , -- | @size@ is the size of the memory region to be bound.
   vkSize :: VkDeviceSize
-  , -- | @memory@ is the @VkDeviceMemory@ object that the range of the resource
-  -- is bound to. If @memory@ is
+  , -- | @memory@ is the 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory' object
+  -- that the range of the resource is bound to. If @memory@ is
   -- 'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE', the range is unbound.
   vkMemory :: VkDeviceMemory
-  , -- | @memoryOffset@ is the offset into the @VkDeviceMemory@ object to bind
-  -- the resource range to. If @memory@ is
+  , -- | @memoryOffset@ is the offset into the
+  -- 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory' object to bind the
+  -- resource range to. If @memory@ is
   -- 'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE', this value is
   -- ignored.
   vkMemoryOffset :: VkDeviceSize
@@ -890,12 +892,13 @@ data VkSparseImageMemoryBind = VkSparseImageMemoryBind
   -- @offset@ + @extent@ equals the corresponding dimensions of the image
   -- subresource.
   vkExtent :: VkExtent3D
-  , -- | @memory@ is the @VkDeviceMemory@ object that the sparse image blocks of
-  -- the image are bound to. If @memory@ is
+  , -- | @memory@ is the 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory' object
+  -- that the sparse image blocks of the image are bound to. If @memory@ is
   -- 'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE', the sparse image
   -- blocks are unbound.
   vkMemory :: VkDeviceMemory
-  , -- | @memoryOffset@ is an offset into @VkDeviceMemory@ object. If @memory@ is
+  , -- | @memoryOffset@ is an offset into
+  -- 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory' object. If @memory@ is
   -- 'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE', this value is
   -- ignored.
   vkMemoryOffset :: VkDeviceSize
@@ -936,12 +939,13 @@ instance Storable VkSparseImageMemoryBind where
 -- 'VkBindSparseInfo', 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer',
 -- 'VkSparseMemoryBind'
 data VkSparseBufferMemoryBindInfo = VkSparseBufferMemoryBindInfo
-  { -- | @buffer@ is the @VkBuffer@ object to be bound.
+  { -- | @buffer@ is the 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer'
+  -- object to be bound.
   vkBuffer :: VkBuffer
-  , -- | @bindCount@ is the number of @VkSparseMemoryBind@ structures in the
+  , -- | @bindCount@ is the number of 'VkSparseMemoryBind' structures in the
   -- @pBinds@ array.
   vkBindCount :: Word32
-  , -- | @pBinds@ is a pointer to array of @VkSparseMemoryBind@ structures.
+  , -- | @pBinds@ is a pointer to array of 'VkSparseMemoryBind' structures.
   vkPBinds :: Ptr VkSparseMemoryBind
   }
   deriving (Eq, Show)
@@ -979,12 +983,13 @@ instance Storable VkSparseBufferMemoryBindInfo where
 -- 'VkBindSparseInfo', 'Graphics.Vulkan.Core10.MemoryManagement.VkImage',
 -- 'VkSparseMemoryBind'
 data VkSparseImageOpaqueMemoryBindInfo = VkSparseImageOpaqueMemoryBindInfo
-  { -- | @image@ is the @VkImage@ object to be bound.
+  { -- | @image@ is the 'Graphics.Vulkan.Core10.MemoryManagement.VkImage' object
+  -- to be bound.
   vkImage :: VkImage
-  , -- | @bindCount@ is the number of @VkSparseMemoryBind@ structures in the
+  , -- | @bindCount@ is the number of 'VkSparseMemoryBind' structures in the
   -- @pBinds@ array.
   vkBindCount :: Word32
-  , -- | @pBinds@ is a pointer to array of @VkSparseMemoryBind@ structures.
+  , -- | @pBinds@ is a pointer to array of 'VkSparseMemoryBind' structures.
   vkPBinds :: Ptr VkSparseMemoryBind
   }
   deriving (Eq, Show)
@@ -1027,12 +1032,13 @@ instance Storable VkSparseImageOpaqueMemoryBindInfo where
 -- 'VkBindSparseInfo', 'Graphics.Vulkan.Core10.MemoryManagement.VkImage',
 -- 'VkSparseImageMemoryBind'
 data VkSparseImageMemoryBindInfo = VkSparseImageMemoryBindInfo
-  { -- | @image@ is the @VkImage@ object to be bound
+  { -- | @image@ is the 'Graphics.Vulkan.Core10.MemoryManagement.VkImage' object
+  -- to be bound
   vkImage :: VkImage
-  , -- | @bindCount@ is the number of @VkSparseImageMemoryBind@ structures in
+  , -- | @bindCount@ is the number of 'VkSparseImageMemoryBind' structures in
   -- pBinds array
   vkBindCount :: Word32
-  , -- | @pBinds@ is a pointer to array of @VkSparseImageMemoryBind@ structures
+  , -- | @pBinds@ is a pointer to array of 'VkSparseImageMemoryBind' structures
   vkPBinds :: Ptr VkSparseImageMemoryBind
   }
   deriving (Eq, Show)

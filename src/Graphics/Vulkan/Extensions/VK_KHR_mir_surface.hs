@@ -70,7 +70,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkPhysicalDevice
   )
 import Graphics.Vulkan.Extensions.VK_KHR_surface
-  ( VkSurfaceKHR
+  ( VkSurfaceKHR(..)
   )
 
 
@@ -125,37 +125,18 @@ pattern VK_KHR_MIR_SURFACE_EXTENSION_NAME = "VK_KHR_mir_surface"
 --     (see [Memory
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)).
 --
--- -   @pSurface@ points to a @VkSurfaceKHR@ handle in which the created
---     surface object is returned.
+-- -   @pSurface@ points to a
+--     'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceKHR' handle in
+--     which the created surface object is returned.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @instance@ /must/ be a valid @VkInstance@ handle
---
--- -   @pCreateInfo@ /must/ be a valid pointer to a valid
---     @VkMirSurfaceCreateInfoKHR@ structure
---
--- -   If @pAllocator@ is not @NULL@, @pAllocator@ /must/ be a valid
---     pointer to a valid @VkAllocationCallbacks@ structure
---
--- -   @pSurface@ /must/ be a valid pointer to a @VkSurfaceKHR@ handle
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
+-- Unresolved directive in vkCreateMirSurfaceKHR.txt -
+-- include::..\/validity\/protos\/vkCreateMirSurfaceKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkAllocationCallbacks',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkInstance',
--- 'VkMirSurfaceCreateInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -184,15 +165,13 @@ foreign import ccall
 --     returned by @vkGetPhysicalDeviceQueueFamilyProperties@ for the given
 --     @physicalDevice@
 --
--- == Valid Usage (Implicit)
---
--- -   @physicalDevice@ /must/ be a valid @VkPhysicalDevice@ handle
---
--- -   @connection@ /must/ be a valid pointer to a @MirConnection@ value
+-- Unresolved directive in vkGetPhysicalDeviceMirPresentationSupportKHR.txt
+-- -
+-- include::..\/validity\/protos\/vkGetPhysicalDeviceMirPresentationSupportKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDevice'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -207,18 +186,12 @@ foreign import ccall
 --
 -- -   @surface@ /must/ point to a valid @MirSurface@.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_MIR_SURFACE_CREATE_INFO_KHR@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @flags@ /must/ be @0@
+-- Unresolved directive in VkMirSurfaceCreateInfoKHR.txt -
+-- include::..\/validity\/structs\/VkMirSurfaceCreateInfoKHR.txt[]
 --
 -- = See Also
 --
--- 'VkMirSurfaceCreateFlagsKHR',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'vkCreateMirSurfaceKHR'
+-- No cross-references are available
 data VkMirSurfaceCreateInfoKHR = VkMirSurfaceCreateInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

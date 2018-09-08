@@ -32,7 +32,7 @@ import Graphics.Vulkan.Core10.Core
   ( VkStructureType(..)
   )
 import Graphics.Vulkan.Core10.Memory
-  ( VkDeviceMemory
+  ( VkDeviceMemory(..)
   )
 
 
@@ -48,34 +48,14 @@ pattern VK_NV_WIN32_KEYED_MUTEX_EXTENSION_NAME = "VK_NV_win32_keyed_mutex"
 -- | VkWin32KeyedMutexAcquireReleaseInfoNV - use Windows keyex mutex
 -- mechanism to synchronize work
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV@
---
--- -   If @acquireCount@ is not @0@, @pAcquireSyncs@ /must/ be a valid
---     pointer to an array of @acquireCount@ valid @VkDeviceMemory@ handles
---
--- -   If @acquireCount@ is not @0@, @pAcquireKeys@ /must/ be a valid
---     pointer to an array of @acquireCount@ @uint64_t@ values
---
--- -   If @acquireCount@ is not @0@, @pAcquireTimeoutMilliseconds@ /must/
---     be a valid pointer to an array of @acquireCount@ @uint32_t@ values
---
--- -   If @releaseCount@ is not @0@, @pReleaseSyncs@ /must/ be a valid
---     pointer to an array of @releaseCount@ valid @VkDeviceMemory@ handles
---
--- -   If @releaseCount@ is not @0@, @pReleaseKeys@ /must/ be a valid
---     pointer to an array of @releaseCount@ @uint64_t@ values
---
--- -   Both of the elements of @pAcquireSyncs@, and the elements of
---     @pReleaseSyncs@ that are valid handles /must/ have been created,
---     allocated, or retrieved from the same @VkDevice@
+-- Unresolved directive in VkWin32KeyedMutexAcquireReleaseInfoNV.txt -
+-- include::..\/validity\/structs\/VkWin32KeyedMutexAcquireReleaseInfoNV.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkWin32KeyedMutexAcquireReleaseInfoNV = VkWin32KeyedMutexAcquireReleaseInfoNV
   { -- No documentation found for Nested "VkWin32KeyedMutexAcquireReleaseInfoNV" "sType"
   vkSType :: VkStructureType

@@ -72,7 +72,7 @@ import Graphics.Vulkan.Core10.Core
 --
 -- = See Also
 --
--- 'VkPipelineRasterizationConservativeStateCreateInfoEXT'
+-- No cross-references are available
 newtype VkConservativeRasterizationModeEXT = VkConservativeRasterizationModeEXT Int32
   deriving (Eq, Ord, Storable)
 
@@ -121,7 +121,7 @@ pattern VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT = VkConservativeRas
 --
 -- = See Also
 --
--- 'VkPipelineRasterizationConservativeStateCreateInfoEXT'
+-- No cross-references are available
 newtype VkPipelineRasterizationConservativeStateCreateFlagsEXT = VkPipelineRasterizationConservativeStateCreateFlagsEXT VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -233,10 +233,9 @@ pattern VK_EXT_CONSERVATIVE_RASTERIZATION_EXTENSION_NAME = "VK_EXT_conservative_
 --     execution mode /must/ not be used when conservative rasterization is
 --     enabled.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT@
+-- Unresolved directive in
+-- VkPhysicalDeviceConservativeRasterizationPropertiesEXT.txt -
+-- include::..\/validity\/structs\/VkPhysicalDeviceConservativeRasterizationPropertiesEXT.txt[]
 --
 -- If the @VkPhysicalDeviceConservativeRasterizationPropertiesEXT@
 -- structure is included in the @pNext@ chain of
@@ -245,7 +244,7 @@ pattern VK_EXT_CONSERVATIVE_RASTERIZATION_EXTENSION_NAME = "VK_EXT_conservative_
 --
 -- = See Also
 --
--- @VkBool32@, 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPhysicalDeviceConservativeRasterizationPropertiesEXT = VkPhysicalDeviceConservativeRasterizationPropertiesEXT
   { -- No documentation found for Nested "VkPhysicalDeviceConservativeRasterizationPropertiesEXT" "sType"
   vkSType :: VkStructureType
@@ -307,21 +306,13 @@ instance Storable VkPhysicalDeviceConservativeRasterizationPropertiesEXT where
 --     @VkPhysicalDeviceConservativeRasterizationPropertiesEXT@::@maxExtraPrimitiveOverestimationSize@
 --     inclusive
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT@
---
--- -   @flags@ /must/ be @0@
---
--- -   @conservativeRasterizationMode@ /must/ be a valid
---     'VkConservativeRasterizationModeEXT' value
+-- Unresolved directive in
+-- VkPipelineRasterizationConservativeStateCreateInfoEXT.txt -
+-- include::..\/validity\/structs\/VkPipelineRasterizationConservativeStateCreateInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'VkConservativeRasterizationModeEXT',
--- 'VkPipelineRasterizationConservativeStateCreateFlagsEXT',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPipelineRasterizationConservativeStateCreateInfoEXT = VkPipelineRasterizationConservativeStateCreateInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

@@ -12,7 +12,7 @@ module Graphics.Vulkan.Core10.CommandPool
   , pattern VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT
   , VkCommandPoolResetFlagBits(..)
   , pattern VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT
-  , VkCommandPool
+  , VkCommandPool(..)
   , vkCreateCommandPool
   , vkDestroyCommandPool
   , vkResetCommandPool
@@ -27,9 +27,11 @@ import Data.Bits
   )
 import Data.Word
   ( Word32
+  , Word64
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -148,8 +150,6 @@ instance Read VkCommandPoolResetFlagBits where
 -- the system.
 pattern VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT :: VkCommandPoolResetFlagBits
 pattern VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT = VkCommandPoolResetFlagBits 0x00000001
--- | Dummy data to tag the 'Ptr' with
-data VkCommandPool_T
 -- | VkCommandPool - Opaque handle to a command pool object
 --
 -- = See Also
@@ -158,24 +158,37 @@ data VkCommandPool_T
 -- 'vkCreateCommandPool', 'vkDestroyCommandPool',
 -- 'Graphics.Vulkan.Core10.CommandBuffer.vkFreeCommandBuffers',
 -- 'vkResetCommandPool',
--- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance1.vkTrimCommandPool',
--- 'Graphics.Vulkan.Extensions.VK_KHR_maintenance1.vkTrimCommandPoolKHR'
-type VkCommandPool = Ptr VkCommandPool_T
+-- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance1.vkTrimCommandPool'
+newtype VkCommandPool = VkCommandPool Word64
+  deriving (Eq, Show)
+
+instance Storable VkCommandPool where
+  sizeOf (VkCommandPool w) = sizeOf w
+  alignment (VkCommandPool w) = alignment w
+  peek ptr = VkCommandPool <$> peek (castPtr ptr)
+  poke ptr (VkCommandPool w) = poke (castPtr ptr) w
 -- | vkCreateCommandPool - Create a new command pool object
 --
 -- = Parameters
 --
 -- -   @device@ is the logical device that creates the command pool.
 --
--- -   @pCreateInfo@ contains information used to create the command pool.
+-- -   @pCreateInfo@ is a pointer to an instance of the
+--     'VkCommandPoolCreateInfo' structure specifying the state of the
+--     command pool object.
 --
 -- -   @pAllocator@ controls host memory allocation as described in the
 --     [Memory
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pCommandPool@ points to a @VkCommandPool@ handle in which the
+-- -   @pCommandPool@ points to a 'VkCommandPool' handle in which the
 --     created pool is returned.
+--
+-- == Valid Usage
+--
+-- -   @pCreateInfo@::@queueFamilyIndex@ /must/ be the index of a queue
+--     family available in the logical device @device@.
 --
 -- == Valid Usage (Implicit)
 --
@@ -343,11 +356,6 @@ foreign import ccall
   "vkResetCommandPool" vkResetCommandPool :: ("device" ::: VkDevice) -> ("commandPool" ::: VkCommandPool) -> ("flags" ::: VkCommandPoolResetFlags) -> IO VkResult
 -- | VkCommandPoolCreateInfo - Structure specifying parameters of a newly
 -- created command pool
---
--- == Valid Usage
---
--- -   @queueFamilyIndex@ /must/ be the index of a queue family available
---     in the calling command’s @device@ parameter
 --
 -- == Valid Usage (Implicit)
 --

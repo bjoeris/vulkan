@@ -30,7 +30,7 @@ module Graphics.Vulkan.Extensions.VK_KHR_swapchain
   , pattern VK_SWAPCHAIN_CREATE_PROTECTED_BIT_KHR
   , pattern VK_KHR_SWAPCHAIN_SPEC_VERSION
   , pattern VK_KHR_SWAPCHAIN_EXTENSION_NAME
-  , VkSwapchainKHR
+  , VkSwapchainKHR(..)
   , vkCreateSwapchainKHR
   , vkDestroySwapchainKHR
   , vkGetSwapchainImagesKHR
@@ -68,6 +68,7 @@ import Data.Word
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -116,16 +117,16 @@ import Graphics.Vulkan.Core10.Image
   ( VkImageLayout(..)
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkImage
+  ( VkImage(..)
   )
 import Graphics.Vulkan.Core10.Pipeline
   ( VkExtent2D(..)
   , VkRect2D(..)
   )
 import Graphics.Vulkan.Core10.Queue
-  ( VkFence
+  ( VkFence(..)
+  , VkSemaphore(..)
   , VkQueue
-  , VkSemaphore
   )
 import Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group_creation
   ( VK_MAX_DEVICE_GROUP_SIZE
@@ -134,8 +135,8 @@ import Graphics.Vulkan.Extensions.VK_KHR_surface
   ( VkColorSpaceKHR(..)
   , VkCompositeAlphaFlagBitsKHR(..)
   , VkPresentModeKHR(..)
+  , VkSurfaceKHR(..)
   , VkSurfaceTransformFlagBitsKHR(..)
-  , VkSurfaceKHR
   )
 
 
@@ -145,7 +146,7 @@ import Graphics.Vulkan.Extensions.VK_KHR_surface
 --
 -- = See Also
 --
--- 'VkSwapchainCreateFlagsKHR'
+-- No cross-references are available
 newtype VkSwapchainCreateFlagBitsKHR = VkSwapchainCreateFlagBitsKHR VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -176,7 +177,7 @@ instance Read VkSwapchainCreateFlagBitsKHR where
 --
 -- = See Also
 --
--- 'VkDeviceGroupPresentInfoKHR', 'VkDeviceGroupPresentModeFlagsKHR'
+-- No cross-references are available
 newtype VkDeviceGroupPresentModeFlagBitsKHR = VkDeviceGroupPresentModeFlagBitsKHR VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -274,8 +275,6 @@ pattern VK_KHR_SWAPCHAIN_SPEC_VERSION = 70
 -- No documentation found for TopLevel "VK_KHR_SWAPCHAIN_EXTENSION_NAME"
 pattern VK_KHR_SWAPCHAIN_EXTENSION_NAME :: (Eq a ,IsString a) => a
 pattern VK_KHR_SWAPCHAIN_EXTENSION_NAME = "VK_KHR_swapchain"
--- | Dummy data to tag the 'Ptr' with
-data VkSwapchainKHR_T
 -- | VkSwapchainKHR - Opaque handle to a swapchain object
 --
 -- = Description
@@ -288,9 +287,10 @@ data VkSwapchainKHR_T
 -- application renders to the image, and then queues the image for
 -- presentation to the surface.
 --
--- A native window /cannot/ be associated with more than one swapchain at a
--- time. Further, swapchains /cannot/ be created for native windows that
--- have a non-Vulkan graphics API surface associated with them.
+-- A native window /cannot/ be associated with more than one non-retired
+-- swapchain at a time. Further, swapchains /cannot/ be created for native
+-- windows that have a non-Vulkan graphics API surface associated with
+-- them.
 --
 -- __Note__
 --
@@ -331,18 +331,15 @@ data VkSwapchainKHR_T
 --
 -- = See Also
 --
--- 'VkAcquireNextImageInfoKHR', 'VkBindImageMemorySwapchainInfoKHR',
--- 'VkImageSwapchainCreateInfoKHR', 'VkPresentInfoKHR',
--- 'VkSwapchainCreateInfoKHR', 'vkAcquireNextImageKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_display_swapchain.vkCreateSharedSwapchainsKHR',
--- 'vkCreateSwapchainKHR', 'vkDestroySwapchainKHR',
--- 'Graphics.Vulkan.Extensions.VK_GOOGLE_display_timing.vkGetPastPresentationTimingGOOGLE',
--- 'Graphics.Vulkan.Extensions.VK_GOOGLE_display_timing.vkGetRefreshCycleDurationGOOGLE',
--- 'Graphics.Vulkan.Extensions.VK_EXT_display_control.vkGetSwapchainCounterEXT',
--- 'vkGetSwapchainImagesKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_shared_presentable_image.vkGetSwapchainStatusKHR',
--- 'Graphics.Vulkan.Extensions.VK_EXT_hdr_metadata.vkSetHdrMetadataEXT'
-type VkSwapchainKHR = Ptr VkSwapchainKHR_T
+-- No cross-references are available
+newtype VkSwapchainKHR = VkSwapchainKHR Word64
+  deriving (Eq, Show)
+
+instance Storable VkSwapchainKHR where
+  sizeOf (VkSwapchainKHR w) = sizeOf w
+  alignment (VkSwapchainKHR w) = alignment w
+  peek ptr = VkSwapchainKHR <$> peek (castPtr ptr)
+  poke ptr (VkSwapchainKHR w) = poke (castPtr ptr) w
 -- | vkCreateSwapchainKHR - Create a swapchain
 --
 -- = Parameters
@@ -358,50 +355,17 @@ type VkSwapchainKHR = Ptr VkSwapchainKHR_T
 --     (see [Memory
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)).
 --
--- -   @pSwapchain@ is a pointer to a @VkSwapchainKHR@ handle in which the
+-- -   @pSwapchain@ is a pointer to a 'VkSwapchainKHR' handle in which the
 --     created swapchain object will be returned.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @pCreateInfo@ /must/ be a valid pointer to a valid
---     @VkSwapchainCreateInfoKHR@ structure
---
--- -   If @pAllocator@ is not @NULL@, @pAllocator@ /must/ be a valid
---     pointer to a valid @VkAllocationCallbacks@ structure
---
--- -   @pSwapchain@ /must/ be a valid pointer to a @VkSwapchainKHR@ handle
---
--- == Host Synchronization
---
--- -   Host access to @pCreateInfo.surface@ /must/ be externally
---     synchronized
---
--- -   Host access to @pCreateInfo.oldSwapchain@ /must/ be externally
---     synchronized
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_DEVICE_LOST@
---
---     -   @VK_ERROR_SURFACE_LOST_KHR@
---
---     -   @VK_ERROR_NATIVE_WINDOW_IN_USE_KHR@
+-- Unresolved directive in vkCreateSwapchainKHR.txt -
+-- include::..\/validity\/protos\/vkCreateSwapchainKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkAllocationCallbacks',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkSwapchainCreateInfoKHR', 'VkSwapchainKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -411,7 +375,9 @@ foreign import ccall
 --
 -- = Parameters
 --
--- -   @device@ is the @VkDevice@ associated with @swapchain@.
+-- -   @device@ is the
+--     'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice' associated
+--     with @swapchain@.
 --
 -- -   @swapchain@ is the swapchain to destroy.
 --
@@ -453,28 +419,12 @@ foreign import ccall
 -- -   If no @VkAllocationCallbacks@ were provided when @swapchain@ was
 --     created, @pAllocator@ /must/ be @NULL@
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   If @swapchain@ is not
---     'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE', @swapchain@
---     /must/ be a valid @VkSwapchainKHR@ handle
---
--- -   If @pAllocator@ is not @NULL@, @pAllocator@ /must/ be a valid
---     pointer to a valid @VkAllocationCallbacks@ structure
---
--- -   Both of @device@, and @swapchain@ that are valid handles /must/ have
---     been created, allocated, or retrieved from the same @VkInstance@
---
--- == Host Synchronization
---
--- -   Host access to @swapchain@ /must/ be externally synchronized
+-- Unresolved directive in vkDestroySwapchainKHR.txt -
+-- include::..\/validity\/protos\/vkDestroySwapchainKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkAllocationCallbacks',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice', 'VkSwapchainKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -511,39 +461,12 @@ foreign import ccall
 -- @VK_SUCCESS@ to indicate that not all the available values were
 -- returned.
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @swapchain@ /must/ be a valid @VkSwapchainKHR@ handle
---
--- -   @pSwapchainImageCount@ /must/ be a valid pointer to a @uint32_t@
---     value
---
--- -   If the value referenced by @pSwapchainImageCount@ is not @0@, and
---     @pSwapchainImages@ is not @NULL@, @pSwapchainImages@ /must/ be a
---     valid pointer to an array of @pSwapchainImageCount@ @VkImage@
---     handles
---
--- -   Both of @device@, and @swapchain@ /must/ have been created,
---     allocated, or retrieved from the same @VkInstance@
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
---     -   @VK_INCOMPLETE@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
+-- Unresolved directive in vkGetSwapchainImagesKHR.txt -
+-- include::..\/validity\/protos\/vkGetSwapchainImagesKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'Graphics.Vulkan.Core10.MemoryManagement.VkImage', 'VkSwapchainKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -600,65 +523,12 @@ foreign import ccall
 --     with the @surface@ used to create @swapchain@, @timeout@ /must/ not
 --     be @UINT64_MAX@
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @swapchain@ /must/ be a valid @VkSwapchainKHR@ handle
---
--- -   If @semaphore@ is not
---     'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE', @semaphore@
---     /must/ be a valid @VkSemaphore@ handle
---
--- -   If @fence@ is not 'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE',
---     @fence@ /must/ be a valid @VkFence@ handle
---
--- -   @pImageIndex@ /must/ be a valid pointer to a @uint32_t@ value
---
--- -   If @semaphore@ is a valid handle, it /must/ have been created,
---     allocated, or retrieved from @device@
---
--- -   If @fence@ is a valid handle, it /must/ have been created,
---     allocated, or retrieved from @device@
---
--- -   Both of @device@, and @swapchain@ that are valid handles /must/ have
---     been created, allocated, or retrieved from the same @VkInstance@
---
--- == Host Synchronization
---
--- -   Host access to @swapchain@ /must/ be externally synchronized
---
--- -   Host access to @semaphore@ /must/ be externally synchronized
---
--- -   Host access to @fence@ /must/ be externally synchronized
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
---     -   @VK_TIMEOUT@
---
---     -   @VK_NOT_READY@
---
---     -   @VK_SUBOPTIMAL_KHR@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_DEVICE_LOST@
---
---     -   @VK_ERROR_OUT_OF_DATE_KHR@
---
---     -   @VK_ERROR_SURFACE_LOST_KHR@
+-- Unresolved directive in vkAcquireNextImageKHR.txt -
+-- include::..\/validity\/protos\/vkAcquireNextImageKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'Graphics.Vulkan.Core10.Queue.VkFence',
--- 'Graphics.Vulkan.Core10.Queue.VkSemaphore', 'VkSwapchainKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -732,55 +602,12 @@ foreign import ccall
 -- considered to be enqueued and thus any semaphore to be waited on gets
 -- unsignaled when the corresponding queue operation is complete.
 --
--- == Valid Usage (Implicit)
---
--- -   @queue@ /must/ be a valid @VkQueue@ handle
---
--- -   @pPresentInfo@ /must/ be a valid pointer to a valid
---     @VkPresentInfoKHR@ structure
---
--- == Host Synchronization
---
--- -   Host access to @queue@ /must/ be externally synchronized
---
--- -   Host access to @pPresentInfo.pWaitSemaphores@[] /must/ be externally
---     synchronized
---
--- -   Host access to @pPresentInfo.pSwapchains@[] /must/ be externally
---     synchronized
---
--- == Command Properties
---
--- \'
---
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
--- | [Command Buffer                                                                                             | [Render Pass                                                                                               | [Supported Queue                                                                                      | [Pipeline                                                                                                                  |
--- | Levels](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkCommandBufferLevel) | Scope](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#vkCmdBeginRenderPass) | Types](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkQueueFlagBits) | Type](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#synchronization-pipeline-stages-types) |
--- +=============================================================================================================+============================================================================================================+=======================================================================================================+============================================================================================================================+
--- | -                                                                                                           | -                                                                                                          | Any                                                                                                   | -                                                                                                                          |
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
---     -   @VK_SUBOPTIMAL_KHR@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_DEVICE_LOST@
---
---     -   @VK_ERROR_OUT_OF_DATE_KHR@
---
---     -   @VK_ERROR_SURFACE_LOST_KHR@
+-- Unresolved directive in vkQueuePresentKHR.txt -
+-- include::..\/validity\/protos\/vkQueuePresentKHR.txt[]
 --
 -- = See Also
 --
--- 'VkPresentInfoKHR', 'Graphics.Vulkan.Core10.Queue.VkQueue'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -797,27 +624,14 @@ foreign import ccall
 --     type 'VkDeviceGroupPresentCapabilitiesKHR' that is filled with the
 --     logical device’s capabilities.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @pDeviceGroupPresentCapabilities@ /must/ be a valid pointer to a
---     @VkDeviceGroupPresentCapabilitiesKHR@ structure
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
+-- Unresolved directive in vkGetDeviceGroupPresentCapabilitiesKHR.txt -
+-- include::..\/validity\/protos\/vkGetDeviceGroupPresentCapabilitiesKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkDeviceGroupPresentCapabilitiesKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -843,39 +657,12 @@ foreign import ccall
 -- modes /must/ be a subset of the modes returned by
 -- 'vkGetDeviceGroupPresentCapabilitiesKHR'.
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @surface@ /must/ be a valid @VkSurfaceKHR@ handle
---
--- -   @pModes@ /must/ be a valid pointer to a
---     'VkDeviceGroupPresentModeFlagsKHR' value
---
--- -   Both of @device@, and @surface@ /must/ have been created, allocated,
---     or retrieved from the same @VkInstance@
---
--- == Host Synchronization
---
--- -   Host access to @surface@ /must/ be externally synchronized
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_SURFACE_LOST_KHR@
+-- Unresolved directive in vkGetDeviceGroupSurfacePresentModesKHR.txt -
+-- include::..\/validity\/protos\/vkGetDeviceGroupSurfacePresentModesKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkDeviceGroupPresentModeFlagsKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -905,41 +692,12 @@ foreign import ccall
 --     with the @surface@ used to create @swapchain@, the @timeout@ member
 --     of @pAcquireInfo@ /must/ not be @UINT64_MAX@
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @pAcquireInfo@ /must/ be a valid pointer to a valid
---     @VkAcquireNextImageInfoKHR@ structure
---
--- -   @pImageIndex@ /must/ be a valid pointer to a @uint32_t@ value
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
---     -   @VK_TIMEOUT@
---
---     -   @VK_NOT_READY@
---
---     -   @VK_SUBOPTIMAL_KHR@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_DEVICE_LOST@
---
---     -   @VK_ERROR_OUT_OF_DATE_KHR@
---
---     -   @VK_ERROR_SURFACE_LOST_KHR@
+-- Unresolved directive in vkAcquireNextImage2KHR.txt -
+-- include::..\/validity\/protos\/vkAcquireNextImage2KHR.txt[]
 --
 -- = See Also
 --
--- 'VkAcquireNextImageInfoKHR',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -957,8 +715,8 @@ foreign import ccall
 -- -   @pRectCount@ is a pointer to an integer related to the number of
 --     rectangles available or queried, as described below.
 --
--- -   @pRects@ is either @NULL@ or a pointer to an array of @VkRect2D@
---     structures.
+-- -   @pRects@ is either @NULL@ or a pointer to an array of
+--     'Graphics.Vulkan.Core10.Pipeline.VkRect2D' structures.
 --
 -- = Description
 --
@@ -978,42 +736,12 @@ foreign import ccall
 --
 -- The rectangles returned by this command /must/ not overlap.
 --
--- == Valid Usage (Implicit)
---
--- -   @physicalDevice@ /must/ be a valid @VkPhysicalDevice@ handle
---
--- -   @surface@ /must/ be a valid @VkSurfaceKHR@ handle
---
--- -   @pRectCount@ /must/ be a valid pointer to a @uint32_t@ value
---
--- -   If the value referenced by @pRectCount@ is not @0@, and @pRects@ is
---     not @NULL@, @pRects@ /must/ be a valid pointer to an array of
---     @pRectCount@ @VkRect2D@ structures
---
--- -   Both of @physicalDevice@, and @surface@ /must/ have been created,
---     allocated, or retrieved from the same @VkInstance@
---
--- == Host Synchronization
---
--- -   Host access to @surface@ /must/ be externally synchronized
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
---     -   @VK_INCOMPLETE@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
+-- Unresolved directive in vkGetPhysicalDevicePresentRectanglesKHR.txt -
+-- include::..\/validity\/protos\/vkGetPhysicalDevicePresentRectanglesKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDevice',
--- 'Graphics.Vulkan.Core10.Pipeline.VkRect2D',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -1222,81 +950,22 @@ foreign import ccall
 --     equal to 1, @flags@ /must/ not contain
 --     @VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR@
 --
--- -   @oldSwapchain@ /must/ not be in the retired state
+-- -   If @oldSwapchain@ is not
+--     'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE', @oldSwapchain@
+--     /must/ be a non-retired swapchain associated with native window
+--     referred to by @surface@
 --
 -- -   @imageFormat@, @imageUsage@, @imageExtent@, and @imageArrayLayers@
 --     /must/ be supported for @VK_IMAGE_TYPE_2D@ @VK_IMAGE_TILING_OPTIMAL@
 --     images as reported by
 --     'Graphics.Vulkan.Core10.DeviceInitialization.vkGetPhysicalDeviceImageFormatProperties'.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR@
---
--- -   Each @pNext@ member of any structure (including this one) in the
---     @pNext@ chain /must/ be either @NULL@ or a pointer to a valid
---     instance of 'VkDeviceGroupSwapchainCreateInfoKHR' or
---     'Graphics.Vulkan.Extensions.VK_EXT_display_control.VkSwapchainCounterCreateInfoEXT'
---
--- -   Each @sType@ member in the @pNext@ chain /must/ be unique
---
--- -   @flags@ /must/ be a valid combination of
---     'VkSwapchainCreateFlagBitsKHR' values
---
--- -   @surface@ /must/ be a valid @VkSurfaceKHR@ handle
---
--- -   @imageFormat@ /must/ be a valid
---     'Graphics.Vulkan.Core10.Core.VkFormat' value
---
--- -   @imageColorSpace@ /must/ be a valid
---     'Graphics.Vulkan.Extensions.VK_KHR_surface.VkColorSpaceKHR' value
---
--- -   @imageUsage@ /must/ be a valid combination of
---     'Graphics.Vulkan.Core10.DeviceInitialization.VkImageUsageFlagBits'
---     values
---
--- -   @imageUsage@ /must/ not be @0@
---
--- -   @imageSharingMode@ /must/ be a valid
---     'Graphics.Vulkan.Core10.Buffer.VkSharingMode' value
---
--- -   @preTransform@ /must/ be a valid
---     'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceTransformFlagBitsKHR'
---     value
---
--- -   @compositeAlpha@ /must/ be a valid
---     'Graphics.Vulkan.Extensions.VK_KHR_surface.VkCompositeAlphaFlagBitsKHR'
---     value
---
--- -   @presentMode@ /must/ be a valid
---     'Graphics.Vulkan.Extensions.VK_KHR_surface.VkPresentModeKHR' value
---
--- -   If @oldSwapchain@ is not
---     'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE', @oldSwapchain@
---     /must/ be a valid @VkSwapchainKHR@ handle
---
--- -   If @oldSwapchain@ is a valid handle, it /must/ have been created,
---     allocated, or retrieved from @surface@
---
--- -   Both of @oldSwapchain@, and @surface@ that are valid handles /must/
---     have been created, allocated, or retrieved from the same
---     @VkInstance@
+-- Unresolved directive in VkSwapchainCreateInfoKHR.txt -
+-- include::..\/validity\/structs\/VkSwapchainCreateInfoKHR.txt[]
 --
 -- = See Also
 --
--- @VkBool32@, 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkColorSpaceKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkCompositeAlphaFlagBitsKHR',
--- 'Graphics.Vulkan.Core10.Pipeline.VkExtent2D',
--- 'Graphics.Vulkan.Core10.Core.VkFormat',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkImageUsageFlags',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkPresentModeKHR',
--- 'Graphics.Vulkan.Core10.Buffer.VkSharingMode',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceTransformFlagBitsKHR',
--- 'VkSwapchainCreateFlagsKHR', 'VkSwapchainKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_display_swapchain.vkCreateSharedSwapchainsKHR',
--- 'vkCreateSwapchainKHR'
+-- No cross-references are available
 data VkSwapchainCreateInfoKHR = VkSwapchainCreateInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -1417,46 +1086,12 @@ instance Storable VkSwapchainCreateInfoKHR where
 --     @VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR@ layout at the time the
 --     operation is executed on a @VkDevice@
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_PRESENT_INFO_KHR@
---
--- -   Each @pNext@ member of any structure (including this one) in the
---     @pNext@ chain /must/ be either @NULL@ or a pointer to a valid
---     instance of 'VkDeviceGroupPresentInfoKHR',
---     'Graphics.Vulkan.Extensions.VK_KHR_display_swapchain.VkDisplayPresentInfoKHR',
---     'Graphics.Vulkan.Extensions.VK_KHR_incremental_present.VkPresentRegionsKHR',
---     or
---     'Graphics.Vulkan.Extensions.VK_GOOGLE_display_timing.VkPresentTimesInfoGOOGLE'
---
--- -   Each @sType@ member in the @pNext@ chain /must/ be unique
---
--- -   If @waitSemaphoreCount@ is not @0@, @pWaitSemaphores@ /must/ be a
---     valid pointer to an array of @waitSemaphoreCount@ valid
---     @VkSemaphore@ handles
---
--- -   @pSwapchains@ /must/ be a valid pointer to an array of
---     @swapchainCount@ valid @VkSwapchainKHR@ handles
---
--- -   @pImageIndices@ /must/ be a valid pointer to an array of
---     @swapchainCount@ @uint32_t@ values
---
--- -   If @pResults@ is not @NULL@, @pResults@ /must/ be a valid pointer to
---     an array of @swapchainCount@ 'Graphics.Vulkan.Core10.Core.VkResult'
---     values
---
--- -   @swapchainCount@ /must/ be greater than @0@
---
--- -   Both of the elements of @pSwapchains@, and the elements of
---     @pWaitSemaphores@ that are valid handles /must/ have been created,
---     allocated, or retrieved from the same @VkInstance@
+-- Unresolved directive in VkPresentInfoKHR.txt -
+-- include::..\/validity\/structs\/VkPresentInfoKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkResult',
--- 'Graphics.Vulkan.Core10.Queue.VkSemaphore',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'VkSwapchainKHR',
--- 'vkQueuePresentKHR'
+-- No cross-references are available
 data VkPresentInfoKHR = VkPresentInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -1465,14 +1100,15 @@ data VkPresentInfoKHR = VkPresentInfoKHR
   , -- | @waitSemaphoreCount@ is the number of semaphores to wait for before
   -- issuing the present request. The number /may/ be zero.
   vkWaitSemaphoreCount :: Word32
-  , -- | @pWaitSemaphores@, if not @NULL@, is an array of @VkSemaphore@ objects
-  -- with @waitSemaphoreCount@ entries, and specifies the semaphores to wait
-  -- for before issuing the present request.
+  , -- | @pWaitSemaphores@, if not @NULL@, is an array of
+  -- 'Graphics.Vulkan.Core10.Queue.VkSemaphore' objects with
+  -- @waitSemaphoreCount@ entries, and specifies the semaphores to wait for
+  -- before issuing the present request.
   vkPWaitSemaphores :: Ptr VkSemaphore
   , -- | @swapchainCount@ is the number of swapchains being presented to by this
   -- command.
   vkSwapchainCount :: Word32
-  , -- | @pSwapchains@ is an array of @VkSwapchainKHR@ objects with
+  , -- | @pSwapchains@ is an array of 'VkSwapchainKHR' objects with
   -- @swapchainCount@ entries. A given swapchain /must/ not appear in this
   -- list more than once.
   vkPSwapchains :: Ptr VkSwapchainKHR
@@ -1523,18 +1159,12 @@ instance Storable VkPresentInfoKHR where
 -- If a device group only includes a single physical device, then @modes@
 -- /must/ equal @VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR@.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR@
---
--- -   @pNext@ /must/ be @NULL@
+-- Unresolved directive in VkDeviceGroupPresentCapabilitiesKHR.txt -
+-- include::..\/validity\/structs\/VkDeviceGroupPresentCapabilitiesKHR.txt[]
 --
 -- = See Also
 --
--- 'VkDeviceGroupPresentModeFlagsKHR',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetDeviceGroupPresentCapabilitiesKHR'
+-- No cross-references are available
 data VkDeviceGroupPresentCapabilitiesKHR = VkDeviceGroupPresentCapabilitiesKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -1575,18 +1205,12 @@ instance Storable VkDeviceGroupPresentCapabilitiesKHR where
 --     parameters](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#swapchain-wsi-image-create-info)
 --     of the swapchain
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHR@
---
--- -   If @swapchain@ is not
---     'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE', @swapchain@
---     /must/ be a valid @VkSwapchainKHR@ handle
+-- Unresolved directive in VkImageSwapchainCreateInfoKHR.txt -
+-- include::..\/validity\/structs\/VkImageSwapchainCreateInfoKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'VkSwapchainKHR'
+-- No cross-references are available
 data VkImageSwapchainCreateInfoKHR = VkImageSwapchainCreateInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -1624,20 +1248,12 @@ instance Storable VkImageSwapchainCreateInfoKHR where
 --
 -- -   @imageIndex@ /must/ be less than the number of images in @swapchain@
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR@
---
--- -   @swapchain@ /must/ be a valid @VkSwapchainKHR@ handle
---
--- == Host Synchronization
---
--- -   Host access to @swapchain@ /must/ be externally synchronized
+-- Unresolved directive in VkBindImageMemorySwapchainInfoKHR.txt -
+-- include::..\/validity\/structs\/VkBindImageMemorySwapchainInfoKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'VkSwapchainKHR'
+-- No cross-references are available
 data VkBindImageMemorySwapchainInfoKHR = VkBindImageMemorySwapchainInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -1708,39 +1324,12 @@ instance Storable VkBindImageMemorySwapchainInfoKHR where
 -- -   @semaphore@ and @fence@ /must/ not both be equal to
 --     'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE'.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_ACQUIRE_NEXT_IMAGE_INFO_KHR@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @swapchain@ /must/ be a valid @VkSwapchainKHR@ handle
---
--- -   If @semaphore@ is not
---     'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE', @semaphore@
---     /must/ be a valid @VkSemaphore@ handle
---
--- -   If @fence@ is not 'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE',
---     @fence@ /must/ be a valid @VkFence@ handle
---
--- -   Each of @fence@, @semaphore@, and @swapchain@ that are valid handles
---     /must/ have been created, allocated, or retrieved from the same
---     @VkInstance@
---
--- == Host Synchronization
---
--- -   Host access to @swapchain@ /must/ be externally synchronized
---
--- -   Host access to @semaphore@ /must/ be externally synchronized
---
--- -   Host access to @fence@ /must/ be externally synchronized
+-- Unresolved directive in VkAcquireNextImageInfoKHR.txt -
+-- include::..\/validity\/structs\/VkAcquireNextImageInfoKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Queue.VkFence',
--- 'Graphics.Vulkan.Core10.Queue.VkSemaphore',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'VkSwapchainKHR',
--- 'vkAcquireNextImage2KHR'
+-- No cross-references are available
 data VkAcquireNextImageInfoKHR = VkAcquireNextImageInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -1849,19 +1438,12 @@ instance Storable VkAcquireNextImageInfoKHR where
 -- -   @mode@ /must/ have exactly one bit set, and that bit /must/ have
 --     been included in 'VkDeviceGroupSwapchainCreateInfoKHR'::@modes@
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_INFO_KHR@
---
--- -   If @swapchainCount@ is not @0@, @pDeviceMasks@ /must/ be a valid
---     pointer to an array of @swapchainCount@ @uint32_t@ values
---
--- -   @mode@ /must/ be a valid 'VkDeviceGroupPresentModeFlagBitsKHR' value
+-- Unresolved directive in VkDeviceGroupPresentInfoKHR.txt -
+-- include::..\/validity\/structs\/VkDeviceGroupPresentInfoKHR.txt[]
 --
 -- = See Also
 --
--- 'VkDeviceGroupPresentModeFlagBitsKHR',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkDeviceGroupPresentInfoKHR = VkDeviceGroupPresentInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -1899,20 +1481,12 @@ instance Storable VkDeviceGroupPresentInfoKHR where
 -- If this structure is not present, @modes@ is considered to be
 -- @VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR@.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR@
---
--- -   @modes@ /must/ be a valid combination of
---     'VkDeviceGroupPresentModeFlagBitsKHR' values
---
--- -   @modes@ /must/ not be @0@
+-- Unresolved directive in VkDeviceGroupSwapchainCreateInfoKHR.txt -
+-- include::..\/validity\/structs\/VkDeviceGroupSwapchainCreateInfoKHR.txt[]
 --
 -- = See Also
 --
--- 'VkDeviceGroupPresentModeFlagsKHR',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkDeviceGroupSwapchainCreateInfoKHR = VkDeviceGroupSwapchainCreateInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -1941,7 +1515,7 @@ instance Storable VkDeviceGroupSwapchainCreateInfoKHR where
 --
 -- = See Also
 --
--- 'VkSwapchainCreateFlagBitsKHR', 'VkSwapchainCreateInfoKHR'
+-- No cross-references are available
 type VkSwapchainCreateFlagsKHR = VkSwapchainCreateFlagBitsKHR
 -- | VkDeviceGroupPresentModeFlagsKHR - Bitmask of
 -- VkDeviceGroupPresentModeFlagBitsKHR
@@ -1953,8 +1527,5 @@ type VkSwapchainCreateFlagsKHR = VkSwapchainCreateFlagBitsKHR
 --
 -- = See Also
 --
--- 'VkDeviceGroupPresentCapabilitiesKHR',
--- 'VkDeviceGroupPresentModeFlagBitsKHR',
--- 'VkDeviceGroupSwapchainCreateInfoKHR',
--- 'vkGetDeviceGroupSurfacePresentModesKHR'
+-- No cross-references are available
 type VkDeviceGroupPresentModeFlagsKHR = VkDeviceGroupPresentModeFlagBitsKHR

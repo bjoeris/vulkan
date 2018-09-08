@@ -340,51 +340,30 @@ import Text.Read.Lex
 -- = See Also
 --
 -- 'Graphics.Vulkan.Core10.CommandBuffer.VkCommandBufferInheritanceInfo',
--- 'Graphics.Vulkan.Extensions.VK_NV_dedicated_allocation.VkDedicatedAllocationBufferCreateInfoNV',
--- 'Graphics.Vulkan.Extensions.VK_NV_dedicated_allocation.VkDedicatedAllocationImageCreateInfoNV',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance3.VkDescriptorSetLayoutSupport',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkDeviceGeneratedCommandsFeaturesNVX',
--- 'Graphics.Vulkan.Extensions.VK_KHR_display_swapchain.VkDisplayPresentInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_display.VkDisplayPropertiesKHR',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_dedicated_allocation.VkMemoryDedicatedRequirements',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_16bit_storage.VkPhysicalDevice16BitStorageFeatures',
--- 'Graphics.Vulkan.Extensions.VK_EXT_blend_operation_advanced.VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_blend_operation_advanced.VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_conservative_rasterization.VkPhysicalDeviceConservativeRasterizationPropertiesEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing.VkPhysicalDeviceDescriptorIndexingFeaturesEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing.VkPhysicalDeviceDescriptorIndexingPropertiesEXT',
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDeviceFeatures',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group_creation.VkPhysicalDeviceGroupProperties',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkPhysicalDeviceIDProperties',
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDeviceLimits',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_multiview.VkPhysicalDeviceMultiviewFeatures',
--- 'Graphics.Vulkan.Extensions.VK_NVX_multiview_per_view_attributes.VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX',
 -- 'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_protected_memory.VkPhysicalDeviceProtectedMemoryFeatures',
 -- 'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_protected_memory.VkPhysicalDeviceProtectedMemoryProperties',
--- 'Graphics.Vulkan.Extensions.VK_EXT_sample_locations.VkPhysicalDeviceSampleLocationsPropertiesEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_sampler_filter_minmax.VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkPhysicalDeviceSamplerYcbcrConversionFeatures',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_shader_draw_parameters.VkPhysicalDeviceShaderDrawParameterFeatures',
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDeviceSparseProperties',
 -- 'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_subgroup.VkPhysicalDeviceSubgroupProperties',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_variable_pointers.VkPhysicalDeviceVariablePointerFeatures',
--- 'Graphics.Vulkan.Extensions.VK_EXT_blend_operation_advanced.VkPipelineColorBlendAdvancedStateCreateInfoEXT',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineColorBlendAttachmentState',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineColorBlendStateCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_NV_framebuffer_mixed_samples.VkPipelineCoverageModulationStateCreateInfoNV',
--- 'Graphics.Vulkan.Extensions.VK_NV_fragment_coverage_to_color.VkPipelineCoverageToColorStateCreateInfoNV',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineDepthStencilStateCreateInfo',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineInputAssemblyStateCreateInfo',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineMultisampleStateCreateInfo',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineRasterizationStateCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_sample_locations.VkPipelineSampleLocationsStateCreateInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_NV_clip_space_w_scaling.VkPipelineViewportWScalingStateCreateInfoNV',
 -- 'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_protected_memory.VkProtectedSubmitInfo',
 -- 'Graphics.Vulkan.Core10.Sampler.VkSamplerCreateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkSamplerYcbcrConversionCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkSwapchainCreateInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_AMD_texture_gather_bias_lod.VkTextureLODGatherFormatPropertiesAMD',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.vkGetPhysicalDeviceSurfaceSupportKHR',
 -- 'Graphics.Vulkan.Core10.Fence.vkWaitForFences'
 newtype VkBool32 = VkBool32 Int32
   deriving (Eq, Ord, Storable)
@@ -418,22 +397,16 @@ pattern VK_TRUE = VkBool32 1
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkAndroidHardwareBufferFormatPropertiesANDROID',
 -- 'Graphics.Vulkan.Core10.Pass.VkAttachmentDescription',
 -- 'Graphics.Vulkan.Core10.BufferView.VkBufferViewCreateInfo',
 -- 'Graphics.Vulkan.Core10.Image.VkImageCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_image_format_list.VkImageFormatListCreateInfoKHR',
 -- 'Graphics.Vulkan.Core10.ImageView.VkImageViewCreateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.VkPhysicalDeviceImageFormatInfo2',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.VkPhysicalDeviceSparseImageFormatInfo2',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkSamplerYcbcrConversionCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceFormatKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkSwapchainCreateInfoKHR',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkVertexInputAttributeDescription',
--- 'Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities.vkGetPhysicalDeviceExternalImageFormatPropertiesNV',
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.vkGetPhysicalDeviceFormatProperties',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceFormatProperties2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceFormatProperties2KHR',
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.vkGetPhysicalDeviceImageFormatProperties',
 -- 'Graphics.Vulkan.Core10.SparseResourceMemoryManagement.vkGetPhysicalDeviceSparseImageFormatProperties'
 newtype VkFormat = VkFormat Int32
@@ -2214,8 +2187,7 @@ pattern VK_FORMAT_ASTC_12x12_SRGB_BLOCK = VkFormat 184
 --
 -- = See Also
 --
--- No cross-references are available,
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkPresentInfoKHR'
+-- No cross-references are available
 newtype VkResult = VkResult Int32
   deriving (Eq, Ord, Storable)
 
@@ -2385,146 +2357,71 @@ pattern VK_ERROR_FRAGMENTED_POOL = VkResult (-12)
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkAcquireNextImageInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkAndroidHardwareBufferFormatPropertiesANDROID',
--- 'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkAndroidHardwareBufferPropertiesANDROID',
--- 'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkAndroidHardwareBufferUsageANDROID',
--- 'Graphics.Vulkan.Extensions.VK_KHR_android_surface.VkAndroidSurfaceCreateInfoKHR',
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkApplicationInfo',
+-- @VkBaseInStructure@, @VkBaseOutStructure@,
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group_and_VK_KHR_bind_memory2.VkBindBufferMemoryDeviceGroupInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_bind_memory2.VkBindBufferMemoryInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group_and_VK_KHR_bind_memory2.VkBindImageMemoryDeviceGroupInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_bind_memory2.VkBindImageMemoryInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkBindImageMemorySwapchainInfoKHR',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkBindImagePlaneMemoryInfo',
 -- 'Graphics.Vulkan.Core10.SparseResourceMemoryManagement.VkBindSparseInfo',
 -- 'Graphics.Vulkan.Core10.Buffer.VkBufferCreateInfo',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.VkBufferMemoryBarrier',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_memory_requirements2.VkBufferMemoryRequirementsInfo2',
 -- 'Graphics.Vulkan.Core10.BufferView.VkBufferViewCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkCmdProcessCommandsInfoNVX',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkCmdReserveSpaceForCommandsInfoNVX',
 -- 'Graphics.Vulkan.Core10.CommandBuffer.VkCommandBufferAllocateInfo',
 -- 'Graphics.Vulkan.Core10.CommandBuffer.VkCommandBufferBeginInfo',
 -- 'Graphics.Vulkan.Core10.CommandBuffer.VkCommandBufferInheritanceInfo',
 -- 'Graphics.Vulkan.Core10.CommandPool.VkCommandPoolCreateInfo',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkComputePipelineCreateInfo',
 -- 'Graphics.Vulkan.Core10.DescriptorSet.VkCopyDescriptorSet',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_win32.VkD3D12FenceSubmitInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_EXT_debug_marker.VkDebugMarkerMarkerInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_debug_marker.VkDebugMarkerObjectNameInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_debug_marker.VkDebugMarkerObjectTagInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_debug_report.VkDebugReportCallbackCreateInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_debug_utils.VkDebugUtilsLabelEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_debug_utils.VkDebugUtilsMessengerCallbackDataEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_debug_utils.VkDebugUtilsMessengerCreateInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_debug_utils.VkDebugUtilsObjectNameInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_debug_utils.VkDebugUtilsObjectTagInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_NV_dedicated_allocation.VkDedicatedAllocationBufferCreateInfoNV',
--- 'Graphics.Vulkan.Extensions.VK_NV_dedicated_allocation.VkDedicatedAllocationImageCreateInfoNV',
--- 'Graphics.Vulkan.Extensions.VK_NV_dedicated_allocation.VkDedicatedAllocationMemoryAllocateInfoNV',
 -- 'Graphics.Vulkan.Core10.DescriptorSet.VkDescriptorPoolCreateInfo',
 -- 'Graphics.Vulkan.Core10.DescriptorSet.VkDescriptorSetAllocateInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing.VkDescriptorSetLayoutBindingFlagsCreateInfoEXT',
 -- 'Graphics.Vulkan.Core10.DescriptorSet.VkDescriptorSetLayoutCreateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance3.VkDescriptorSetLayoutSupport',
--- 'Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing.VkDescriptorSetVariableDescriptorCountAllocateInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing.VkDescriptorSetVariableDescriptorCountLayoutSupportEXT',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_descriptor_update_template.VkDescriptorUpdateTemplateCreateInfo',
 -- 'Graphics.Vulkan.Core10.Device.VkDeviceCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_display_control.VkDeviceEventInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkDeviceGeneratedCommandsFeaturesNVX',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkDeviceGeneratedCommandsLimitsNVX',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group.VkDeviceGroupBindSparseInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group.VkDeviceGroupCommandBufferBeginInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group_creation.VkDeviceGroupDeviceCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkDeviceGroupPresentCapabilitiesKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkDeviceGroupPresentInfoKHR',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group.VkDeviceGroupRenderPassBeginInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group.VkDeviceGroupSubmitInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkDeviceGroupSwapchainCreateInfoKHR',
 -- 'Graphics.Vulkan.Core10.Device.VkDeviceQueueCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_global_priority.VkDeviceQueueGlobalPriorityCreateInfoEXT',
 -- 'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_protected_memory.VkDeviceQueueInfo2',
--- 'Graphics.Vulkan.Extensions.VK_EXT_display_control.VkDisplayEventInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_display.VkDisplayModeCreateInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_EXT_display_control.VkDisplayPowerInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_display_swapchain.VkDisplayPresentInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_display.VkDisplaySurfaceCreateInfoKHR',
 -- 'Graphics.Vulkan.Core10.Event.VkEventCreateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_fence.VkExportFenceCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_fence_win32.VkExportFenceWin32HandleInfoKHR',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory.VkExportMemoryAllocateInfo',
--- 'Graphics.Vulkan.Extensions.VK_NV_external_memory.VkExportMemoryAllocateInfoNV',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_win32.VkExportMemoryWin32HandleInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_NV_external_memory_win32.VkExportMemoryWin32HandleInfoNV',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_semaphore.VkExportSemaphoreCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_win32.VkExportSemaphoreWin32HandleInfoKHR',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalBufferProperties',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_fence_capabilities.VkExternalFenceProperties',
--- 'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkExternalFormatANDROID',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalImageFormatProperties',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory.VkExternalMemoryBufferCreateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory.VkExternalMemoryImageCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_NV_external_memory.VkExternalMemoryImageCreateInfoNV',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_semaphore_capabilities.VkExternalSemaphoreProperties',
 -- 'Graphics.Vulkan.Core10.Fence.VkFenceCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_fence_fd.VkFenceGetFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_fence_win32.VkFenceGetWin32HandleInfoKHR',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.VkFormatProperties2',
 -- 'Graphics.Vulkan.Core10.Pass.VkFramebufferCreateInfo',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkGraphicsPipelineCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_hdr_metadata.VkHdrMetadataEXT',
--- 'Graphics.Vulkan.Extensions.VK_MVK_ios_surface.VkIOSSurfaceCreateInfoMVK',
 -- 'Graphics.Vulkan.Core10.Image.VkImageCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_image_format_list.VkImageFormatListCreateInfoKHR',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.VkImageFormatProperties2',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.VkImageMemoryBarrier',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_memory_requirements2.VkImageMemoryRequirementsInfo2',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkImagePlaneMemoryRequirementsInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_memory_requirements2.VkImageSparseMemoryRequirementsInfo2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkImageSwapchainCreateInfoKHR',
 -- 'Graphics.Vulkan.Core10.ImageView.VkImageViewCreateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance2.VkImageViewUsageCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkImportAndroidHardwareBufferInfoANDROID',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_fence_fd.VkImportFenceFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_fence_win32.VkImportFenceWin32HandleInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_fd.VkImportMemoryFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_EXT_external_memory_host.VkImportMemoryHostPointerInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_win32.VkImportMemoryWin32HandleInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_NV_external_memory_win32.VkImportMemoryWin32HandleInfoNV',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_fd.VkImportSemaphoreFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_win32.VkImportSemaphoreWin32HandleInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkIndirectCommandsLayoutCreateInfoNVX',
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkInstanceCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_MVK_macos_surface.VkMacOSSurfaceCreateInfoMVK',
 -- 'Graphics.Vulkan.Core10.Memory.VkMappedMemoryRange',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group.VkMemoryAllocateFlagsInfo',
 -- 'Graphics.Vulkan.Core10.Memory.VkMemoryAllocateInfo',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.VkMemoryBarrier',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_dedicated_allocation.VkMemoryDedicatedAllocateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_dedicated_allocation.VkMemoryDedicatedRequirements',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_fd.VkMemoryFdPropertiesKHR',
--- 'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkMemoryGetAndroidHardwareBufferInfoANDROID',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_fd.VkMemoryGetFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_win32.VkMemoryGetWin32HandleInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_EXT_external_memory_host.VkMemoryHostPointerPropertiesEXT',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_memory_requirements2.VkMemoryRequirements2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_win32.VkMemoryWin32HandlePropertiesKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_mir_surface.VkMirSurfaceCreateInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_EXT_sample_locations.VkMultisamplePropertiesEXT',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkObjectTableCreateInfoNVX',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_16bit_storage.VkPhysicalDevice16BitStorageFeatures',
--- 'Graphics.Vulkan.Extensions.VK_EXT_blend_operation_advanced.VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_blend_operation_advanced.VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_conservative_rasterization.VkPhysicalDeviceConservativeRasterizationPropertiesEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing.VkPhysicalDeviceDescriptorIndexingFeaturesEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing.VkPhysicalDeviceDescriptorIndexingPropertiesEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_discard_rectangles.VkPhysicalDeviceDiscardRectanglePropertiesEXT',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkPhysicalDeviceExternalBufferInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_fence_capabilities.VkPhysicalDeviceExternalFenceInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkPhysicalDeviceExternalImageFormatInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_external_memory_host.VkPhysicalDeviceExternalMemoryHostPropertiesEXT',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_semaphore_capabilities.VkPhysicalDeviceExternalSemaphoreInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.VkPhysicalDeviceFeatures2',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group_creation.VkPhysicalDeviceGroupProperties',
@@ -2533,49 +2430,29 @@ pattern VK_ERROR_FRAGMENTED_POOL = VkResult (-12)
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance3.VkPhysicalDeviceMaintenance3Properties',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.VkPhysicalDeviceMemoryProperties2',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_multiview.VkPhysicalDeviceMultiviewFeatures',
--- 'Graphics.Vulkan.Extensions.VK_NVX_multiview_per_view_attributes.VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_multiview.VkPhysicalDeviceMultiviewProperties',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance2.VkPhysicalDevicePointClippingProperties',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.VkPhysicalDeviceProperties2',
 -- 'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_protected_memory.VkPhysicalDeviceProtectedMemoryFeatures',
 -- 'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_protected_memory.VkPhysicalDeviceProtectedMemoryProperties',
--- 'Graphics.Vulkan.Extensions.VK_KHR_push_descriptor.VkPhysicalDevicePushDescriptorPropertiesKHR',
--- 'Graphics.Vulkan.Extensions.VK_EXT_sample_locations.VkPhysicalDeviceSampleLocationsPropertiesEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_sampler_filter_minmax.VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkPhysicalDeviceSamplerYcbcrConversionFeatures',
--- 'Graphics.Vulkan.Extensions.VK_AMD_shader_core_properties.VkPhysicalDeviceShaderCorePropertiesAMD',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_shader_draw_parameters.VkPhysicalDeviceShaderDrawParameterFeatures',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.VkPhysicalDeviceSparseImageFormatInfo2',
 -- 'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_subgroup.VkPhysicalDeviceSubgroupProperties',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_surface_capabilities2.VkPhysicalDeviceSurfaceInfo2KHR',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_variable_pointers.VkPhysicalDeviceVariablePointerFeatures',
--- 'Graphics.Vulkan.Extensions.VK_EXT_vertex_attribute_divisor.VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT',
 -- 'Graphics.Vulkan.Core10.PipelineCache.VkPipelineCacheCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_blend_operation_advanced.VkPipelineColorBlendAdvancedStateCreateInfoEXT',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineColorBlendStateCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_NV_framebuffer_mixed_samples.VkPipelineCoverageModulationStateCreateInfoNV',
--- 'Graphics.Vulkan.Extensions.VK_NV_fragment_coverage_to_color.VkPipelineCoverageToColorStateCreateInfoNV',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineDepthStencilStateCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_discard_rectangles.VkPipelineDiscardRectangleStateCreateInfoEXT',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineDynamicStateCreateInfo',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineInputAssemblyStateCreateInfo',
 -- 'Graphics.Vulkan.Core10.PipelineLayout.VkPipelineLayoutCreateInfo',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineMultisampleStateCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_conservative_rasterization.VkPipelineRasterizationConservativeStateCreateInfoEXT',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineRasterizationStateCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_AMD_rasterization_order.VkPipelineRasterizationStateRasterizationOrderAMD',
--- 'Graphics.Vulkan.Extensions.VK_EXT_sample_locations.VkPipelineSampleLocationsStateCreateInfoEXT',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineShaderStageCreateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance2.VkPipelineTessellationDomainOriginStateCreateInfo',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineTessellationStateCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_vertex_attribute_divisor.VkPipelineVertexInputDivisorStateCreateInfoEXT',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineVertexInputStateCreateInfo',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineViewportStateCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_NV_viewport_swizzle.VkPipelineViewportSwizzleStateCreateInfoNV',
--- 'Graphics.Vulkan.Extensions.VK_NV_clip_space_w_scaling.VkPipelineViewportWScalingStateCreateInfoNV',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkPresentInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_incremental_present.VkPresentRegionsKHR',
--- 'Graphics.Vulkan.Extensions.VK_GOOGLE_display_timing.VkPresentTimesInfoGOOGLE',
 -- 'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_protected_memory.VkProtectedSubmitInfo',
 -- 'Graphics.Vulkan.Core10.Query.VkQueryPoolCreateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.VkQueueFamilyProperties2',
@@ -2583,38 +2460,16 @@ pattern VK_ERROR_FRAGMENTED_POOL = VkResult (-12)
 -- 'Graphics.Vulkan.Core10.Pass.VkRenderPassCreateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance2.VkRenderPassInputAttachmentAspectCreateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_multiview.VkRenderPassMultiviewCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_sample_locations.VkRenderPassSampleLocationsBeginInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_sample_locations.VkSampleLocationsInfoEXT',
 -- 'Graphics.Vulkan.Core10.Sampler.VkSamplerCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_sampler_filter_minmax.VkSamplerReductionModeCreateInfoEXT',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkSamplerYcbcrConversionCreateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkSamplerYcbcrConversionImageFormatProperties',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkSamplerYcbcrConversionInfo',
 -- 'Graphics.Vulkan.Core10.QueueSemaphore.VkSemaphoreCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_fd.VkSemaphoreGetFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_win32.VkSemaphoreGetWin32HandleInfoKHR',
 -- 'Graphics.Vulkan.Core10.Shader.VkShaderModuleCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_validation_cache.VkShaderModuleValidationCacheCreateInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_shared_presentable_image.VkSharedPresentSurfaceCapabilitiesKHR',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.VkSparseImageFormatProperties2',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_memory_requirements2.VkSparseImageMemoryRequirements2',
 -- 'Graphics.Vulkan.Core10.Queue.VkSubmitInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_display_surface_counter.VkSurfaceCapabilities2EXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_surface_capabilities2.VkSurfaceCapabilities2KHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_surface_capabilities2.VkSurfaceFormat2KHR',
--- 'Graphics.Vulkan.Extensions.VK_EXT_display_control.VkSwapchainCounterCreateInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkSwapchainCreateInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_AMD_texture_gather_bias_lod.VkTextureLODGatherFormatPropertiesAMD',
--- 'Graphics.Vulkan.Extensions.VK_EXT_validation_cache.VkValidationCacheCreateInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_validation_flags.VkValidationFlagsEXT',
--- 'Graphics.Vulkan.Extensions.VK_NN_vi_surface.VkViSurfaceCreateInfoNN',
--- 'Graphics.Vulkan.Extensions.VK_KHR_wayland_surface.VkWaylandSurfaceCreateInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_win32_keyed_mutex.VkWin32KeyedMutexAcquireReleaseInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_NV_win32_keyed_mutex.VkWin32KeyedMutexAcquireReleaseInfoNV',
--- 'Graphics.Vulkan.Extensions.VK_KHR_win32_surface.VkWin32SurfaceCreateInfoKHR',
--- 'Graphics.Vulkan.Core10.DescriptorSet.VkWriteDescriptorSet',
--- 'Graphics.Vulkan.Extensions.VK_KHR_xcb_surface.VkXcbSurfaceCreateInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_xlib_surface.VkXlibSurfaceCreateInfoKHR'
+-- 'Graphics.Vulkan.Core10.DescriptorSet.VkWriteDescriptorSet'
 newtype VkStructureType = VkStructureType Int32
   deriving (Eq, Ord, Storable)
 
@@ -2783,6 +2638,9 @@ instance Show VkStructureType where
   showsPrec _ (VkStructureType 1000079000) = showString "VK_STRUCTURE_TYPE_IMPORT_SEMAPHORE_FD_INFO_KHR"
   showsPrec _ (VkStructureType 1000079001) = showString "VK_STRUCTURE_TYPE_SEMAPHORE_GET_FD_INFO_KHR"
   showsPrec _ (VkStructureType 1000080000) = showString "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR"
+  showsPrec _ (VkStructureType 1000081000) = showString "VK_STRUCTURE_TYPE_COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT"
+  showsPrec _ (VkStructureType 1000081001) = showString "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT"
+  showsPrec _ (VkStructureType 1000081002) = showString "VK_STRUCTURE_TYPE_CONDITIONAL_RENDERING_BEGIN_INFO_EXT"
   showsPrec _ (VkStructureType 1000084000) = showString "VK_STRUCTURE_TYPE_PRESENT_REGIONS_KHR"
   showsPrec _ (VkStructureType 1000086000) = showString "VK_STRUCTURE_TYPE_OBJECT_TABLE_CREATE_INFO_NVX"
   showsPrec _ (VkStructureType 1000086001) = showString "VK_STRUCTURE_TYPE_INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NVX"
@@ -2804,6 +2662,13 @@ instance Show VkStructureType where
   showsPrec _ (VkStructureType 1000101000) = showString "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT"
   showsPrec _ (VkStructureType 1000101001) = showString "VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT"
   showsPrec _ (VkStructureType 1000105000) = showString "VK_STRUCTURE_TYPE_HDR_METADATA_EXT"
+  showsPrec _ (VkStructureType 1000109000) = showString "VK_STRUCTURE_TYPE_ATTACHMENT_DESCRIPTION_2_KHR"
+  showsPrec _ (VkStructureType 1000109001) = showString "VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_2_KHR"
+  showsPrec _ (VkStructureType 1000109002) = showString "VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_2_KHR"
+  showsPrec _ (VkStructureType 1000109003) = showString "VK_STRUCTURE_TYPE_SUBPASS_DEPENDENCY_2_KHR"
+  showsPrec _ (VkStructureType 1000109004) = showString "VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO_2_KHR"
+  showsPrec _ (VkStructureType 1000109005) = showString "VK_STRUCTURE_TYPE_SUBPASS_BEGIN_INFO_KHR"
+  showsPrec _ (VkStructureType 1000109006) = showString "VK_STRUCTURE_TYPE_SUBPASS_END_INFO_KHR"
   showsPrec _ (VkStructureType 1000111000) = showString "VK_STRUCTURE_TYPE_SHARED_PRESENT_SURFACE_CAPABILITIES_KHR"
   showsPrec _ (VkStructureType 1000114000) = showString "VK_STRUCTURE_TYPE_IMPORT_FENCE_WIN32_HANDLE_INFO_KHR"
   showsPrec _ (VkStructureType 1000114001) = showString "VK_STRUCTURE_TYPE_EXPORT_FENCE_WIN32_HANDLE_INFO_KHR"
@@ -2813,6 +2678,11 @@ instance Show VkStructureType where
   showsPrec _ (VkStructureType 1000119000) = showString "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SURFACE_INFO_2_KHR"
   showsPrec _ (VkStructureType 1000119001) = showString "VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_KHR"
   showsPrec _ (VkStructureType 1000119002) = showString "VK_STRUCTURE_TYPE_SURFACE_FORMAT_2_KHR"
+  showsPrec _ (VkStructureType 1000121000) = showString "VK_STRUCTURE_TYPE_DISPLAY_PROPERTIES_2_KHR"
+  showsPrec _ (VkStructureType 1000121001) = showString "VK_STRUCTURE_TYPE_DISPLAY_PLANE_PROPERTIES_2_KHR"
+  showsPrec _ (VkStructureType 1000121002) = showString "VK_STRUCTURE_TYPE_DISPLAY_MODE_PROPERTIES_2_KHR"
+  showsPrec _ (VkStructureType 1000121003) = showString "VK_STRUCTURE_TYPE_DISPLAY_PLANE_INFO_2_KHR"
+  showsPrec _ (VkStructureType 1000121004) = showString "VK_STRUCTURE_TYPE_DISPLAY_PLANE_CAPABILITIES_2_KHR"
   showsPrec _ (VkStructureType 1000122000) = showString "VK_STRUCTURE_TYPE_IOS_SURFACE_CREATE_INFO_MVK"
   showsPrec _ (VkStructureType 1000123000) = showString "VK_STRUCTURE_TYPE_MACOS_SURFACE_CREATE_INFO_MVK"
   showsPrec _ (VkStructureType 1000128000) = showString "VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_NAME_INFO_EXT"
@@ -2847,12 +2717,15 @@ instance Show VkStructureType where
   showsPrec _ (VkStructureType 1000161003) = showString "VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT"
   showsPrec _ (VkStructureType 1000161004) = showString "VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT"
   showsPrec _ (VkStructureType 1000174000) = showString "VK_STRUCTURE_TYPE_DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT"
+  showsPrec _ (VkStructureType 1000177000) = showString "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES_KHR"
   showsPrec _ (VkStructureType 1000178000) = showString "VK_STRUCTURE_TYPE_IMPORT_MEMORY_HOST_POINTER_INFO_EXT"
   showsPrec _ (VkStructureType 1000178001) = showString "VK_STRUCTURE_TYPE_MEMORY_HOST_POINTER_PROPERTIES_EXT"
   showsPrec _ (VkStructureType 1000178002) = showString "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT"
   showsPrec _ (VkStructureType 1000185000) = showString "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD"
   showsPrec _ (VkStructureType 1000190000) = showString "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT"
   showsPrec _ (VkStructureType 1000190001) = showString "VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT"
+  showsPrec _ (VkStructureType 1000206000) = showString "VK_STRUCTURE_TYPE_CHECKPOINT_DATA_NV"
+  showsPrec _ (VkStructureType 1000206001) = showString "VK_STRUCTURE_TYPE_QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV"
   showsPrec p (VkStructureType x) = showParen (p >= 11) (showString "VkStructureType " . showsPrec 11 x)
 
 instance Read VkStructureType where
@@ -3026,6 +2899,9 @@ instance Read VkStructureType where
                              , ("VK_STRUCTURE_TYPE_IMPORT_SEMAPHORE_FD_INFO_KHR",                                 pure (VkStructureType 1000079000))
                              , ("VK_STRUCTURE_TYPE_SEMAPHORE_GET_FD_INFO_KHR",                                    pure (VkStructureType 1000079001))
                              , ("VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR",               pure (VkStructureType 1000080000))
+                             , ("VK_STRUCTURE_TYPE_COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT",    pure (VkStructureType 1000081000))
+                             , ("VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT",           pure (VkStructureType 1000081001))
+                             , ("VK_STRUCTURE_TYPE_CONDITIONAL_RENDERING_BEGIN_INFO_EXT",                         pure (VkStructureType 1000081002))
                              , ("VK_STRUCTURE_TYPE_PRESENT_REGIONS_KHR",                                          pure (VkStructureType 1000084000))
                              , ("VK_STRUCTURE_TYPE_OBJECT_TABLE_CREATE_INFO_NVX",                                 pure (VkStructureType 1000086000))
                              , ("VK_STRUCTURE_TYPE_INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NVX",                     pure (VkStructureType 1000086001))
@@ -3047,6 +2923,13 @@ instance Read VkStructureType where
                              , ("VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT",    pure (VkStructureType 1000101000))
                              , ("VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT",    pure (VkStructureType 1000101001))
                              , ("VK_STRUCTURE_TYPE_HDR_METADATA_EXT",                                             pure (VkStructureType 1000105000))
+                             , ("VK_STRUCTURE_TYPE_ATTACHMENT_DESCRIPTION_2_KHR",                                 pure (VkStructureType 1000109000))
+                             , ("VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_2_KHR",                                   pure (VkStructureType 1000109001))
+                             , ("VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_2_KHR",                                    pure (VkStructureType 1000109002))
+                             , ("VK_STRUCTURE_TYPE_SUBPASS_DEPENDENCY_2_KHR",                                     pure (VkStructureType 1000109003))
+                             , ("VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO_2_KHR",                                pure (VkStructureType 1000109004))
+                             , ("VK_STRUCTURE_TYPE_SUBPASS_BEGIN_INFO_KHR",                                       pure (VkStructureType 1000109005))
+                             , ("VK_STRUCTURE_TYPE_SUBPASS_END_INFO_KHR",                                         pure (VkStructureType 1000109006))
                              , ("VK_STRUCTURE_TYPE_SHARED_PRESENT_SURFACE_CAPABILITIES_KHR",                      pure (VkStructureType 1000111000))
                              , ("VK_STRUCTURE_TYPE_IMPORT_FENCE_WIN32_HANDLE_INFO_KHR",                           pure (VkStructureType 1000114000))
                              , ("VK_STRUCTURE_TYPE_EXPORT_FENCE_WIN32_HANDLE_INFO_KHR",                           pure (VkStructureType 1000114001))
@@ -3056,6 +2939,11 @@ instance Read VkStructureType where
                              , ("VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SURFACE_INFO_2_KHR",                           pure (VkStructureType 1000119000))
                              , ("VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_KHR",                                   pure (VkStructureType 1000119001))
                              , ("VK_STRUCTURE_TYPE_SURFACE_FORMAT_2_KHR",                                         pure (VkStructureType 1000119002))
+                             , ("VK_STRUCTURE_TYPE_DISPLAY_PROPERTIES_2_KHR",                                     pure (VkStructureType 1000121000))
+                             , ("VK_STRUCTURE_TYPE_DISPLAY_PLANE_PROPERTIES_2_KHR",                               pure (VkStructureType 1000121001))
+                             , ("VK_STRUCTURE_TYPE_DISPLAY_MODE_PROPERTIES_2_KHR",                                pure (VkStructureType 1000121002))
+                             , ("VK_STRUCTURE_TYPE_DISPLAY_PLANE_INFO_2_KHR",                                     pure (VkStructureType 1000121003))
+                             , ("VK_STRUCTURE_TYPE_DISPLAY_PLANE_CAPABILITIES_2_KHR",                             pure (VkStructureType 1000121004))
                              , ("VK_STRUCTURE_TYPE_IOS_SURFACE_CREATE_INFO_MVK",                                  pure (VkStructureType 1000122000))
                              , ("VK_STRUCTURE_TYPE_MACOS_SURFACE_CREATE_INFO_MVK",                                pure (VkStructureType 1000123000))
                              , ("VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_NAME_INFO_EXT",                             pure (VkStructureType 1000128000))
@@ -3090,12 +2978,15 @@ instance Read VkStructureType where
                              , ("VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT",   pure (VkStructureType 1000161003))
                              , ("VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT",  pure (VkStructureType 1000161004))
                              , ("VK_STRUCTURE_TYPE_DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT",                 pure (VkStructureType 1000174000))
+                             , ("VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES_KHR",                    pure (VkStructureType 1000177000))
                              , ("VK_STRUCTURE_TYPE_IMPORT_MEMORY_HOST_POINTER_INFO_EXT",                          pure (VkStructureType 1000178000))
                              , ("VK_STRUCTURE_TYPE_MEMORY_HOST_POINTER_PROPERTIES_EXT",                           pure (VkStructureType 1000178001))
                              , ("VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT",          pure (VkStructureType 1000178002))
                              , ("VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD",                   pure (VkStructureType 1000185000))
                              , ("VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT",      pure (VkStructureType 1000190000))
                              , ("VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT",          pure (VkStructureType 1000190001))
+                             , ("VK_STRUCTURE_TYPE_CHECKPOINT_DATA_NV",                                           pure (VkStructureType 1000206000))
+                             , ("VK_STRUCTURE_TYPE_QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV",                        pure (VkStructureType 1000206001))
                              ] +++
                       prec 10 (do
                         expectP (Ident "VkStructureType")
@@ -3385,8 +3276,7 @@ pattern VK_STRUCTURE_TYPE_LOADER_DEVICE_CREATE_INFO = VkStructureType 48
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_EXT_debug_utils.VkDebugUtilsObjectNameInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_debug_utils.VkDebugUtilsObjectTagInfoEXT'
+-- No cross-references are available
 newtype VkObjectType = VkObjectType Int32
   deriving (Eq, Ord, Storable)
 

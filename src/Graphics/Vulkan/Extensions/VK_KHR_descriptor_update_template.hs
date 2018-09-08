@@ -47,8 +47,8 @@ import Graphics.Vulkan.Core10.Core
   , VkStructureType(..)
   )
 import Graphics.Vulkan.Core10.DescriptorSet
-  ( VkDescriptorType(..)
-  , VkDescriptorSet
+  ( VkDescriptorSet(..)
+  , VkDescriptorType(..)
   )
 import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkAllocationCallbacks(..)
@@ -58,17 +58,17 @@ import Graphics.Vulkan.Core10.Pass
   ( VkPipelineBindPoint(..)
   )
 import Graphics.Vulkan.Core10.Pipeline
-  ( VkPipelineLayout
+  ( VkPipelineLayout(..)
   )
 import Graphics.Vulkan.Core10.PipelineLayout
-  ( VkDescriptorSetLayout
+  ( VkDescriptorSetLayout(..)
   )
 import Graphics.Vulkan.Core11.Promoted_from_VK_KHR_descriptor_update_template
-  ( VkDescriptorUpdateTemplateCreateFlags(..)
+  ( VkDescriptorUpdateTemplate(..)
+  , VkDescriptorUpdateTemplateCreateFlags(..)
   , VkDescriptorUpdateTemplateCreateInfo(..)
   , VkDescriptorUpdateTemplateEntry(..)
   , VkDescriptorUpdateTemplateType(..)
-  , VkDescriptorUpdateTemplate
   , vkCreateDescriptorUpdateTemplate
   , vkDestroyDescriptorUpdateTemplate
   , vkUpdateDescriptorSetWithTemplate

@@ -29,7 +29,7 @@ module Graphics.Vulkan.Core10.Query
   , pattern VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT
   , pattern VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT
   , pattern VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT
-  , VkQueryPool
+  , VkQueryPool(..)
   , vkCreateQueryPool
   , vkDestroyQueryPool
   , vkGetQueryPoolResults
@@ -47,12 +47,14 @@ import Data.Int
   )
 import Data.Word
   ( Word32
+  , Word64
   )
 import Foreign.C.Types
   ( CSize(..)
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -415,8 +417,6 @@ pattern VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_B
 -- No documentation found for Nested "VkQueryPipelineStatisticFlagBits" "VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT"
 pattern VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT :: VkQueryPipelineStatisticFlagBits
 pattern VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits 0x00000400
--- | Dummy data to tag the 'Ptr' with
-data VkQueryPool_T
 -- | VkQueryPool - Opaque handle to a query pool object
 --
 -- = See Also
@@ -427,7 +427,14 @@ data VkQueryPool_T
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdResetQueryPool',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdWriteTimestamp',
 -- 'vkCreateQueryPool', 'vkDestroyQueryPool', 'vkGetQueryPoolResults'
-type VkQueryPool = Ptr VkQueryPool_T
+newtype VkQueryPool = VkQueryPool Word64
+  deriving (Eq, Show)
+
+instance Storable VkQueryPool where
+  sizeOf (VkQueryPool w) = sizeOf w
+  alignment (VkQueryPool w) = alignment w
+  peek ptr = VkQueryPool <$> peek (castPtr ptr)
+  poke ptr (VkQueryPool w) = poke (castPtr ptr) w
 -- | vkCreateQueryPool - Create a new query pool object
 --
 -- = Parameters
@@ -443,7 +450,7 @@ type VkQueryPool = Ptr VkQueryPool_T
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pQueryPool@ is a pointer to a @VkQueryPool@ handle in which the
+-- -   @pQueryPool@ is a pointer to a 'VkQueryPool' handle in which the
 --     resulting query pool object is returned.
 --
 -- == Valid Usage (Implicit)

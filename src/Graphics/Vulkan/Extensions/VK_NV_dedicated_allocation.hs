@@ -33,8 +33,8 @@ import Graphics.Vulkan.Core10.Core
   , VkStructureType(..)
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkBuffer
-  , VkImage
+  ( VkBuffer(..)
+  , VkImage(..)
   )
 
 
@@ -70,14 +70,12 @@ pattern VK_NV_DEDICATED_ALLOCATION_EXTENSION_NAME = "VK_NV_dedicated_allocation"
 --     @VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT@, or
 --     @VK_IMAGE_CREATE_SPARSE_ALIASED_BIT@
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV@
+-- Unresolved directive in VkDedicatedAllocationImageCreateInfoNV.txt -
+-- include::..\/validity\/structs\/VkDedicatedAllocationImageCreateInfoNV.txt[]
 --
 -- = See Also
 --
--- @VkBool32@, 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkDedicatedAllocationImageCreateInfoNV = VkDedicatedAllocationImageCreateInfoNV
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -101,14 +99,14 @@ instance Storable VkDedicatedAllocationImageCreateInfoNV where
 -- | VkDedicatedAllocationBufferCreateInfoNV - Specify that a buffer is bound
 -- to a dedicated memory resource
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV@
+-- Unresolved directive in VkDedicatedAllocationBufferCreateInfoNV.txt -
+-- include::..\/validity\/structs\/VkDedicatedAllocationBufferCreateInfoNV.txt[]
 --
 -- = See Also
 --
--- @VkBool32@, 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkDedicatedAllocationBufferCreateInfoNV = VkDedicatedAllocationBufferCreateInfoNV
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -169,26 +167,12 @@ instance Storable VkDedicatedAllocationBufferCreateInfoNV where
 --     dedicated buffer allocation and @buffer@ /must/ be identical to the
 --     buffer associated with the imported memory.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV@
---
--- -   If @image@ is not 'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE',
---     @image@ /must/ be a valid @VkImage@ handle
---
--- -   If @buffer@ is not
---     'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE', @buffer@ /must/
---     be a valid @VkBuffer@ handle
---
--- -   Both of @buffer@, and @image@ that are valid handles /must/ have
---     been created, allocated, or retrieved from the same @VkDevice@
+-- Unresolved directive in VkDedicatedAllocationMemoryAllocateInfoNV.txt -
+-- include::..\/validity\/structs\/VkDedicatedAllocationMemoryAllocateInfoNV.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer',
--- 'Graphics.Vulkan.Core10.MemoryManagement.VkImage',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkDedicatedAllocationMemoryAllocateInfoNV = VkDedicatedAllocationMemoryAllocateInfoNV
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

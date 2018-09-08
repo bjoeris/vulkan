@@ -8,7 +8,7 @@
 
 module Graphics.Vulkan.Core10.PipelineLayout
   ( VkPipelineLayoutCreateFlags(..)
-  , VkDescriptorSetLayout
+  , VkDescriptorSetLayout(..)
   , vkCreatePipelineLayout
   , vkDestroyPipelineLayout
   , VkPushConstantRange(..)
@@ -22,9 +22,11 @@ import Data.Bits
   )
 import Data.Word
   ( Word32
+  , Word64
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -62,8 +64,8 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkDevice
   )
 import Graphics.Vulkan.Core10.Pipeline
-  ( VkShaderStageFlagBits(..)
-  , VkPipelineLayout
+  ( VkPipelineLayout(..)
+  , VkShaderStageFlagBits(..)
   )
 
 
@@ -97,8 +99,6 @@ instance Read VkPipelineLayoutCreateFlags where
                     )
 
 
--- | Dummy data to tag the 'Ptr' with
-data VkDescriptorSetLayout_T
 -- | VkDescriptorSetLayout - Opaque handle to a descriptor set layout object
 --
 -- = See Also
@@ -108,7 +108,14 @@ data VkDescriptorSetLayout_T
 -- 'VkPipelineLayoutCreateInfo',
 -- 'Graphics.Vulkan.Core10.DescriptorSet.vkCreateDescriptorSetLayout',
 -- 'Graphics.Vulkan.Core10.DescriptorSet.vkDestroyDescriptorSetLayout'
-type VkDescriptorSetLayout = Ptr VkDescriptorSetLayout_T
+newtype VkDescriptorSetLayout = VkDescriptorSetLayout Word64
+  deriving (Eq, Show)
+
+instance Storable VkDescriptorSetLayout where
+  sizeOf (VkDescriptorSetLayout w) = sizeOf w
+  alignment (VkDescriptorSetLayout w) = alignment w
+  peek ptr = VkDescriptorSetLayout <$> peek (castPtr ptr)
+  poke ptr (VkDescriptorSetLayout w) = poke (castPtr ptr) w
 -- | vkCreatePipelineLayout - Creates a new pipeline layout object
 --
 -- = Parameters
@@ -124,8 +131,9 @@ type VkDescriptorSetLayout = Ptr VkDescriptorSetLayout_T
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pPipelineLayout@ points to a @VkPipelineLayout@ handle in which the
---     resulting pipeline layout object is returned.
+-- -   @pPipelineLayout@ points to a
+--     'Graphics.Vulkan.Core10.Pipeline.VkPipelineLayout' handle in which
+--     the resulting pipeline layout object is returned.
 --
 -- == Valid Usage (Implicit)
 --
@@ -181,6 +189,11 @@ foreign import ccall
 --
 -- -   If no @VkAllocationCallbacks@ were provided when @pipelineLayout@
 --     was created, @pAllocator@ /must/ be @NULL@
+--
+-- -   @pipelineLayout@ /must/ not have been passed to any vkCmd* command
+--     for any command buffers that are still in the [recording
+--     state](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#commandbuffers-lifecycle)
+--     when @vkDestroyPipelineLayout@ is called
 --
 -- == Valid Usage (Implicit)
 --
@@ -409,7 +422,7 @@ instance Storable VkPushConstantRange where
 --     without the
 --     @VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT@ bit
 --     set with a @descriptorType@ of @VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER@
---     accessible across all shader stagess and and across all elements of
+--     accessible across all shader stages and across all elements of
 --     @pSetLayouts@ /must/ be less than or equal to
 --     @VkPhysicalDeviceLimits@::@maxDescriptorSetUniformBuffers@
 --
@@ -476,8 +489,8 @@ instance Storable VkPushConstantRange where
 --
 -- -   The total number of descriptors of the type
 --     @VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER@ accessible across all shader
---     stagess and and across all elements of @pSetLayouts@ /must/ be less
---     than or equal to
+--     stages and across all elements of @pSetLayouts@ /must/ be less than
+--     or equal to
 --     @VkPhysicalDeviceDescriptorIndexingPropertiesEXT@::@maxDescriptorSetUpdateAfterBindUniformBuffers@
 --
 -- -   The total number of descriptors of the type
@@ -592,10 +605,8 @@ instance Storable VkPipelineLayoutCreateInfo where
 -- = See Also
 --
 -- 'Graphics.Vulkan.Core10.DescriptorSet.VkDescriptorSetLayoutBinding',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkObjectTablePushConstantEntryNVX',
 -- 'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_subgroup.VkPhysicalDeviceSubgroupProperties',
 -- 'VkPushConstantRange',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkShaderStageFlagBits',
--- 'Graphics.Vulkan.Extensions.VK_AMD_shader_info.VkShaderStatisticsInfoAMD',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdPushConstants'
 type VkShaderStageFlags = VkShaderStageFlagBits

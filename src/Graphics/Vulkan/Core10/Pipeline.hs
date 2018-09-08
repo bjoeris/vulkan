@@ -133,9 +133,9 @@ module Graphics.Vulkan.Core10.Pipeline
   , pattern VK_CULL_MODE_BACK_BIT
   , pattern VK_CULL_MODE_NONE
   , pattern VK_CULL_MODE_FRONT_AND_BACK
-  , VkPipeline
-  , VkPipelineLayout
-  , VkRenderPass
+  , VkPipeline(..)
+  , VkPipelineLayout(..)
+  , VkRenderPass(..)
   , vkCreateGraphicsPipelines
   , vkCreateComputePipelines
   , vkDestroyPipeline
@@ -179,6 +179,7 @@ import Data.Vector.Storable.Sized
   )
 import Data.Word
   ( Word32
+  , Word64
   )
 import Foreign.C.Types
   ( CChar(..)
@@ -187,6 +188,7 @@ import Foreign.C.Types
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -227,10 +229,10 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkDevice
   )
 import Graphics.Vulkan.Core10.PipelineCache
-  ( VkPipelineCache
+  ( VkPipelineCache(..)
   )
 import Graphics.Vulkan.Core10.Shader
-  ( VkShaderModule
+  ( VkShaderModule(..)
   )
 
 
@@ -243,7 +245,7 @@ import Graphics.Vulkan.Core10.Shader
 -- The semantics of each enum value is described in the table below:
 --
 -- +--------------------------------------------+---------------------+--------+
--- | VkBlendFactor                              | RGB Blend Factors   | Alpha  |
+-- | 'VkBlendFactor'                            | RGB Blend Factors   | Alpha  |
 -- |                                            | (Sr,Sg,Sb) or       | Blend  |
 -- |                                            | (Dr,Dg,Db)          | Factor |
 -- |                                            |                     | (Sa or |
@@ -450,7 +452,7 @@ pattern VK_BLEND_FACTOR_ONE_MINUS_SRC1_ALPHA = VkBlendFactor 18
 -- below:
 --
 -- +--------------------------------+--------------------+----------------+
--- | VkBlendOp                      | RGB Components     | Alpha          |
+-- | 'VkBlendOp'                    | RGB Components     | Alpha          |
 -- |                                |                    | Component      |
 -- +================================+====================+================+
 -- | @VK_BLEND_OP_ADD@              | R = Rs0 × Sr + Rd  | A = As0 × Sa + |
@@ -1703,8 +1705,7 @@ instance Read VkPipelineShaderStageCreateFlags where
 -- = See Also
 --
 -- 'VkPipelineShaderStageCreateInfo',
--- 'Graphics.Vulkan.Core10.PipelineLayout.VkShaderStageFlags',
--- 'Graphics.Vulkan.Extensions.VK_AMD_shader_info.vkGetShaderInfoAMD'
+-- 'Graphics.Vulkan.Core10.PipelineLayout.VkShaderStageFlags'
 newtype VkShaderStageFlagBits = VkShaderStageFlagBits VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -1717,6 +1718,15 @@ instance Show VkShaderStageFlagBits where
   showsPrec _ VK_SHADER_STAGE_COMPUTE_BIT = showString "VK_SHADER_STAGE_COMPUTE_BIT"
   showsPrec _ VK_SHADER_STAGE_ALL_GRAPHICS = showString "VK_SHADER_STAGE_ALL_GRAPHICS"
   showsPrec _ VK_SHADER_STAGE_ALL = showString "VK_SHADER_STAGE_ALL"
+  -- The following values are from extensions, the patterns themselves are exported from the extension modules
+  showsPrec _ (VkShaderStageFlagBits 0x00000100) = showString "VK_SHADER_STAGE_RESERVED_8_BIT_NV"
+  showsPrec _ (VkShaderStageFlagBits 0x00000200) = showString "VK_SHADER_STAGE_RESERVED_9_BIT_NV"
+  showsPrec _ (VkShaderStageFlagBits 0x00000400) = showString "VK_SHADER_STAGE_RESERVED_10_BIT_NV"
+  showsPrec _ (VkShaderStageFlagBits 0x00000800) = showString "VK_SHADER_STAGE_RESERVED_11_BIT_NV"
+  showsPrec _ (VkShaderStageFlagBits 0x00001000) = showString "VK_SHADER_STAGE_RESERVED_12_BIT_NV"
+  showsPrec _ (VkShaderStageFlagBits 0x00002000) = showString "VK_SHADER_STAGE_RESERVED_13_BIT_NV"
+  showsPrec _ (VkShaderStageFlagBits 0x00000040) = showString "VK_SHADER_STAGE_RESERVED_6_BIT_NV"
+  showsPrec _ (VkShaderStageFlagBits 0x00000080) = showString "VK_SHADER_STAGE_RESERVED_7_BIT_NV"
   showsPrec p (VkShaderStageFlagBits x) = showParen (p >= 11) (showString "VkShaderStageFlagBits " . showsPrec 11 x)
 
 instance Read VkShaderStageFlagBits where
@@ -1728,6 +1738,15 @@ instance Read VkShaderStageFlagBits where
                              , ("VK_SHADER_STAGE_COMPUTE_BIT",                 pure VK_SHADER_STAGE_COMPUTE_BIT)
                              , ("VK_SHADER_STAGE_ALL_GRAPHICS",                pure VK_SHADER_STAGE_ALL_GRAPHICS)
                              , ("VK_SHADER_STAGE_ALL",                         pure VK_SHADER_STAGE_ALL)
+                             , -- The following values are from extensions, the patterns themselves are exported from the extension modules
+                               ("VK_SHADER_STAGE_RESERVED_8_BIT_NV",  pure (VkShaderStageFlagBits 0x00000100))
+                             , ("VK_SHADER_STAGE_RESERVED_9_BIT_NV",  pure (VkShaderStageFlagBits 0x00000200))
+                             , ("VK_SHADER_STAGE_RESERVED_10_BIT_NV", pure (VkShaderStageFlagBits 0x00000400))
+                             , ("VK_SHADER_STAGE_RESERVED_11_BIT_NV", pure (VkShaderStageFlagBits 0x00000800))
+                             , ("VK_SHADER_STAGE_RESERVED_12_BIT_NV", pure (VkShaderStageFlagBits 0x00001000))
+                             , ("VK_SHADER_STAGE_RESERVED_13_BIT_NV", pure (VkShaderStageFlagBits 0x00002000))
+                             , ("VK_SHADER_STAGE_RESERVED_6_BIT_NV",  pure (VkShaderStageFlagBits 0x00000040))
+                             , ("VK_SHADER_STAGE_RESERVED_7_BIT_NV",  pure (VkShaderStageFlagBits 0x00000080))
                              ] +++
                       prec 10 (do
                         expectP (Ident "VkShaderStageFlagBits")
@@ -1792,8 +1811,8 @@ pattern VK_SHADER_STAGE_ALL = VkShaderStageFlagBits 0x7fffffff
 --     be created will be a child of a previously created parent pipeline.
 --
 -- -   @VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT@ specifies that
---     any shader input variables decorated as @DeviceIndex@ will be
---     assigned values as if they were decorated as @ViewIndex@.
+--     any shader input variables decorated as @ViewIndex@ will be assigned
+--     values as if they were decorated as @DeviceIndex@.
 --
 -- -   @VK_PIPELINE_CREATE_DISPATCH_BASE@ specifies that a compute pipeline
 --     /can/ be used with
@@ -1819,6 +1838,7 @@ instance Show VkPipelineCreateFlagBits where
   -- The following values are from extensions, the patterns themselves are exported from the extension modules
   showsPrec _ (VkPipelineCreateFlagBits 0x00000008) = showString "VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT"
   showsPrec _ (VkPipelineCreateFlagBits 0x00000010) = showString "VK_PIPELINE_CREATE_DISPATCH_BASE"
+  showsPrec _ (VkPipelineCreateFlagBits 0x00000020) = showString "VK_PIPELINE_CREATE_RESERVED_5_BIT_NV"
   showsPrec p (VkPipelineCreateFlagBits x) = showParen (p >= 11) (showString "VkPipelineCreateFlagBits " . showsPrec 11 x)
 
 instance Read VkPipelineCreateFlagBits where
@@ -1828,6 +1848,7 @@ instance Read VkPipelineCreateFlagBits where
                              , -- The following values are from extensions, the patterns themselves are exported from the extension modules
                                ("VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT", pure (VkPipelineCreateFlagBits 0x00000008))
                              , ("VK_PIPELINE_CREATE_DISPATCH_BASE",                    pure (VkPipelineCreateFlagBits 0x00000010))
+                             , ("VK_PIPELINE_CREATE_RESERVED_5_BIT_NV",                pure (VkPipelineCreateFlagBits 0x00000020))
                              ] +++
                       prec 10 (do
                         expectP (Ident "VkPipelineCreateFlagBits")
@@ -1975,21 +1996,22 @@ pattern VK_CULL_MODE_NONE = VkCullModeFlagBits 0x00000000
 -- No documentation found for Nested "VkCullModeFlagBits" "VK_CULL_MODE_FRONT_AND_BACK"
 pattern VK_CULL_MODE_FRONT_AND_BACK :: VkCullModeFlagBits
 pattern VK_CULL_MODE_FRONT_AND_BACK = VkCullModeFlagBits 0x00000003
--- | Dummy data to tag the 'Ptr' with
-data VkPipeline_T
 -- | VkPipeline - Opaque handle to a pipeline object
 --
 -- = See Also
 --
 -- 'VkComputePipelineCreateInfo', 'VkGraphicsPipelineCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkObjectTablePipelineEntryNVX',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdBindPipeline',
 -- 'vkCreateComputePipelines', 'vkCreateGraphicsPipelines',
--- 'vkDestroyPipeline',
--- 'Graphics.Vulkan.Extensions.VK_AMD_shader_info.vkGetShaderInfoAMD'
-type VkPipeline = Ptr VkPipeline_T
--- | Dummy data to tag the 'Ptr' with
-data VkPipelineLayout_T
+-- 'vkDestroyPipeline'
+newtype VkPipeline = VkPipeline Word64
+  deriving (Eq, Show)
+
+instance Storable VkPipeline where
+  sizeOf (VkPipeline w) = sizeOf w
+  alignment (VkPipeline w) = alignment w
+  peek ptr = VkPipeline <$> peek (castPtr ptr)
+  poke ptr (VkPipeline w) = poke (castPtr ptr) w
 -- | VkPipelineLayout - Opaque handle to a pipeline layout object
 --
 -- = See Also
@@ -1997,17 +2019,18 @@ data VkPipelineLayout_T
 -- 'VkComputePipelineCreateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_descriptor_update_template.VkDescriptorUpdateTemplateCreateInfo',
 -- 'VkGraphicsPipelineCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkObjectTableDescriptorSetEntryNVX',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkObjectTablePushConstantEntryNVX',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdBindDescriptorSets',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdPushConstants',
--- 'Graphics.Vulkan.Extensions.VK_KHR_push_descriptor.vkCmdPushDescriptorSetKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_push_descriptor.vkCmdPushDescriptorSetWithTemplateKHR',
 -- 'Graphics.Vulkan.Core10.PipelineLayout.vkCreatePipelineLayout',
 -- 'Graphics.Vulkan.Core10.PipelineLayout.vkDestroyPipelineLayout'
-type VkPipelineLayout = Ptr VkPipelineLayout_T
--- | Dummy data to tag the 'Ptr' with
-data VkRenderPass_T
+newtype VkPipelineLayout = VkPipelineLayout Word64
+  deriving (Eq, Show)
+
+instance Storable VkPipelineLayout where
+  sizeOf (VkPipelineLayout w) = sizeOf w
+  alignment (VkPipelineLayout w) = alignment w
+  peek ptr = VkPipelineLayout <$> peek (castPtr ptr)
+  poke ptr (VkPipelineLayout w) = poke (castPtr ptr) w
 -- | VkRenderPass - Opaque handle to a render pass object
 --
 -- = See Also
@@ -2019,7 +2042,14 @@ data VkRenderPass_T
 -- 'Graphics.Vulkan.Core10.Pass.vkCreateRenderPass',
 -- 'Graphics.Vulkan.Core10.Pass.vkDestroyRenderPass',
 -- 'Graphics.Vulkan.Core10.Pass.vkGetRenderAreaGranularity'
-type VkRenderPass = Ptr VkRenderPass_T
+newtype VkRenderPass = VkRenderPass Word64
+  deriving (Eq, Show)
+
+instance Storable VkRenderPass where
+  sizeOf (VkRenderPass w) = sizeOf w
+  alignment (VkRenderPass w) = alignment w
+  peek ptr = VkRenderPass <$> peek (castPtr ptr)
+  poke ptr (VkRenderPass w) = poke (castPtr ptr) w
 -- | vkCreateGraphicsPipelines - Create graphics pipelines
 --
 -- = Parameters
@@ -2036,7 +2066,7 @@ type VkRenderPass = Ptr VkRenderPass_T
 -- -   @createInfoCount@ is the length of the @pCreateInfos@ and
 --     @pPipelines@ arrays.
 --
--- -   @pCreateInfos@ is an array of @VkGraphicsPipelineCreateInfo@
+-- -   @pCreateInfos@ is an array of 'VkGraphicsPipelineCreateInfo'
 --     structures.
 --
 -- -   @pAllocator@ controls host memory allocation as described in the
@@ -2099,8 +2129,6 @@ type VkRenderPass = Ptr VkRenderPass_T
 --
 --     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
 --
---     -   @VK_ERROR_INVALID_SHADER_NV@
---
 -- = See Also
 --
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkAllocationCallbacks',
@@ -2128,7 +2156,7 @@ foreign import ccall
 -- -   @createInfoCount@ is the length of the @pCreateInfos@ and
 --     @pPipelines@ arrays.
 --
--- -   @pCreateInfos@ is an array of @VkComputePipelineCreateInfo@
+-- -   @pCreateInfos@ is an array of 'VkComputePipelineCreateInfo'
 --     structures.
 --
 -- -   @pAllocator@ controls host memory allocation as described in the
@@ -2183,8 +2211,6 @@ foreign import ccall
 --     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
 --
 --     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_INVALID_SHADER_NV@
 --
 -- = See Also
 --
@@ -2252,9 +2278,7 @@ foreign import ccall
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_KHR_display.VkDisplayPlaneCapabilitiesKHR',
--- 'VkRect2D',
--- 'Graphics.Vulkan.Extensions.VK_KHR_incremental_present.VkRectLayerKHR'
+-- 'VkRect2D'
 data VkOffset2D = VkOffset2D
   { -- | @x@ is the x offset.
   vkX :: Int32
@@ -2274,19 +2298,7 @@ instance Storable VkOffset2D where
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_KHR_display.VkDisplayModeParametersKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_display.VkDisplayPlaneCapabilitiesKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_display.VkDisplayPropertiesKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_display.VkDisplaySurfaceCreateInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_EXT_sample_locations.VkMultisamplePropertiesEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_sample_locations.VkPhysicalDeviceSampleLocationsPropertiesEXT',
--- 'VkRect2D',
--- 'Graphics.Vulkan.Extensions.VK_KHR_incremental_present.VkRectLayerKHR',
--- 'Graphics.Vulkan.Extensions.VK_EXT_sample_locations.VkSampleLocationsInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_display_surface_counter.VkSurfaceCapabilities2EXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceCapabilitiesKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkSwapchainCreateInfoKHR',
--- 'Graphics.Vulkan.Core10.Pass.vkGetRenderAreaGranularity'
+-- 'VkRect2D', 'Graphics.Vulkan.Core10.Pass.vkGetRenderAreaGranularity'
 data VkExtent2D = VkExtent2D
   { -- | @width@ is the width of the extent.
   vkWidth :: Word32
@@ -2423,14 +2435,9 @@ instance Storable VkViewport where
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group_and_VK_KHR_bind_memory2.VkBindImageMemoryDeviceGroupInfo',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.VkClearRect',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group.VkDeviceGroupRenderPassBeginInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_display_swapchain.VkDisplayPresentInfoKHR',
--- 'VkExtent2D', 'VkOffset2D',
--- 'Graphics.Vulkan.Extensions.VK_EXT_discard_rectangles.VkPipelineDiscardRectangleStateCreateInfoEXT',
--- 'VkPipelineViewportStateCreateInfo',
+-- 'VkExtent2D', 'VkOffset2D', 'VkPipelineViewportStateCreateInfo',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.VkRenderPassBeginInfo',
--- 'Graphics.Vulkan.Extensions.VK_EXT_discard_rectangles.vkCmdSetDiscardRectangleEXT',
--- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdSetScissor',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.vkGetPhysicalDevicePresentRectanglesKHR'
+-- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdSetScissor'
 data VkRect2D = VkRect2D
   { -- | @offset@ is a 'VkOffset2D' specifying the rectangle offset.
   vkOffset :: VkOffset2D
@@ -2499,11 +2506,11 @@ instance Storable VkSpecializationMapEntry where
 -- -   The @size@ member of each element of @pMapEntries@ /must/ be less
 --     than or equal to @dataSize@ minus @offset@
 --
+-- == Valid Usage (Implicit)
+--
 -- -   If @mapEntryCount@ is not @0@, @pMapEntries@ /must/ be a valid
 --     pointer to an array of @mapEntryCount@ valid
 --     @VkSpecializationMapEntry@ structures
---
--- == Valid Usage (Implicit)
 --
 -- -   If @dataSize@ is not @0@, @pData@ /must/ be a valid pointer to an
 --     array of @dataSize@ bytes
@@ -2654,8 +2661,8 @@ data VkPipelineShaderStageCreateInfo = VkPipelineShaderStageCreateInfo
   , -- | @stage@ is a 'VkShaderStageFlagBits' value specifying a single pipeline
   -- stage.
   vkStage :: VkShaderStageFlagBits
-  , -- | @module@ is a @VkShaderModule@ object that contains the shader for this
-  -- stage.
+  , -- | @module@ is a 'Graphics.Vulkan.Core10.Shader.VkShaderModule' object that
+  -- contains the shader for this stage.
   vkModule :: VkShaderModule
   , -- | @pName@ is a pointer to a null-terminated UTF-8 string specifying the
   -- entry point name of the shader for this stage.
@@ -2917,8 +2924,7 @@ instance Storable VkVertexInputAttributeDescription where
 -- -   @sType@ /must/ be
 --     @VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO@
 --
--- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
---     'Graphics.Vulkan.Extensions.VK_EXT_vertex_attribute_divisor.VkPipelineVertexInputDivisorStateCreateInfoEXT'
+-- -   @pNext@ /must/ be @NULL@
 --
 -- -   @flags@ /must/ be @0@
 --
@@ -3142,14 +3148,7 @@ instance Storable VkPipelineTessellationStateCreateInfo where
 -- -   @sType@ /must/ be
 --     @VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO@
 --
--- -   Each @pNext@ member of any structure (including this one) in the
---     @pNext@ chain /must/ be either @NULL@ or a pointer to a valid
---     instance of
---     'Graphics.Vulkan.Extensions.VK_NV_viewport_swizzle.VkPipelineViewportSwizzleStateCreateInfoNV'
---     or
---     'Graphics.Vulkan.Extensions.VK_NV_clip_space_w_scaling.VkPipelineViewportWScalingStateCreateInfoNV'
---
--- -   Each @sType@ member in the @pNext@ chain /must/ be unique
+-- -   @pNext@ /must/ be @NULL@
 --
 -- -   @flags@ /must/ be @0@
 --
@@ -3178,7 +3177,7 @@ data VkPipelineViewportStateCreateInfo = VkPipelineViewportStateCreateInfo
   -- [scissors](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fragops-scissor)
   -- and /must/ match the number of viewports.
   vkScissorCount :: Word32
-  , -- | @pScissors@ is a pointer to an array of @VkRect2D@ structures which
+  , -- | @pScissors@ is a pointer to an array of 'VkRect2D' structures which
   -- define the rectangular bounds of the scissor for the corresponding
   -- viewport. If the scissor state is dynamic, this member is ignored.
   vkPScissors :: Ptr VkRect2D
@@ -3235,14 +3234,7 @@ instance Storable VkPipelineViewportStateCreateInfo where
 -- -   @sType@ /must/ be
 --     @VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO@
 --
--- -   Each @pNext@ member of any structure (including this one) in the
---     @pNext@ chain /must/ be either @NULL@ or a pointer to a valid
---     instance of
---     'Graphics.Vulkan.Extensions.VK_EXT_conservative_rasterization.VkPipelineRasterizationConservativeStateCreateInfoEXT'
---     or
---     'Graphics.Vulkan.Extensions.VK_AMD_rasterization_order.VkPipelineRasterizationStateRasterizationOrderAMD'
---
--- -   Each @sType@ member in the @pNext@ chain /must/ be unique
+-- -   @pNext@ /must/ be @NULL@
 --
 -- -   @flags@ /must/ be @0@
 --
@@ -3350,15 +3342,7 @@ instance Storable VkPipelineRasterizationStateCreateInfo where
 -- -   @sType@ /must/ be
 --     @VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO@
 --
--- -   Each @pNext@ member of any structure (including this one) in the
---     @pNext@ chain /must/ be either @NULL@ or a pointer to a valid
---     instance of
---     'Graphics.Vulkan.Extensions.VK_NV_framebuffer_mixed_samples.VkPipelineCoverageModulationStateCreateInfoNV',
---     'Graphics.Vulkan.Extensions.VK_NV_fragment_coverage_to_color.VkPipelineCoverageToColorStateCreateInfoNV',
---     or
---     'Graphics.Vulkan.Extensions.VK_EXT_sample_locations.VkPipelineSampleLocationsStateCreateInfoEXT'
---
--- -   Each @sType@ member in the @pNext@ chain /must/ be unique
+-- -   @pNext@ /must/ be @NULL@
 --
 -- -   @flags@ /must/ be @0@
 --
@@ -3618,8 +3602,7 @@ instance Storable VkPipelineColorBlendAttachmentState where
 -- -   @sType@ /must/ be
 --     @VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO@
 --
--- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
---     'Graphics.Vulkan.Extensions.VK_EXT_blend_operation_advanced.VkPipelineColorBlendAdvancedStateCreateInfoEXT'
+-- -   @pNext@ /must/ be @NULL@
 --
 -- -   @flags@ /must/ be @0@
 --
@@ -4024,12 +4007,9 @@ instance Storable VkPipelineDepthStencilStateCreateInfo where
 --     attachments, then for each color attachment in the subpass the
 --     @blendEnable@ member of the corresponding element of the
 --     @pAttachment@ member of @pColorBlendState@ /must/ be @VK_FALSE@ if
---     the @format@ of the attachment does not support color blend
---     operations, as specified by the
---     @VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT@ flag in
---     @VkFormatProperties@::@linearTilingFeatures@ or
---     @VkFormatProperties@::@optimalTilingFeatures@ returned by
---     @vkGetPhysicalDeviceFormatProperties@
+--     the attached image’s [format
+--     features](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#resources-image-format-features)
+--     does not contain the @VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT@.
 --
 -- -   If rasterization is not disabled and the subpass uses color
 --     attachments, the @attachmentCount@ member of @pColorBlendState@
@@ -4039,7 +4019,7 @@ instance Storable VkPipelineDepthStencilStateCreateInfo where
 -- -   If no element of the @pDynamicStates@ member of @pDynamicState@ is
 --     @VK_DYNAMIC_STATE_VIEWPORT@, the @pViewports@ member of
 --     @pViewportState@ /must/ be a valid pointer to an array of
---     @pViewportState@::@viewportCount@ @VkViewport@ structures
+--     @pViewportState@::@viewportCount@ valid @VkViewport@ structures
 --
 -- -   If no element of the @pDynamicStates@ member of @pDynamicState@ is
 --     @VK_DYNAMIC_STATE_SCISSOR@, the @pScissors@ member of
@@ -4195,8 +4175,7 @@ instance Storable VkPipelineDepthStencilStateCreateInfo where
 --
 -- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO@
 --
--- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
---     'Graphics.Vulkan.Extensions.VK_EXT_discard_rectangles.VkPipelineDiscardRectangleStateCreateInfoEXT'
+-- -   @pNext@ /must/ be @NULL@
 --
 -- -   @flags@ /must/ be a valid combination of 'VkPipelineCreateFlagBits'
 --     values

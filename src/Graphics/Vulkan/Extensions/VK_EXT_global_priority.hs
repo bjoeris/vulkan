@@ -79,7 +79,7 @@ import Graphics.Vulkan.Core10.Core
 --
 -- = See Also
 --
--- 'VkDeviceQueueGlobalPriorityCreateInfoEXT'
+-- No cross-references are available
 newtype VkQueueGlobalPriorityEXT = VkQueueGlobalPriorityEXT Int32
   deriving (Eq, Ord, Storable)
 
@@ -139,17 +139,12 @@ pattern VK_EXT_GLOBAL_PRIORITY_EXTENSION_NAME = "VK_EXT_global_priority"
 -- @VkDeviceQueueGlobalPriorityCreateInfoEXT@ will default to
 -- @VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT@.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT@
---
--- -   @globalPriority@ /must/ be a valid 'VkQueueGlobalPriorityEXT' value
+-- Unresolved directive in VkDeviceQueueGlobalPriorityCreateInfoEXT.txt -
+-- include::..\/validity\/structs\/VkDeviceQueueGlobalPriorityCreateInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'VkQueueGlobalPriorityEXT',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkDeviceQueueGlobalPriorityCreateInfoEXT = VkDeviceQueueGlobalPriorityCreateInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

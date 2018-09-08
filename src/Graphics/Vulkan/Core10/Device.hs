@@ -142,8 +142,8 @@ instance Read VkDeviceQueueCreateFlagBits where
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pDevice@ points to a handle in which the created @VkDevice@ is
---     returned.
+-- -   @pDevice@ points to a handle in which the created
+--     'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice' is returned.
 --
 -- = Description
 --
@@ -299,8 +299,7 @@ foreign import ccall
 --
 -- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO@
 --
--- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
---     'Graphics.Vulkan.Extensions.VK_EXT_global_priority.VkDeviceQueueGlobalPriorityCreateInfoEXT'
+-- -   @pNext@ /must/ be @NULL@
 --
 -- -   @flags@ /must/ be a valid combination of
 --     'VkDeviceQueueCreateFlagBits' values
@@ -378,7 +377,6 @@ instance Storable VkDeviceQueueCreateInfo where
 --     instance of
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group_creation.VkDeviceGroupDeviceCreateInfo',
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_16bit_storage.VkPhysicalDevice16BitStorageFeatures',
---     'Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing.VkPhysicalDeviceDescriptorIndexingFeaturesEXT',
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.VkPhysicalDeviceFeatures2',
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_multiview.VkPhysicalDeviceMultiviewFeatures',
 --     'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_protected_memory.VkPhysicalDeviceProtectedMemoryFeatures',

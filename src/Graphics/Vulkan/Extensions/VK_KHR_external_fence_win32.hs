@@ -43,7 +43,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkDevice
   )
 import Graphics.Vulkan.Core10.Queue
-  ( VkFence
+  ( VkFence(..)
   )
 import Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_fence
   ( VkFenceImportFlags
@@ -102,29 +102,12 @@ pattern VK_KHR_EXTERNAL_FENCE_WIN32_EXTENSION_NAME = "VK_KHR_external_fence_win3
 -- in [Importing Fence
 -- Payloads](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#synchronization-fences-importing).
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @pGetWin32HandleInfo@ /must/ be a valid pointer to a valid
---     @VkFenceGetWin32HandleInfoKHR@ structure
---
--- -   @pHandle@ /must/ be a valid pointer to a @HANDLE@ value
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_TOO_MANY_OBJECTS@
---
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
+-- Unresolved directive in vkGetFenceWin32HandleKHR.txt -
+-- include::..\/validity\/protos\/vkGetFenceWin32HandleKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkFenceGetWin32HandleInfoKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -151,27 +134,12 @@ foreign import ccall
 -- of Vulkan, into the same instance from which it was exported, and
 -- multiple times into a given Vulkan instance.
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @pImportFenceWin32HandleInfo@ /must/ be a valid pointer to a valid
---     @VkImportFenceWin32HandleInfoKHR@ structure
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_INVALID_EXTERNAL_HANDLE@
+-- Unresolved directive in vkImportFenceWin32HandleKHR.txt -
+-- include::..\/validity\/protos\/vkImportFenceWin32HandleKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkImportFenceWin32HandleInfoKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -221,34 +189,12 @@ foreign import ccall
 --     @handleType@ in [external fence handle types
 --     compatibility](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#external-fence-handle-types-compatibility).
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_IMPORT_FENCE_WIN32_HANDLE_INFO_KHR@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @fence@ /must/ be a valid @VkFence@ handle
---
--- -   @flags@ /must/ be a valid combination of
---     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_fence.VkFenceImportFlagBits'
---     values
---
--- -   If @handleType@ is not @0@, @handleType@ /must/ be a valid
---     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_fence_capabilities.VkExternalFenceHandleTypeFlagBits'
---     value
---
--- == Host Synchronization
---
--- -   Host access to @fence@ /must/ be externally synchronized
+-- Unresolved directive in VkImportFenceWin32HandleInfoKHR.txt -
+-- include::..\/validity\/structs\/VkImportFenceWin32HandleInfoKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_fence_capabilities.VkExternalFenceHandleTypeFlagBits',
--- 'Graphics.Vulkan.Core10.Queue.VkFence',
--- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_fence.VkFenceImportFlags',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkImportFenceWin32HandleKHR'
+-- No cross-references are available
 data VkImportFenceWin32HandleInfoKHR = VkImportFenceWin32HandleInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -313,20 +259,15 @@ instance Storable VkImportFenceWin32HandleInfoKHR where
 -- -   If
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_fence.VkExportFenceCreateInfo'::@handleTypes@
 --     does not include @VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT@,
---     VkExportFenceWin32HandleInfoKHR /must/ not be in the @pNext@ chain
+--     @VkExportFenceWin32HandleInfoKHR@ /must/ not be in the @pNext@ chain
 --     of 'Graphics.Vulkan.Core10.Fence.VkFenceCreateInfo'.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_EXPORT_FENCE_WIN32_HANDLE_INFO_KHR@
---
--- -   If @pAttributes@ is not @NULL@, @pAttributes@ /must/ be a valid
---     pointer to a valid @SECURITY_ATTRIBUTES@ value
+-- Unresolved directive in VkExportFenceWin32HandleInfoKHR.txt -
+-- include::..\/validity\/structs\/VkExportFenceWin32HandleInfoKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkExportFenceWin32HandleInfoKHR = VkExportFenceWin32HandleInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -394,25 +335,12 @@ instance Storable VkExportFenceWin32HandleInfoKHR where
 -- -   @handleType@ /must/ be defined as an NT handle or a global share
 --     handle.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_FENCE_GET_WIN32_HANDLE_INFO_KHR@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @fence@ /must/ be a valid @VkFence@ handle
---
--- -   @handleType@ /must/ be a valid
---     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_fence_capabilities.VkExternalFenceHandleTypeFlagBits'
---     value
+-- Unresolved directive in VkFenceGetWin32HandleInfoKHR.txt -
+-- include::..\/validity\/structs\/VkFenceGetWin32HandleInfoKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_fence_capabilities.VkExternalFenceHandleTypeFlagBits',
--- 'Graphics.Vulkan.Core10.Queue.VkFence',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetFenceWin32HandleKHR'
+-- No cross-references are available
 data VkFenceGetWin32HandleInfoKHR = VkFenceGetWin32HandleInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

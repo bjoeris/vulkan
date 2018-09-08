@@ -99,10 +99,8 @@ pattern VK_AMD_SHADER_CORE_PROPERTIES_EXTENSION_NAME = "VK_AMD_shader_core_prope
 -- -   @vgprAllocationGranularity@ is an unsigned integer value indicating
 --     the granularity of VGPR allocation for a wave.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD@
+-- Unresolved directive in VkPhysicalDeviceShaderCorePropertiesAMD.txt -
+-- include::..\/validity\/structs\/VkPhysicalDeviceShaderCorePropertiesAMD.txt[]
 --
 -- If the @VkPhysicalDeviceShaderCorePropertiesAMD@ structure is included
 -- in the @pNext@ chain of
@@ -111,7 +109,7 @@ pattern VK_AMD_SHADER_CORE_PROPERTIES_EXTENSION_NAME = "VK_AMD_shader_core_prope
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPhysicalDeviceShaderCorePropertiesAMD = VkPhysicalDeviceShaderCorePropertiesAMD
   { -- No documentation found for Nested "VkPhysicalDeviceShaderCorePropertiesAMD" "sType"
   vkSType :: VkStructureType

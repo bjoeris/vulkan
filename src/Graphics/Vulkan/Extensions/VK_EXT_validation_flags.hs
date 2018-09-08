@@ -61,7 +61,7 @@ import Graphics.Vulkan.Core10.Core
 --
 -- = See Also
 --
--- 'VkValidationFlagsEXT'
+-- No cross-references are available
 newtype VkValidationCheckEXT = VkValidationCheckEXT Int32
   deriving (Eq, Ord, Storable)
 
@@ -102,18 +102,14 @@ pattern VK_EXT_VALIDATION_FLAGS_EXTENSION_NAME = "VK_EXT_validation_flags"
 -- | VkValidationFlagsEXT - Specify validation checks to disable for a Vulkan
 -- instance
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_VALIDATION_FLAGS_EXT@
---
--- -   @pDisabledValidationChecks@ /must/ be a valid pointer to an array of
---     @disabledValidationCheckCount@ 'VkValidationCheckEXT' values
---
--- -   @disabledValidationCheckCount@ /must/ be greater than @0@
+-- Unresolved directive in VkValidationFlagsEXT.txt -
+-- include::..\/validity\/structs\/VkValidationFlagsEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'VkValidationCheckEXT'
+-- No cross-references are available
 data VkValidationFlagsEXT = VkValidationFlagsEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

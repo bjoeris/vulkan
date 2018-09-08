@@ -107,8 +107,8 @@ pattern VK_COMMAND_POOL_CREATE_PROTECTED_BIT = VkCommandPoolCreateFlagBits 0x000
 --     structure, describing the parameters used to create the device
 --     queue.
 --
--- -   @pQueue@ is a pointer to a @VkQueue@ object that will be filled with
---     the handle for the requested queue.
+-- -   @pQueue@ is a pointer to a 'Graphics.Vulkan.Core10.Queue.VkQueue'
+--     object that will be filled with the handle for the requested queue.
 --
 -- == Valid Usage (Implicit)
 --

@@ -26,7 +26,7 @@ module Graphics.Vulkan.Core10.Sampler
   , pattern VK_SAMPLER_MIPMAP_MODE_NEAREST
   , pattern VK_SAMPLER_MIPMAP_MODE_LINEAR
   , VkSamplerCreateFlags(..)
-  , VkSampler
+  , VkSampler(..)
   , vkCreateSampler
   , vkDestroySampler
   , VkSamplerCreateInfo(..)
@@ -39,11 +39,15 @@ import Data.Bits
 import Data.Int
   ( Int32
   )
+import Data.Word
+  ( Word64
+  )
 import Foreign.C.Types
   ( CFloat(..)
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -342,8 +346,6 @@ instance Read VkSamplerCreateFlags where
                     )
 
 
--- | Dummy data to tag the 'Ptr' with
-data VkSampler_T
 -- | VkSampler - Opaque handle to a sampler object
 --
 -- = See Also
@@ -351,7 +353,14 @@ data VkSampler_T
 -- 'Graphics.Vulkan.Core10.DescriptorSet.VkDescriptorImageInfo',
 -- 'Graphics.Vulkan.Core10.DescriptorSet.VkDescriptorSetLayoutBinding',
 -- 'vkCreateSampler', 'vkDestroySampler'
-type VkSampler = Ptr VkSampler_T
+newtype VkSampler = VkSampler Word64
+  deriving (Eq, Show)
+
+instance Storable VkSampler where
+  sizeOf (VkSampler w) = sizeOf w
+  alignment (VkSampler w) = alignment w
+  peek ptr = VkSampler <$> peek (castPtr ptr)
+  poke ptr (VkSampler w) = poke (castPtr ptr) w
 -- | vkCreateSampler - Create a new sampler object
 --
 -- = Parameters
@@ -514,7 +523,7 @@ foreign import ccall
 -- -   @minLod@ and @maxLod@ are the values used to clamp the computed LOD
 --     value, as described in the [Level-of-Detail
 --     Operation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#textures-level-of-detail-operation)
---     section. @maxLod@ /must/ be greater than or equal to @minLod@.
+--     section.
 --
 -- -   @borderColor@ is a 'VkBorderColor' value specifying the predefined
 --     border color to use.
@@ -605,6 +614,8 @@ foreign import ccall
 -- -   The absolute value of @mipLodBias@ /must/ be less than or equal to
 --     @VkPhysicalDeviceLimits@::@maxSamplerLodBias@
 --
+-- -   @maxLod@ /must/ be greater than or equal to @minLod@
+--
 -- -   If the [anisotropic
 --     sampling](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#features-features-samplerAnisotropy)
 --     feature is not enabled, @anisotropyEnable@ /must/ be @VK_FALSE@
@@ -680,14 +691,8 @@ foreign import ccall
 --
 -- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO@
 --
--- -   Each @pNext@ member of any structure (including this one) in the
---     @pNext@ chain /must/ be either @NULL@ or a pointer to a valid
---     instance of
---     'Graphics.Vulkan.Extensions.VK_EXT_sampler_filter_minmax.VkSamplerReductionModeCreateInfoEXT'
---     or
+-- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkSamplerYcbcrConversionInfo'
---
--- -   Each @sType@ member in the @pNext@ chain /must/ be unique
 --
 -- -   @flags@ /must/ be @0@
 --

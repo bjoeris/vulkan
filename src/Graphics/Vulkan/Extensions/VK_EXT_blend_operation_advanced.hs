@@ -155,7 +155,7 @@ import Graphics.Vulkan.Core10.Pipeline
 --
 -- = See Also
 --
--- 'VkPipelineColorBlendAdvancedStateCreateInfoEXT'
+-- No cross-references are available
 newtype VkBlendOverlapEXT = VkBlendOverlapEXT Int32
   deriving (Eq, Ord, Storable)
 
@@ -375,14 +375,13 @@ pattern VK_EXT_BLEND_OPERATION_ADVANCED_EXTENSION_NAME = "VK_EXT_blend_operation
 -- in @pNext@ chain of 'Graphics.Vulkan.Core10.Device.VkDeviceCreateInfo'
 -- to enable the features.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_FEATURES_EXT@
+-- Unresolved directive in
+-- VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT.txt -
+-- include::..\/validity\/structs\/VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT.txt[]
 --
 -- = See Also
 --
--- @VkBool32@, 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT = VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
   { -- No documentation found for Nested "VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT" "sType"
   vkSType :: VkStructureType
@@ -442,10 +441,9 @@ instance Storable VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT where
 --     operation enums are supported. See the valid usage of
 --     'Graphics.Vulkan.Core10.Pipeline.VkPipelineColorBlendAttachmentState'.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT@
+-- Unresolved directive in
+-- VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT.txt -
+-- include::..\/validity\/structs\/VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT.txt[]
 --
 -- If the @VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT@ structure
 -- is included in the @pNext@ chain of
@@ -454,7 +452,7 @@ instance Storable VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT where
 --
 -- = See Also
 --
--- @VkBool32@, 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT = VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
   { -- No documentation found for Nested "VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT" "sType"
   vkSType :: VkStructureType
@@ -518,17 +516,13 @@ instance Storable VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT where
 --     property is not supported, @blendOverlap@ /must/ be
 --     @VK_BLEND_OVERLAP_UNCORRELATED_EXT@
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT@
---
--- -   @blendOverlap@ /must/ be a valid 'VkBlendOverlapEXT' value
+-- Unresolved directive in
+-- VkPipelineColorBlendAdvancedStateCreateInfoEXT.txt -
+-- include::..\/validity\/structs\/VkPipelineColorBlendAdvancedStateCreateInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'VkBlendOverlapEXT', @VkBool32@,
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPipelineColorBlendAdvancedStateCreateInfoEXT = VkPipelineColorBlendAdvancedStateCreateInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

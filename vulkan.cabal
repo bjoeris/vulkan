@@ -187,6 +187,7 @@ library
                      , Graphics.Vulkan.Extensions.VK_KHR_external_semaphore
                      , Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_fd
                      , Graphics.Vulkan.Extensions.VK_KHR_push_descriptor
+                     , Graphics.Vulkan.Extensions.VK_EXT_conditional_rendering
                      , Graphics.Vulkan.Extensions.VK_KHR_16bit_storage
                      , Graphics.Vulkan.Extensions.VK_KHR_incremental_present
                      , Graphics.Vulkan.Extensions.VK_KHR_descriptor_update_template
@@ -205,6 +206,7 @@ library
                      , Graphics.Vulkan.Extensions.VK_EXT_conservative_rasterization
                      , Graphics.Vulkan.Extensions.VK_EXT_swapchain_colorspace
                      , Graphics.Vulkan.Extensions.VK_EXT_hdr_metadata
+                     , Graphics.Vulkan.Extensions.VK_KHR_create_renderpass2
                      , Graphics.Vulkan.Extensions.VK_KHR_shared_presentable_image
                      , Graphics.Vulkan.Extensions.VK_KHR_external_fence_capabilities
                      , Graphics.Vulkan.Extensions.VK_KHR_external_fence
@@ -212,6 +214,7 @@ library
                      , Graphics.Vulkan.Extensions.VK_KHR_maintenance2
                      , Graphics.Vulkan.Extensions.VK_KHR_get_surface_capabilities2
                      , Graphics.Vulkan.Extensions.VK_KHR_variable_pointers
+                     , Graphics.Vulkan.Extensions.VK_KHR_get_display_properties2
                      , Graphics.Vulkan.Extensions.VK_EXT_external_memory_dma_buf
                      , Graphics.Vulkan.Extensions.VK_EXT_queue_family_foreign
                      , Graphics.Vulkan.Extensions.VK_KHR_dedicated_allocation
@@ -237,12 +240,15 @@ library
                      , Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing
                      , Graphics.Vulkan.Extensions.VK_EXT_shader_viewport_index_layer
                      , Graphics.Vulkan.Extensions.VK_KHR_maintenance3
+                     , Graphics.Vulkan.Extensions.VK_KHR_draw_indirect_count
                      , Graphics.Vulkan.Extensions.VK_EXT_global_priority
+                     , Graphics.Vulkan.Extensions.VK_KHR_8bit_storage
                      , Graphics.Vulkan.Extensions.VK_EXT_external_memory_host
                      , Graphics.Vulkan.Extensions.VK_AMD_buffer_marker
                      , Graphics.Vulkan.Extensions.VK_AMD_shader_core_properties
                      , Graphics.Vulkan.Extensions.VK_EXT_vertex_attribute_divisor
                      , Graphics.Vulkan.Extensions.VK_NV_shader_subgroup_partitioned
+                     , Graphics.Vulkan.Extensions.VK_NV_device_diagnostic_checkpoints
                      , Graphics.Vulkan.Dynamic
                      , Graphics.Vulkan
                      , Graphics.Vulkan.Core10

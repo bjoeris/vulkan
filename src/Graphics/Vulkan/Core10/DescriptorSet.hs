@@ -23,8 +23,8 @@ module Graphics.Vulkan.Core10.DescriptorSet
   , VkDescriptorPoolCreateFlagBits(..)
   , pattern VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT
   , VkDescriptorPoolResetFlags(..)
-  , VkDescriptorSet
-  , VkDescriptorPool
+  , VkDescriptorSet(..)
+  , VkDescriptorPool(..)
   , vkCreateDescriptorSetLayout
   , vkDestroyDescriptorSetLayout
   , vkCreateDescriptorPool
@@ -55,9 +55,11 @@ import Data.Int
   )
 import Data.Word
   ( Word32
+  , Word64
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -86,7 +88,7 @@ import Text.Read.Lex
 
 
 import Graphics.Vulkan.Core10.BufferView
-  ( VkBufferView
+  ( VkBufferView(..)
   )
 import Graphics.Vulkan.Core10.Core
   ( VkResult(..)
@@ -102,17 +104,17 @@ import Graphics.Vulkan.Core10.Image
   ( VkImageLayout(..)
   )
 import Graphics.Vulkan.Core10.ImageView
-  ( VkImageView
+  ( VkImageView(..)
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkBuffer
+  ( VkBuffer(..)
   )
 import Graphics.Vulkan.Core10.PipelineLayout
-  ( VkDescriptorSetLayout
+  ( VkDescriptorSetLayout(..)
   , VkShaderStageFlags
   )
 import Graphics.Vulkan.Core10.Sampler
-  ( VkSampler
+  ( VkSampler(..)
   )
 
 
@@ -372,22 +374,23 @@ instance Read VkDescriptorPoolResetFlags where
                     )
 
 
--- | Dummy data to tag the 'Ptr' with
-data VkDescriptorSet_T
 -- | VkDescriptorSet - Opaque handle to a descriptor set object
 --
 -- = See Also
 --
--- 'VkCopyDescriptorSet',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkObjectTableDescriptorSetEntryNVX',
--- 'VkWriteDescriptorSet', 'vkAllocateDescriptorSets',
+-- 'VkCopyDescriptorSet', 'VkWriteDescriptorSet',
+-- 'vkAllocateDescriptorSets',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdBindDescriptorSets',
 -- 'vkFreeDescriptorSets',
--- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_descriptor_update_template.vkUpdateDescriptorSetWithTemplate',
--- 'Graphics.Vulkan.Extensions.VK_KHR_descriptor_update_template.vkUpdateDescriptorSetWithTemplateKHR'
-type VkDescriptorSet = Ptr VkDescriptorSet_T
--- | Dummy data to tag the 'Ptr' with
-data VkDescriptorPool_T
+-- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_descriptor_update_template.vkUpdateDescriptorSetWithTemplate'
+newtype VkDescriptorSet = VkDescriptorSet Word64
+  deriving (Eq, Show)
+
+instance Storable VkDescriptorSet where
+  sizeOf (VkDescriptorSet w) = sizeOf w
+  alignment (VkDescriptorSet w) = alignment w
+  peek ptr = VkDescriptorSet <$> peek (castPtr ptr)
+  poke ptr (VkDescriptorSet w) = poke (castPtr ptr) w
 -- | VkDescriptorPool - Opaque handle to a descriptor pool object
 --
 -- = See Also
@@ -395,7 +398,14 @@ data VkDescriptorPool_T
 -- 'VkDescriptorSetAllocateInfo', 'vkCreateDescriptorPool',
 -- 'vkDestroyDescriptorPool', 'vkFreeDescriptorSets',
 -- 'vkResetDescriptorPool'
-type VkDescriptorPool = Ptr VkDescriptorPool_T
+newtype VkDescriptorPool = VkDescriptorPool Word64
+  deriving (Eq, Show)
+
+instance Storable VkDescriptorPool where
+  sizeOf (VkDescriptorPool w) = sizeOf w
+  alignment (VkDescriptorPool w) = alignment w
+  peek ptr = VkDescriptorPool <$> peek (castPtr ptr)
+  poke ptr (VkDescriptorPool w) = poke (castPtr ptr) w
 -- | vkCreateDescriptorSetLayout - Create a new descriptor set layout
 --
 -- = Parameters
@@ -412,8 +422,9 @@ type VkDescriptorPool = Ptr VkDescriptorPool_T
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pSetLayout@ points to a @VkDescriptorSetLayout@ handle in which the
---     resulting descriptor set layout object is returned.
+-- -   @pSetLayout@ points to a
+--     'Graphics.Vulkan.Core10.PipelineLayout.VkDescriptorSetLayout' handle
+--     in which the resulting descriptor set layout object is returned.
 --
 -- == Valid Usage (Implicit)
 --
@@ -516,7 +527,7 @@ foreign import ccall
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pDescriptorPool@ points to a @VkDescriptorPool@ handle in which the
+-- -   @pDescriptorPool@ points to a 'VkDescriptorPool' handle in which the
 --     resulting descriptor pool object is returned.
 --
 -- = Description
@@ -549,8 +560,6 @@ foreign import ccall
 --     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
 --
 --     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_FRAGMENTATION_EXT@
 --
 -- = See Also
 --
@@ -689,7 +698,7 @@ foreign import ccall
 --     'VkDescriptorSetAllocateInfo' structure describing parameters of the
 --     allocation.
 --
--- -   @pDescriptorSets@ is a pointer to an array of @VkDescriptorSet@
+-- -   @pDescriptorSets@ is a pointer to an array of 'VkDescriptorSet'
 --     handles in which the resulting descriptor set objects are returned.
 --
 -- = Description
@@ -785,7 +794,7 @@ foreign import ccall
 -- -   @descriptorSetCount@ is the number of elements in the
 --     @pDescriptorSets@ array.
 --
--- -   @pDescriptorSets@ is an array of handles to @VkDescriptorSet@
+-- -   @pDescriptorSets@ is an array of handles to 'VkDescriptorSet'
 --     objects.
 --
 -- = Description
@@ -1005,41 +1014,19 @@ instance Storable VkDescriptorBufferInfo where
 -- -   @imageView@ /must/ not be 2D or 2D array image view created from a
 --     3D image
 --
+-- -   If @imageView@ is created from a depth\/stencil image, the
+--     @aspectMask@ used to create the @imageView@ /must/ include either
+--     @VK_IMAGE_ASPECT_DEPTH_BIT@ or @VK_IMAGE_ASPECT_STENCIL_BIT@ but not
+--     both.
+--
 -- -   @imageLayout@ /must/ match the actual
 --     'Graphics.Vulkan.Core10.Image.VkImageLayout' of each subresource
 --     accessible from @imageView@ at the time this descriptor is accessed
+--     as defined by the [image layout matching
+--     rules](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#resources-image-layouts-matching-rule)
 --
--- -   If @sampler@ is used and enables [sampler Y’CBCR
---     conversion](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#samplers-YCbCr-conversion):
---
---     -   The @format@ of the @imageView@ /must/ be the same as the
---         'Graphics.Vulkan.Core10.Core.VkFormat' of the image
---
---     -   The @aspectMask@ of the @imageView@ /must/ be
---         @VK_IMAGE_ASPECT_COLOR_BIT@
---
---     -   The @components.a@ of the @imageView@ /must/ be
---         @VK_COMPONENT_SWIZZLE_IDENTITY@
---
---     -   The @components.r@ of the @imageView@ /must/ be
---         @VK_COMPONENT_SWIZZLE_IDENTITY@
---
---     -   The @components.g@ of the @imageView@ /must/ be
---         @VK_COMPONENT_SWIZZLE_IDENTITY@
---
---     -   The @components.b@ of the @imageView@ /must/ be
---         @VK_COMPONENT_SWIZZLE_IDENTITY@
---
---     -   The @pNext@ chain of the @imageView@ /must/ contain a
---         @VkSamplerYcbcrConversionInfo@ which has a @conversion@ which is
---         an /identically defined object/ to the @conversion@ of the
---         @VkSamplerYcbcrConversionInfo@ which is in the @pNext@ chain of
---         the @sampler@
---
--- -   If @sampler@ is used and does not enable [sampler Y’CBCR
---     conversion](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#samplers-YCbCr-conversion)
---     and the 'Graphics.Vulkan.Core10.Core.VkFormat' of the image is a
---     [multi-planar
+-- -   If @sampler@ is used and the 'Graphics.Vulkan.Core10.Core.VkFormat'
+--     of the image is a [multi-planar
 --     format](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#features-formats-requiring-sampler-ycbcr-conversion),
 --     the image /must/ have been created with
 --     @VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT@, and the @aspectMask@ of the
@@ -1168,6 +1155,28 @@ instance Storable VkDescriptorImageInfo where
 --     valid @VkImageView@ and
 --     'Graphics.Vulkan.Core10.Image.VkImageLayout', respectively
 --
+-- -   If @descriptorType@ is @VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE@, then the
+--     @imageView@ member of each @pImageInfo@ element /must/ have been
+--     created without a @VkSamplerYcbcrConversionInfo@ structure in its
+--     @pNext@ chain
+--
+-- -   If @descriptorType@ is @VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER@,
+--     and if any element of @pImageInfo@ has a @imageView@ member that was
+--     created with a @VkSamplerYcbcrConversionInfo@ structure in its
+--     @pNext@ chain, then @dstSet@ /must/ have been allocated with a
+--     layout that included immutable samplers for @dstBinding@
+--
+-- -   If @descriptorType@ is @VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER@,
+--     and @dstSet@ was allocated with a layout that included immutable
+--     samplers for @dstBinding@, then the @imageView@ member of each
+--     element of @pImageInfo@ which corresponds to an immutable sampler
+--     that enables [sampler Y’CBCR
+--     conversion](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#samplers-YCbCr-conversion)
+--     /must/ have been created with a @VkSamplerYcbcrConversionInfo@
+--     structure in its @pNext@ chain with an /identically defined/
+--     @VkSamplerYcbcrConversionInfo@ to the corresponding immutable
+--     sampler
+--
 -- -   If @descriptorType@ is @VK_DESCRIPTOR_TYPE_STORAGE_IMAGE@, for each
 --     descriptor that will be accessed via load or store operations the
 --     @imageLayout@ member for corresponding elements of @pImageInfo@
@@ -1272,7 +1281,6 @@ instance Storable VkDescriptorImageInfo where
 -- 'Graphics.Vulkan.Core10.BufferView.VkBufferView',
 -- 'VkDescriptorBufferInfo', 'VkDescriptorImageInfo', 'VkDescriptorSet',
 -- 'VkDescriptorType', 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'Graphics.Vulkan.Extensions.VK_KHR_push_descriptor.vkCmdPushDescriptorSetKHR',
 -- 'vkUpdateDescriptorSets'
 data VkWriteDescriptorSet = VkWriteDescriptorSet
   { -- | @sType@ is the type of this structure.
@@ -1601,8 +1609,7 @@ instance Storable VkDescriptorSetLayoutBinding where
 -- -   @sType@ /must/ be
 --     @VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO@
 --
--- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
---     'Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing.VkDescriptorSetLayoutBindingFlagsCreateInfoEXT'
+-- -   @pNext@ /must/ be @NULL@
 --
 -- -   @flags@ /must/ be a valid combination of
 --     'VkDescriptorSetLayoutCreateFlagBits' values
@@ -1616,8 +1623,7 @@ instance Storable VkDescriptorSetLayoutBinding where
 -- 'VkDescriptorSetLayoutBinding', 'VkDescriptorSetLayoutCreateFlags',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
 -- 'vkCreateDescriptorSetLayout',
--- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance3.vkGetDescriptorSetLayoutSupport',
--- 'Graphics.Vulkan.Extensions.VK_KHR_maintenance3.vkGetDescriptorSetLayoutSupportKHR'
+-- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance3.vkGetDescriptorSetLayoutSupport'
 data VkDescriptorSetLayoutCreateInfo = VkDescriptorSetLayoutCreateInfo
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -1749,7 +1755,7 @@ data VkDescriptorPoolCreateInfo = VkDescriptorPoolCreateInfo
   vkMaxSets :: Word32
   , -- | @poolSizeCount@ is the number of elements in @pPoolSizes@.
   vkPoolSizeCount :: Word32
-  , -- | @pPoolSizes@ is a pointer to an array of @VkDescriptorPoolSize@
+  , -- | @pPoolSizes@ is a pointer to an array of 'VkDescriptorPoolSize'
   -- structures, each containing a descriptor type and number of descriptors
   -- of that type to be allocated in the pool.
   vkPPoolSizes :: Ptr VkDescriptorPoolSize
@@ -1788,8 +1794,7 @@ instance Storable VkDescriptorPoolCreateInfo where
 --
 -- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO@
 --
--- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
---     'Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing.VkDescriptorSetVariableDescriptorCountAllocateInfoEXT'
+-- -   @pNext@ /must/ be @NULL@
 --
 -- -   @descriptorPool@ /must/ be a valid @VkDescriptorPool@ handle
 --

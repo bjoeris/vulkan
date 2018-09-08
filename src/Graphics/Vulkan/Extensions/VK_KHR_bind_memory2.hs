@@ -43,11 +43,11 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkDeviceSize
   )
 import Graphics.Vulkan.Core10.Memory
-  ( VkDeviceMemory
+  ( VkDeviceMemory(..)
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkBuffer
-  , VkImage
+  ( VkBuffer(..)
+  , VkImage(..)
   )
 import Graphics.Vulkan.Core11.Promoted_from_VK_KHR_bind_memory2
   ( VkBindBufferMemoryInfo(..)

@@ -8,7 +8,7 @@
 
 module Graphics.Vulkan.Core10.Shader
   ( VkShaderModuleCreateFlags(..)
-  , VkShaderModule
+  , VkShaderModule(..)
   , vkCreateShaderModule
   , vkDestroyShaderModule
   , VkShaderModuleCreateInfo(..)
@@ -20,12 +20,14 @@ import Data.Bits
   )
 import Data.Word
   ( Word32
+  , Word64
   )
 import Foreign.C.Types
   ( CSize(..)
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -94,22 +96,27 @@ instance Read VkShaderModuleCreateFlags where
                     )
 
 
--- | Dummy data to tag the 'Ptr' with
-data VkShaderModule_T
 -- | VkShaderModule - Opaque handle to a shader module object
 --
 -- = See Also
 --
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineShaderStageCreateInfo',
 -- 'vkCreateShaderModule', 'vkDestroyShaderModule'
-type VkShaderModule = Ptr VkShaderModule_T
+newtype VkShaderModule = VkShaderModule Word64
+  deriving (Eq, Show)
+
+instance Storable VkShaderModule where
+  sizeOf (VkShaderModule w) = sizeOf w
+  alignment (VkShaderModule w) = alignment w
+  peek ptr = VkShaderModule <$> peek (castPtr ptr)
+  poke ptr (VkShaderModule w) = poke (castPtr ptr) w
 -- | vkCreateShaderModule - Creates a new shader module object
 --
 -- = Parameters
 --
 -- -   @device@ is the logical device that creates the shader module.
 --
--- -   @pCreateInfo@ parameter is a pointer to an instance of the
+-- -   @pCreateInfo@ is a pointer to an instance of the
 --     @VkShaderModuleCreateInfo@ structure.
 --
 -- -   @pAllocator@ controls host memory allocation as described in the
@@ -117,7 +124,7 @@ type VkShaderModule = Ptr VkShaderModule_T
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pShaderModule@ points to a @VkShaderModule@ handle in which the
+-- -   @pShaderModule@ points to a 'VkShaderModule' handle in which the
 --     resulting shader module object is returned.
 --
 -- = Description
@@ -154,8 +161,6 @@ type VkShaderModule = Ptr VkShaderModule_T
 --     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
 --
 --     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_INVALID_SHADER_NV@
 --
 -- = See Also
 --
@@ -264,8 +269,7 @@ foreign import ccall
 --
 -- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO@
 --
--- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
---     'Graphics.Vulkan.Extensions.VK_EXT_validation_cache.VkShaderModuleValidationCacheCreateInfoEXT'
+-- -   @pNext@ /must/ be @NULL@
 --
 -- -   @flags@ /must/ be @0@
 --

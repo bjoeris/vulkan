@@ -34,7 +34,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkPhysicalDevice
   )
 import Graphics.Vulkan.Extensions.VK_KHR_display
-  ( VkDisplayKHR
+  ( VkDisplayKHR(..)
   )
 import Graphics.Vulkan.Extensions.VK_KHR_xlib_surface
   ( Display(..)
@@ -77,26 +77,12 @@ pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME = "VK_EXT_acquire_xlib_displa
 -- One example of when an X11 server loses access to a display is when it
 -- loses ownership of its virtual terminal.
 --
--- == Valid Usage (Implicit)
---
--- -   @physicalDevice@ /must/ be a valid @VkPhysicalDevice@ handle
---
--- -   @dpy@ /must/ be a valid pointer to a @Display@ value
---
--- -   @display@ /must/ be a valid @VkDisplayKHR@ handle
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_INITIALIZATION_FAILED@
+-- Unresolved directive in vkAcquireXlibDisplayEXT.txt -
+-- include::..\/validity\/protos\/vkAcquireXlibDisplayEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_KHR_display.VkDisplayKHR',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDevice'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -125,23 +111,12 @@ foreign import ccall
 -- 'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE' /must/ be returned in
 -- @pDisplay@.
 --
--- == Valid Usage (Implicit)
---
--- -   @physicalDevice@ /must/ be a valid @VkPhysicalDevice@ handle
---
--- -   @dpy@ /must/ be a valid pointer to a @Display@ value
---
--- -   @pDisplay@ /must/ be a valid pointer to a @VkDisplayKHR@ handle
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
+-- Unresolved directive in vkGetRandROutputDisplayEXT.txt -
+-- include::..\/validity\/protos\/vkGetRandROutputDisplayEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_KHR_display.VkDisplayKHR',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDevice'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe

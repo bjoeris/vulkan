@@ -13,10 +13,10 @@ module Graphics.Vulkan.Extensions.VK_EXT_display_surface_counter
   , pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT
   , pattern VK_EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION
   , pattern VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME
-  , pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT
   , vkGetPhysicalDeviceSurfaceCapabilities2EXT
   , VkSurfaceCapabilities2EXT(..)
   , VkSurfaceCounterFlagsEXT
+  , pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT
   ) where
 
 import Data.Bits
@@ -71,9 +71,9 @@ import Graphics.Vulkan.Core10.Pipeline
   ( VkExtent2D(..)
   )
 import Graphics.Vulkan.Extensions.VK_KHR_surface
-  ( VkSurfaceTransformFlagBitsKHR(..)
+  ( VkSurfaceKHR(..)
+  , VkSurfaceTransformFlagBitsKHR(..)
   , VkCompositeAlphaFlagsKHR
-  , VkSurfaceKHR
   , VkSurfaceTransformFlagsKHR
   )
 
@@ -84,8 +84,7 @@ import Graphics.Vulkan.Extensions.VK_KHR_surface
 --
 -- = See Also
 --
--- 'VkSurfaceCounterFlagsEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_display_control.vkGetSwapchainCounterEXT'
+-- No cross-references are available
 newtype VkSurfaceCounterFlagBitsEXT = VkSurfaceCounterFlagBitsEXT VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -117,9 +116,6 @@ pattern VK_EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION = 1
 -- No documentation found for TopLevel "VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME"
 pattern VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME :: (Eq a ,IsString a) => a
 pattern VK_EXT_DISPLAY_SURFACE_COUNTER_EXTENSION_NAME = "VK_EXT_display_surface_counter"
--- No documentation found for TopLevel "VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT"
-pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT :: VkStructureType
-pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT = VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT
 -- | vkGetPhysicalDeviceSurfaceCapabilities2EXT - Query surface capabilities
 --
 -- = Parameters
@@ -141,35 +137,12 @@ pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT = VK_STRUCTURE_TYPE_SURFACE_
 -- with the ability to return extended information by adding extension
 -- structures to the @pNext@ chain of its @pSurfaceCapabilities@ parameter.
 --
--- == Valid Usage (Implicit)
---
--- -   @physicalDevice@ /must/ be a valid @VkPhysicalDevice@ handle
---
--- -   @surface@ /must/ be a valid @VkSurfaceKHR@ handle
---
--- -   @pSurfaceCapabilities@ /must/ be a valid pointer to a
---     @VkSurfaceCapabilities2EXT@ structure
---
--- -   Both of @physicalDevice@, and @surface@ /must/ have been created,
---     allocated, or retrieved from the same @VkInstance@
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_SURFACE_LOST_KHR@
+-- Unresolved directive in vkGetPhysicalDeviceSurfaceCapabilities2EXT.txt -
+-- include::..\/validity\/protos\/vkGetPhysicalDeviceSurfaceCapabilities2EXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDevice',
--- 'VkSurfaceCapabilities2EXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -202,22 +175,12 @@ foreign import ccall
 --     [display
 --     surface](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#wsi-display-surfaces).
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT@
---
--- -   @pNext@ /must/ be @NULL@
+-- Unresolved directive in VkSurfaceCapabilities2EXT.txt -
+-- include::..\/validity\/structs\/VkSurfaceCapabilities2EXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkCompositeAlphaFlagsKHR',
--- 'Graphics.Vulkan.Core10.Pipeline.VkExtent2D',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkImageUsageFlags',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'VkSurfaceCounterFlagsEXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceTransformFlagBitsKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceTransformFlagsKHR',
--- 'vkGetPhysicalDeviceSurfaceCapabilities2EXT'
+-- No cross-references are available
 data VkSurfaceCapabilities2EXT = VkSurfaceCapabilities2EXT
   { -- No documentation found for Nested "VkSurfaceCapabilities2EXT" "sType"
   vkSType :: VkStructureType
@@ -286,6 +249,8 @@ instance Storable VkSurfaceCapabilities2EXT where
 --
 -- = See Also
 --
--- 'VkSurfaceCapabilities2EXT', 'VkSurfaceCounterFlagBitsEXT',
--- 'Graphics.Vulkan.Extensions.VK_EXT_display_control.VkSwapchainCounterCreateInfoEXT'
+-- No cross-references are available
 type VkSurfaceCounterFlagsEXT = VkSurfaceCounterFlagBitsEXT
+-- No documentation found for TopLevel "VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT"
+pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT :: VkStructureType
+pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT = VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT

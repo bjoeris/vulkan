@@ -8,7 +8,7 @@
 
 module Graphics.Vulkan.Core10.PipelineCache
   ( VkPipelineCacheCreateFlags(..)
-  , VkPipelineCache
+  , VkPipelineCache(..)
   , vkCreatePipelineCache
   , vkDestroyPipelineCache
   , vkGetPipelineCacheData
@@ -22,12 +22,14 @@ import Data.Bits
   )
 import Data.Word
   ( Word32
+  , Word64
   )
 import Foreign.C.Types
   ( CSize(..)
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -96,8 +98,6 @@ instance Read VkPipelineCacheCreateFlags where
                     )
 
 
--- | Dummy data to tag the 'Ptr' with
-data VkPipelineCache_T
 -- | VkPipelineCache - Opaque handle to a pipeline cache object
 --
 -- = See Also
@@ -106,7 +106,14 @@ data VkPipelineCache_T
 -- 'Graphics.Vulkan.Core10.Pipeline.vkCreateGraphicsPipelines',
 -- 'vkCreatePipelineCache', 'vkDestroyPipelineCache',
 -- 'vkGetPipelineCacheData', 'vkMergePipelineCaches'
-type VkPipelineCache = Ptr VkPipelineCache_T
+newtype VkPipelineCache = VkPipelineCache Word64
+  deriving (Eq, Show)
+
+instance Storable VkPipelineCache where
+  sizeOf (VkPipelineCache w) = sizeOf w
+  alignment (VkPipelineCache w) = alignment w
+  peek ptr = VkPipelineCache <$> peek (castPtr ptr)
+  poke ptr (VkPipelineCache w) = poke (castPtr ptr) w
 -- | vkCreatePipelineCache - Creates a new pipeline cache
 --
 -- = Parameters
@@ -114,7 +121,7 @@ type VkPipelineCache = Ptr VkPipelineCache_T
 -- -   @device@ is the logical device that creates the pipeline cache
 --     object.
 --
--- -   @pCreateInfo@ is a pointer to a @VkPipelineCacheCreateInfo@
+-- -   @pCreateInfo@ is a pointer to a 'VkPipelineCacheCreateInfo'
 --     structure that contains the initial parameters for the pipeline
 --     cache object.
 --
@@ -123,7 +130,7 @@ type VkPipelineCache = Ptr VkPipelineCache_T
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pPipelineCache@ is a pointer to a @VkPipelineCache@ handle in which
+-- -   @pPipelineCache@ is a pointer to a 'VkPipelineCache' handle in which
 --     the resulting pipeline cache object is returned.
 --
 -- = Description

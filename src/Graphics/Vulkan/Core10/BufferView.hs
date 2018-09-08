@@ -8,7 +8,7 @@
 
 module Graphics.Vulkan.Core10.BufferView
   ( VkBufferViewCreateFlags(..)
-  , VkBufferView
+  , VkBufferView(..)
   , vkCreateBufferView
   , vkDestroyBufferView
   , VkBufferViewCreateInfo(..)
@@ -18,8 +18,12 @@ import Data.Bits
   ( Bits
   , FiniteBits
   )
+import Data.Word
+  ( Word64
+  )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -59,7 +63,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkDeviceSize
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkBuffer
+  ( VkBuffer(..)
   )
 
 
@@ -93,15 +97,20 @@ instance Read VkBufferViewCreateFlags where
                     )
 
 
--- | Dummy data to tag the 'Ptr' with
-data VkBufferView_T
 -- | VkBufferView - Opaque handle to a buffer view object
 --
 -- = See Also
 --
 -- 'Graphics.Vulkan.Core10.DescriptorSet.VkWriteDescriptorSet',
 -- 'vkCreateBufferView', 'vkDestroyBufferView'
-type VkBufferView = Ptr VkBufferView_T
+newtype VkBufferView = VkBufferView Word64
+  deriving (Eq, Show)
+
+instance Storable VkBufferView where
+  sizeOf (VkBufferView w) = sizeOf w
+  alignment (VkBufferView w) = alignment w
+  peek ptr = VkBufferView <$> peek (castPtr ptr)
+  poke ptr (VkBufferView w) = poke (castPtr ptr) w
 -- | vkCreateBufferView - Create a new buffer view object
 --
 -- = Parameters
@@ -117,7 +126,7 @@ type VkBufferView = Ptr VkBufferView_T
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pView@ points to a @VkBufferView@ handle in which the resulting
+-- -   @pView@ points to a 'VkBufferView' handle in which the resulting
 --     buffer view object is returned.
 --
 -- == Valid Usage (Implicit)
@@ -273,7 +282,8 @@ data VkBufferViewCreateInfo = VkBufferViewCreateInfo
   vkPNext :: Ptr ()
   , -- | @flags@ is reserved for future use.
   vkFlags :: VkBufferViewCreateFlags
-  , -- | @buffer@ is a @VkBuffer@ on which the view will be created.
+  , -- | @buffer@ is a 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer' on
+  -- which the view will be created.
   vkBuffer :: VkBuffer
   , -- | @format@ is a 'Graphics.Vulkan.Core10.Core.VkFormat' describing the
   -- format of the data elements in the buffer.

@@ -44,7 +44,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkDevice
   )
 import Graphics.Vulkan.Extensions.VK_KHR_swapchain
-  ( VkSwapchainKHR
+  ( VkSwapchainKHR(..)
   )
 
 
@@ -72,26 +72,14 @@ pattern VK_EXT_HDR_METADATA_EXTENSION_NAME = "VK_EXT_hdr_metadata"
 -- -   @pMetadata@ is a pointer to the array of @swapchainCount@
 --     @VkHdrMetadataEXT@ structures.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @pSwapchains@ /must/ be a valid pointer to an array of
---     @swapchainCount@ valid @VkSwapchainKHR@ handles
---
--- -   @pMetadata@ /must/ be a valid pointer to an array of
---     @swapchainCount@ valid @VkHdrMetadataEXT@ structures
---
--- -   @swapchainCount@ /must/ be greater than @0@
---
--- -   Both of @device@, and the elements of @pSwapchains@ /must/ have been
---     created, allocated, or retrieved from the same @VkInstance@
+-- Unresolved directive in vkSetHdrMetadataEXT.txt -
+-- include::..\/validity\/protos\/vkSetHdrMetadataEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkHdrMetadataEXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkSwapchainKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -101,7 +89,7 @@ foreign import ccall
 --
 -- = See Also
 --
--- 'VkHdrMetadataEXT'
+-- No cross-references are available
 data VkXYColorEXT = VkXYColorEXT
   { -- No documentation found for Nested "VkXYColorEXT" "x"
   vkX :: CFloat
@@ -128,8 +116,7 @@ instance Storable VkXYColorEXT where
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'VkXYColorEXT',
--- 'vkSetHdrMetadataEXT'
+-- No cross-references are available
 data VkHdrMetadataEXT = VkHdrMetadataEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

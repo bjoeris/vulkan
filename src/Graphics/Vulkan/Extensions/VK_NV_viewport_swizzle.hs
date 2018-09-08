@@ -80,7 +80,7 @@ import Graphics.Vulkan.Core10.Core
 --
 -- = See Also
 --
--- 'VkViewportSwizzleNV'
+-- No cross-references are available
 newtype VkViewportCoordinateSwizzleNV = VkViewportCoordinateSwizzleNV Int32
   deriving (Eq, Ord, Storable)
 
@@ -154,7 +154,7 @@ pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV = VkViewportCoordinateSwizz
 --
 -- = See Also
 --
--- 'VkPipelineViewportSwizzleStateCreateInfoNV'
+-- No cross-references are available
 newtype VkPipelineViewportSwizzleStateCreateFlagsNV = VkPipelineViewportSwizzleStateCreateFlagsNV VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -184,20 +184,14 @@ pattern VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME :: (Eq a ,IsString a) => a
 pattern VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME = "VK_NV_viewport_swizzle"
 -- | VkViewportSwizzleNV - Structure specifying a viewport swizzle
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @x@ /must/ be a valid 'VkViewportCoordinateSwizzleNV' value
---
--- -   @y@ /must/ be a valid 'VkViewportCoordinateSwizzleNV' value
---
--- -   @z@ /must/ be a valid 'VkViewportCoordinateSwizzleNV' value
---
--- -   @w@ /must/ be a valid 'VkViewportCoordinateSwizzleNV' value
+-- Unresolved directive in VkViewportSwizzleNV.txt -
+-- include::..\/validity\/structs\/VkViewportSwizzleNV.txt[]
 --
 -- = See Also
 --
--- 'VkPipelineViewportSwizzleStateCreateInfoNV',
--- 'VkViewportCoordinateSwizzleNV'
+-- No cross-references are available
 data VkViewportSwizzleNV = VkViewportSwizzleNV
   { -- | @x@ is a 'VkViewportCoordinateSwizzleNV' value specifying the swizzle
   -- operation to apply to the x component of the primitive
@@ -233,19 +227,12 @@ instance Storable VkViewportSwizzleNV where
 -- -   @viewportCount@ /must/ match the @viewportCount@ set in
 --     @VkPipelineViewportStateCreateInfo@
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV@
---
--- -   @flags@ /must/ be @0@
---
--- -   @viewportCount@ /must/ be greater than @0@
+-- Unresolved directive in VkPipelineViewportSwizzleStateCreateInfoNV.txt -
+-- include::..\/validity\/structs\/VkPipelineViewportSwizzleStateCreateInfoNV.txt[]
 --
 -- = See Also
 --
--- 'VkPipelineViewportSwizzleStateCreateFlagsNV',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'VkViewportSwizzleNV'
+-- No cross-references are available
 data VkPipelineViewportSwizzleStateCreateInfoNV = VkPipelineViewportSwizzleStateCreateInfoNV
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

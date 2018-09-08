@@ -41,11 +41,11 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkDeviceSize
   )
 import Graphics.Vulkan.Core10.Memory
-  ( VkDeviceMemory
+  ( VkDeviceMemory(..)
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkBuffer
-  , VkImage
+  ( VkBuffer(..)
+  , VkImage(..)
   )
 
 
@@ -158,22 +158,6 @@ foreign import ccall
 --
 -- -   @memoryOffset@ /must/ be less than the size of @memory@
 --
--- -   If @buffer@ was created with the
---     @VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT@ or
---     @VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT@, @memoryOffset@ /must/ be
---     a multiple of
---     @VkPhysicalDeviceLimits@::@minTexelBufferOffsetAlignment@
---
--- -   If @buffer@ was created with the
---     @VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT@, @memoryOffset@ /must/ be a
---     multiple of
---     @VkPhysicalDeviceLimits@::@minUniformBufferOffsetAlignment@
---
--- -   If @buffer@ was created with the
---     @VK_BUFFER_USAGE_STORAGE_BUFFER_BIT@, @memoryOffset@ /must/ be a
---     multiple of
---     @VkPhysicalDeviceLimits@::@minStorageBufferOffsetAlignment@
---
 -- -   @memory@ /must/ have been allocated using one of the memory types
 --     allowed in the @memoryTypeBits@ member of the @VkMemoryRequirements@
 --     structure returned from a call to @vkGetBufferMemoryRequirements@
@@ -234,8 +218,7 @@ foreign import ccall
 --
 -- 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer',
 -- 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory', @VkDeviceSize@,
--- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'vkBindBufferMemory2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_bind_memory2.vkBindBufferMemory2KHR'
+-- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'vkBindBufferMemory2'
 data VkBindBufferMemoryInfo = VkBindBufferMemoryInfo
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -243,8 +226,8 @@ data VkBindBufferMemoryInfo = VkBindBufferMemoryInfo
   vkPNext :: Ptr ()
   , -- | @buffer@ is the buffer to be attached to memory.
   vkBuffer :: VkBuffer
-  , -- | @memory@ is a @VkDeviceMemory@ object describing the device memory to
-  -- attach.
+  , -- | @memory@ is a 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory' object
+  -- describing the device memory to attach.
   vkMemory :: VkDeviceMemory
   , -- | @memoryOffset@ is the start offset of the region of @memory@ which is to
   -- be bound to the buffer. The number of bytes returned in the
@@ -421,8 +404,7 @@ instance Storable VkBindBufferMemoryInfo where
 -- -   Each @pNext@ member of any structure (including this one) in the
 --     @pNext@ chain /must/ be either @NULL@ or a pointer to a valid
 --     instance of
---     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group_and_VK_KHR_bind_memory2.VkBindImageMemoryDeviceGroupInfo',
---     'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkBindImageMemorySwapchainInfoKHR',
+--     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group_and_VK_KHR_bind_memory2.VkBindImageMemoryDeviceGroupInfo'
 --     or
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkBindImagePlaneMemoryInfo'
 --
@@ -437,8 +419,7 @@ instance Storable VkBindBufferMemoryInfo where
 --
 -- 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory', @VkDeviceSize@,
 -- 'Graphics.Vulkan.Core10.MemoryManagement.VkImage',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'vkBindImageMemory2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_bind_memory2.vkBindImageMemory2KHR'
+-- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'vkBindImageMemory2'
 data VkBindImageMemoryInfo = VkBindImageMemoryInfo
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -446,8 +427,8 @@ data VkBindImageMemoryInfo = VkBindImageMemoryInfo
   vkPNext :: Ptr ()
   , -- | @image@ is the image to be attached to memory.
   vkImage :: VkImage
-  , -- | @memory@ is a @VkDeviceMemory@ object describing the device memory to
-  -- attach.
+  , -- | @memory@ is a 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory' object
+  -- describing the device memory to attach.
   vkMemory :: VkDeviceMemory
   , -- | @memoryOffset@ is the start offset of the region of @memory@ which is to
   -- be bound to the image. The number of bytes returned in the

@@ -176,7 +176,7 @@ pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBGROUP_PROPERTIES = VkStructureType 
 --     'Graphics.Vulkan.Core10.Pipeline.VkShaderStageFlagBits' describing
 --     the shader stages that subgroup operations are supported in.
 --     @supportedStages@ will have the @VK_SHADER_STAGE_COMPUTE_BIT@ bit
---     set if any of any of the physical device’s queues support
+--     set if any of the physical device’s queues support
 --     @VK_QUEUE_COMPUTE_BIT@.
 --
 -- -   @supportedOperations@ is a bitmask of 'VkSubgroupFeatureFlagBits'

@@ -263,6 +263,10 @@ module Graphics.Vulkan.Dynamic
   , hasCmdBeginQuery
   , cmdEndQuery
   , hasCmdEndQuery
+  , cmdBeginConditionalRenderingEXT
+  , hasCmdBeginConditionalRenderingEXT
+  , cmdEndConditionalRenderingEXT
+  , hasCmdEndConditionalRenderingEXT
   , cmdResetQueryPool
   , hasCmdResetQueryPool
   , cmdWriteTimestamp
@@ -525,6 +529,14 @@ module Graphics.Vulkan.Dynamic
   , hasGetPhysicalDeviceSurfaceCapabilities2KHR
   , getPhysicalDeviceSurfaceFormats2KHR
   , hasGetPhysicalDeviceSurfaceFormats2KHR
+  , getPhysicalDeviceDisplayProperties2KHR
+  , hasGetPhysicalDeviceDisplayProperties2KHR
+  , getPhysicalDeviceDisplayPlaneProperties2KHR
+  , hasGetPhysicalDeviceDisplayPlaneProperties2KHR
+  , getDisplayModeProperties2KHR
+  , hasGetDisplayModeProperties2KHR
+  , getDisplayPlaneCapabilities2KHR
+  , hasGetDisplayPlaneCapabilities2KHR
   , getBufferMemoryRequirements2
   , hasGetBufferMemoryRequirements2
   , getImageMemoryRequirements2
@@ -581,12 +593,28 @@ module Graphics.Vulkan.Dynamic
   , hasGetMemoryHostPointerPropertiesEXT
   , cmdWriteBufferMarkerAMD
   , hasCmdWriteBufferMarkerAMD
+  , createRenderPass2KHR
+  , hasCreateRenderPass2KHR
+  , cmdBeginRenderPass2KHR
+  , hasCmdBeginRenderPass2KHR
+  , cmdNextSubpass2KHR
+  , hasCmdNextSubpass2KHR
+  , cmdEndRenderPass2KHR
+  , hasCmdEndRenderPass2KHR
 #if defined(VK_USE_PLATFORM_ANDROID_KHR)
   , getAndroidHardwareBufferPropertiesANDROID
   , hasGetAndroidHardwareBufferPropertiesANDROID
   , getMemoryAndroidHardwareBufferANDROID
   , hasGetMemoryAndroidHardwareBufferANDROID
 #endif
+  , cmdDrawIndirectCountKHR
+  , hasCmdDrawIndirectCountKHR
+  , cmdDrawIndexedIndirectCountKHR
+  , hasCmdDrawIndexedIndirectCountKHR
+  , cmdSetCheckpointNV
+  , hasCmdSetCheckpointNV
+  , getQueueCheckpointDataNV
+  , hasGetQueueCheckpointDataNV
   ) where
 
 import Data.Int
@@ -620,8 +648,8 @@ import Graphics.Vulkan.Core10.Buffer
   ( VkBufferCreateInfo(..)
   )
 import Graphics.Vulkan.Core10.BufferView
-  ( VkBufferViewCreateInfo(..)
-  , VkBufferView
+  ( VkBufferView(..)
+  , VkBufferViewCreateInfo(..)
   )
 import Graphics.Vulkan.Core10.CommandBuffer
   ( VkCommandBufferAllocateInfo(..)
@@ -651,9 +679,9 @@ import Graphics.Vulkan.Core10.CommandBufferBuilding
   , VkStencilFaceFlags
   )
 import Graphics.Vulkan.Core10.CommandPool
-  ( VkCommandPoolCreateInfo(..)
+  ( VkCommandPool(..)
+  , VkCommandPoolCreateInfo(..)
   , VkCommandPoolResetFlagBits(..)
-  , VkCommandPool
   , VkCommandPoolResetFlags
   )
 import Graphics.Vulkan.Core10.Core
@@ -663,13 +691,13 @@ import Graphics.Vulkan.Core10.Core
   )
 import Graphics.Vulkan.Core10.DescriptorSet
   ( VkCopyDescriptorSet(..)
+  , VkDescriptorPool(..)
   , VkDescriptorPoolCreateInfo(..)
   , VkDescriptorPoolResetFlags(..)
+  , VkDescriptorSet(..)
   , VkDescriptorSetAllocateInfo(..)
   , VkDescriptorSetLayoutCreateInfo(..)
   , VkWriteDescriptorSet(..)
-  , VkDescriptorPool
-  , VkDescriptorSet
   )
 import Graphics.Vulkan.Core10.Device
   ( VkDeviceCreateInfo(..)
@@ -698,8 +726,8 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , vkGetInstanceProcAddr
   )
 import Graphics.Vulkan.Core10.Event
-  ( VkEventCreateInfo(..)
-  , VkEvent
+  ( VkEvent(..)
+  , VkEventCreateInfo(..)
   )
 import Graphics.Vulkan.Core10.ExtensionDiscovery
   ( VkExtensionProperties(..)
@@ -714,77 +742,77 @@ import Graphics.Vulkan.Core10.Image
   )
 import Graphics.Vulkan.Core10.ImageView
   ( VkImageSubresourceRange(..)
+  , VkImageView(..)
   , VkImageViewCreateInfo(..)
-  , VkImageView
   )
 import Graphics.Vulkan.Core10.LayerDiscovery
   ( VkLayerProperties(..)
   )
 import Graphics.Vulkan.Core10.Memory
-  ( VkMappedMemoryRange(..)
+  ( VkDeviceMemory(..)
+  , VkMappedMemoryRange(..)
   , VkMemoryAllocateInfo(..)
   , VkMemoryMapFlags(..)
-  , VkDeviceMemory
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkMemoryRequirements(..)
-  , VkBuffer
-  , VkImage
+  ( VkBuffer(..)
+  , VkImage(..)
+  , VkMemoryRequirements(..)
   )
 import Graphics.Vulkan.Core10.Pass
   ( VkDependencyFlagBits(..)
+  , VkFramebuffer(..)
   , VkFramebufferCreateInfo(..)
   , VkPipelineBindPoint(..)
   , VkRenderPassCreateInfo(..)
   , VkDependencyFlags
-  , VkFramebuffer
   )
 import Graphics.Vulkan.Core10.Pipeline
   ( VkComputePipelineCreateInfo(..)
   , VkExtent2D(..)
   , VkGraphicsPipelineCreateInfo(..)
+  , VkPipeline(..)
+  , VkPipelineLayout(..)
   , VkRect2D(..)
+  , VkRenderPass(..)
   , VkShaderStageFlagBits(..)
   , VkViewport(..)
-  , VkPipeline
-  , VkPipelineLayout
-  , VkRenderPass
   )
 import Graphics.Vulkan.Core10.PipelineCache
-  ( VkPipelineCacheCreateInfo(..)
-  , VkPipelineCache
+  ( VkPipelineCache(..)
+  , VkPipelineCacheCreateInfo(..)
   )
 import Graphics.Vulkan.Core10.PipelineLayout
-  ( VkPipelineLayoutCreateInfo(..)
-  , VkDescriptorSetLayout
+  ( VkDescriptorSetLayout(..)
+  , VkPipelineLayoutCreateInfo(..)
   , VkShaderStageFlags
   )
 import Graphics.Vulkan.Core10.Query
-  ( VkQueryPoolCreateInfo(..)
+  ( VkQueryPool(..)
+  , VkQueryPoolCreateInfo(..)
   , VkQueryResultFlagBits(..)
-  , VkQueryPool
   , VkQueryResultFlags
   )
 import Graphics.Vulkan.Core10.Queue
-  ( VkPipelineStageFlagBits(..)
+  ( VkFence(..)
+  , VkPipelineStageFlagBits(..)
+  , VkSemaphore(..)
   , VkSubmitInfo(..)
   , VkCommandBuffer
-  , VkFence
   , VkPipelineStageFlags
   , VkQueue
-  , VkSemaphore
   )
 import Graphics.Vulkan.Core10.QueueSemaphore
   ( VkSemaphoreCreateInfo(..)
   )
 import Graphics.Vulkan.Core10.Sampler
   ( VkFilter(..)
+  , VkSampler(..)
   , VkSamplerCreateInfo(..)
-  , VkSampler
   )
 import Graphics.Vulkan.Core10.Shader
-  ( VkShaderModuleCreateInfo(..)
-  , VkShaderModule
+  ( VkShaderModule(..)
+  , VkShaderModuleCreateInfo(..)
   )
 import Graphics.Vulkan.Core10.SparseResourceMemoryManagement
   ( VkBindSparseInfo(..)
@@ -800,8 +828,8 @@ import Graphics.Vulkan.Core11.Promoted_from_VK_KHR_bind_memory2
   , VkBindImageMemoryInfo(..)
   )
 import Graphics.Vulkan.Core11.Promoted_from_VK_KHR_descriptor_update_template
-  ( VkDescriptorUpdateTemplateCreateInfo(..)
-  , VkDescriptorUpdateTemplate
+  ( VkDescriptorUpdateTemplate(..)
+  , VkDescriptorUpdateTemplateCreateInfo(..)
   )
 import Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group
   ( VkPeerMemoryFeatureFlags
@@ -847,8 +875,8 @@ import Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance3
   ( VkDescriptorSetLayoutSupport(..)
   )
 import Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion
-  ( VkSamplerYcbcrConversionCreateInfo(..)
-  , VkSamplerYcbcrConversion
+  ( VkSamplerYcbcrConversion(..)
+  , VkSamplerYcbcrConversionCreateInfo(..)
   )
 import Graphics.Vulkan.Extensions.VK_AMD_shader_info
   ( VkShaderInfoTypeAMD(..)
@@ -867,6 +895,9 @@ import Graphics.Vulkan.Extensions.VK_EXT_acquire_xlib_display
   ( RROutput
   )
 #endif
+import Graphics.Vulkan.Extensions.VK_EXT_conditional_rendering
+  ( VkConditionalRenderingBeginInfoEXT(..)
+  )
 import Graphics.Vulkan.Extensions.VK_EXT_debug_marker
   ( VkDebugMarkerMarkerInfoEXT(..)
   , VkDebugMarkerObjectNameInfoEXT(..)
@@ -874,9 +905,9 @@ import Graphics.Vulkan.Extensions.VK_EXT_debug_marker
   )
 import Graphics.Vulkan.Extensions.VK_EXT_debug_report
   ( VkDebugReportCallbackCreateInfoEXT(..)
+  , VkDebugReportCallbackEXT(..)
   , VkDebugReportFlagBitsEXT(..)
   , VkDebugReportObjectTypeEXT(..)
-  , VkDebugReportCallbackEXT
   , VkDebugReportFlagsEXT
   )
 import Graphics.Vulkan.Extensions.VK_EXT_debug_utils
@@ -885,10 +916,10 @@ import Graphics.Vulkan.Extensions.VK_EXT_debug_utils
   , VkDebugUtilsMessageTypeFlagBitsEXT(..)
   , VkDebugUtilsMessengerCallbackDataEXT(..)
   , VkDebugUtilsMessengerCreateInfoEXT(..)
+  , VkDebugUtilsMessengerEXT(..)
   , VkDebugUtilsObjectNameInfoEXT(..)
   , VkDebugUtilsObjectTagInfoEXT(..)
   , VkDebugUtilsMessageTypeFlagsEXT
-  , VkDebugUtilsMessengerEXT
   )
 import Graphics.Vulkan.Extensions.VK_EXT_display_control
   ( VkDeviceEventInfoEXT(..)
@@ -911,7 +942,7 @@ import Graphics.Vulkan.Extensions.VK_EXT_sample_locations
   )
 import Graphics.Vulkan.Extensions.VK_EXT_validation_cache
   ( VkValidationCacheCreateInfoEXT(..)
-  , VkValidationCacheEXT
+  , VkValidationCacheEXT(..)
   )
 import Graphics.Vulkan.Extensions.VK_GOOGLE_display_timing
   ( VkPastPresentationTimingGOOGLE(..)
@@ -923,15 +954,20 @@ import Graphics.Vulkan.Extensions.VK_KHR_android_surface
   ( VkAndroidSurfaceCreateInfoKHR(..)
   )
 #endif
+import Graphics.Vulkan.Extensions.VK_KHR_create_renderpass2
+  ( VkRenderPassCreateInfo2KHR(..)
+  , VkSubpassBeginInfoKHR(..)
+  , VkSubpassEndInfoKHR(..)
+  )
 import Graphics.Vulkan.Extensions.VK_KHR_display
-  ( VkDisplayModeCreateInfoKHR(..)
+  ( VkDisplayKHR(..)
+  , VkDisplayModeCreateInfoKHR(..)
+  , VkDisplayModeKHR(..)
   , VkDisplayModePropertiesKHR(..)
   , VkDisplayPlaneCapabilitiesKHR(..)
   , VkDisplayPlanePropertiesKHR(..)
   , VkDisplayPropertiesKHR(..)
   , VkDisplaySurfaceCreateInfoKHR(..)
-  , VkDisplayKHR
-  , VkDisplayModeKHR
   )
 import Graphics.Vulkan.Extensions.VK_KHR_external_fence_fd
   ( VkFenceGetFdInfoKHR(..)
@@ -966,6 +1002,13 @@ import Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_win32
   , VkSemaphoreGetWin32HandleInfoKHR(..)
   )
 #endif
+import Graphics.Vulkan.Extensions.VK_KHR_get_display_properties2
+  ( VkDisplayModeProperties2KHR(..)
+  , VkDisplayPlaneCapabilities2KHR(..)
+  , VkDisplayPlaneInfo2KHR(..)
+  , VkDisplayPlaneProperties2KHR(..)
+  , VkDisplayProperties2KHR(..)
+  )
 import Graphics.Vulkan.Extensions.VK_KHR_get_surface_capabilities2
   ( VkPhysicalDeviceSurfaceInfo2KHR(..)
   , VkSurfaceCapabilities2KHR(..)
@@ -982,15 +1025,15 @@ import Graphics.Vulkan.Extensions.VK_KHR_surface
   ( VkPresentModeKHR(..)
   , VkSurfaceCapabilitiesKHR(..)
   , VkSurfaceFormatKHR(..)
-  , VkSurfaceKHR
+  , VkSurfaceKHR(..)
   )
 import Graphics.Vulkan.Extensions.VK_KHR_swapchain
   ( VkAcquireNextImageInfoKHR(..)
   , VkDeviceGroupPresentCapabilitiesKHR(..)
   , VkPresentInfoKHR(..)
   , VkSwapchainCreateInfoKHR(..)
+  , VkSwapchainKHR(..)
   , VkDeviceGroupPresentModeFlagsKHR
-  , VkSwapchainKHR
   )
 
 #if defined(VK_USE_PLATFORM_WAYLAND_KHR)
@@ -1051,14 +1094,17 @@ import Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands
   , VkDeviceGeneratedCommandsFeaturesNVX(..)
   , VkDeviceGeneratedCommandsLimitsNVX(..)
   , VkIndirectCommandsLayoutCreateInfoNVX(..)
+  , VkIndirectCommandsLayoutNVX(..)
   , VkObjectEntryTypeNVX(..)
   , VkObjectTableCreateInfoNVX(..)
   , VkObjectTableEntryNVX(..)
-  , VkIndirectCommandsLayoutNVX
-  , VkObjectTableNVX
+  , VkObjectTableNVX(..)
   )
 import Graphics.Vulkan.Extensions.VK_NV_clip_space_w_scaling
   ( VkViewportWScalingNV(..)
+  )
+import Graphics.Vulkan.Extensions.VK_NV_device_diagnostic_checkpoints
+  ( VkCheckpointDataNV(..)
   )
 import Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities
   ( VkExternalImageFormatPropertiesNV(..)
@@ -1187,6 +1233,8 @@ data DeviceCmds = DeviceCmds
 , pVkCmdPipelineBarrier :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("srcStageMask" ::: VkPipelineStageFlags) -> ("dstStageMask" ::: VkPipelineStageFlags) -> ("dependencyFlags" ::: VkDependencyFlags) -> ("memoryBarrierCount" ::: Word32) -> ("pMemoryBarriers" ::: Ptr VkMemoryBarrier) -> ("bufferMemoryBarrierCount" ::: Word32) -> ("pBufferMemoryBarriers" ::: Ptr VkBufferMemoryBarrier) -> ("imageMemoryBarrierCount" ::: Word32) -> ("pImageMemoryBarriers" ::: Ptr VkImageMemoryBarrier) -> IO ())
 , pVkCmdBeginQuery :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("queryPool" ::: VkQueryPool) -> ("query" ::: Word32) -> ("flags" ::: VkQueryControlFlags) -> IO ())
 , pVkCmdEndQuery :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("queryPool" ::: VkQueryPool) -> ("query" ::: Word32) -> IO ())
+, pVkCmdBeginConditionalRenderingEXT :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pConditionalRenderingBegin" ::: Ptr VkConditionalRenderingBeginInfoEXT) -> IO ())
+, pVkCmdEndConditionalRenderingEXT :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> IO ())
 , pVkCmdResetQueryPool :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("queryPool" ::: VkQueryPool) -> ("firstQuery" ::: Word32) -> ("queryCount" ::: Word32) -> IO ())
 , pVkCmdWriteTimestamp :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pipelineStage" ::: VkPipelineStageFlagBits) -> ("queryPool" ::: VkQueryPool) -> ("query" ::: Word32) -> IO ())
 , pVkCmdCopyQueryPoolResults :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("queryPool" ::: VkQueryPool) -> ("firstQuery" ::: Word32) -> ("queryCount" ::: Word32) -> ("dstBuffer" ::: VkBuffer) -> ("dstOffset" ::: VkDeviceSize) -> ("stride" ::: VkDeviceSize) -> ("flags" ::: VkQueryResultFlags) -> IO ())
@@ -1287,10 +1335,18 @@ data DeviceCmds = DeviceCmds
 , pVkCmdInsertDebugUtilsLabelEXT :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pLabelInfo" ::: Ptr VkDebugUtilsLabelEXT) -> IO ())
 , pVkGetMemoryHostPointerPropertiesEXT :: FunPtr (("device" ::: VkDevice) -> ("handleType" ::: VkExternalMemoryHandleTypeFlagBits) -> ("pHostPointer" ::: Ptr ()) -> ("pMemoryHostPointerProperties" ::: Ptr VkMemoryHostPointerPropertiesEXT) -> IO VkResult)
 , pVkCmdWriteBufferMarkerAMD :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pipelineStage" ::: VkPipelineStageFlagBits) -> ("dstBuffer" ::: VkBuffer) -> ("dstOffset" ::: VkDeviceSize) -> ("marker" ::: Word32) -> IO ())
+, pVkCreateRenderPass2KHR :: FunPtr (("device" ::: VkDevice) -> ("pCreateInfo" ::: Ptr VkRenderPassCreateInfo2KHR) -> ("pAllocator" ::: Ptr VkAllocationCallbacks) -> ("pRenderPass" ::: Ptr VkRenderPass) -> IO VkResult)
+, pVkCmdBeginRenderPass2KHR :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pRenderPassBegin" ::: Ptr VkRenderPassBeginInfo) -> ("pSubpassBeginInfo" ::: Ptr VkSubpassBeginInfoKHR) -> IO ())
+, pVkCmdNextSubpass2KHR :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pSubpassBeginInfo" ::: Ptr VkSubpassBeginInfoKHR) -> ("pSubpassEndInfo" ::: Ptr VkSubpassEndInfoKHR) -> IO ())
+, pVkCmdEndRenderPass2KHR :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pSubpassEndInfo" ::: Ptr VkSubpassEndInfoKHR) -> IO ())
 #if defined(VK_USE_PLATFORM_ANDROID_KHR)
 , pVkGetAndroidHardwareBufferPropertiesANDROID :: FunPtr (("device" ::: VkDevice) -> ("buffer" ::: Ptr AHardwareBuffer) -> ("pProperties" ::: Ptr VkAndroidHardwareBufferPropertiesANDROID) -> IO VkResult)
 , pVkGetMemoryAndroidHardwareBufferANDROID :: FunPtr (("device" ::: VkDevice) -> ("pInfo" ::: Ptr VkMemoryGetAndroidHardwareBufferInfoANDROID) -> ("pBuffer" ::: Ptr (Ptr AHardwareBuffer)) -> IO VkResult)
 #endif
+, pVkCmdDrawIndirectCountKHR :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("buffer" ::: VkBuffer) -> ("offset" ::: VkDeviceSize) -> ("countBuffer" ::: VkBuffer) -> ("countBufferOffset" ::: VkDeviceSize) -> ("maxDrawCount" ::: Word32) -> ("stride" ::: Word32) -> IO ())
+, pVkCmdDrawIndexedIndirectCountKHR :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("buffer" ::: VkBuffer) -> ("offset" ::: VkDeviceSize) -> ("countBuffer" ::: VkBuffer) -> ("countBufferOffset" ::: VkDeviceSize) -> ("maxDrawCount" ::: Word32) -> ("stride" ::: Word32) -> IO ())
+, pVkCmdSetCheckpointNV :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pCheckpointMarker" ::: Ptr ()) -> IO ())
+, pVkGetQueueCheckpointDataNV :: FunPtr (("queue" ::: VkQueue) -> ("pCheckpointDataCount" ::: Ptr Word32) -> ("pCheckpointData" ::: Ptr VkCheckpointDataNV) -> IO ())
   }
   deriving (Show)
 
@@ -1378,6 +1434,10 @@ data InstanceCmds = InstanceCmds
 , pVkGetPhysicalDeviceMultisamplePropertiesEXT :: FunPtr (("physicalDevice" ::: VkPhysicalDevice) -> ("samples" ::: VkSampleCountFlagBits) -> ("pMultisampleProperties" ::: Ptr VkMultisamplePropertiesEXT) -> IO ())
 , pVkGetPhysicalDeviceSurfaceCapabilities2KHR :: FunPtr (("physicalDevice" ::: VkPhysicalDevice) -> ("pSurfaceInfo" ::: Ptr VkPhysicalDeviceSurfaceInfo2KHR) -> ("pSurfaceCapabilities" ::: Ptr VkSurfaceCapabilities2KHR) -> IO VkResult)
 , pVkGetPhysicalDeviceSurfaceFormats2KHR :: FunPtr (("physicalDevice" ::: VkPhysicalDevice) -> ("pSurfaceInfo" ::: Ptr VkPhysicalDeviceSurfaceInfo2KHR) -> ("pSurfaceFormatCount" ::: Ptr Word32) -> ("pSurfaceFormats" ::: Ptr VkSurfaceFormat2KHR) -> IO VkResult)
+, pVkGetPhysicalDeviceDisplayProperties2KHR :: FunPtr (("physicalDevice" ::: VkPhysicalDevice) -> ("pPropertyCount" ::: Ptr Word32) -> ("pProperties" ::: Ptr VkDisplayProperties2KHR) -> IO VkResult)
+, pVkGetPhysicalDeviceDisplayPlaneProperties2KHR :: FunPtr (("physicalDevice" ::: VkPhysicalDevice) -> ("pPropertyCount" ::: Ptr Word32) -> ("pProperties" ::: Ptr VkDisplayPlaneProperties2KHR) -> IO VkResult)
+, pVkGetDisplayModeProperties2KHR :: FunPtr (("physicalDevice" ::: VkPhysicalDevice) -> ("display" ::: VkDisplayKHR) -> ("pPropertyCount" ::: Ptr Word32) -> ("pProperties" ::: Ptr VkDisplayModeProperties2KHR) -> IO VkResult)
+, pVkGetDisplayPlaneCapabilities2KHR :: FunPtr (("physicalDevice" ::: VkPhysicalDevice) -> ("pDisplayPlaneInfo" ::: Ptr VkDisplayPlaneInfo2KHR) -> ("pCapabilities" ::: Ptr VkDisplayPlaneCapabilities2KHR) -> IO VkResult)
 , pVkCreateDebugUtilsMessengerEXT :: FunPtr (("instance" ::: VkInstance) -> ("pCreateInfo" ::: Ptr VkDebugUtilsMessengerCreateInfoEXT) -> ("pAllocator" ::: Ptr VkAllocationCallbacks) -> ("pMessenger" ::: Ptr VkDebugUtilsMessengerEXT) -> IO VkResult)
 , pVkDestroyDebugUtilsMessengerEXT :: FunPtr (("instance" ::: VkInstance) -> ("messenger" ::: VkDebugUtilsMessengerEXT) -> ("pAllocator" ::: Ptr VkAllocationCallbacks) -> IO ())
 , pVkSubmitDebugUtilsMessageEXT :: FunPtr (("instance" ::: VkInstance) -> ("messageSeverity" ::: VkDebugUtilsMessageSeverityFlagBitsEXT) -> ("messageTypes" ::: VkDebugUtilsMessageTypeFlagsEXT) -> ("pCallbackData" ::: Ptr VkDebugUtilsMessengerCallbackDataEXT) -> IO ())
@@ -1499,6 +1559,8 @@ initDeviceCmds handle = DeviceCmds
   <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdPipelineBarrier\NUL"#))
   <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdBeginQuery\NUL"#))
   <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdEndQuery\NUL"#))
+  <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdBeginConditionalRenderingEXT\NUL"#))
+  <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdEndConditionalRenderingEXT\NUL"#))
   <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdResetQueryPool\NUL"#))
   <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdWriteTimestamp\NUL"#))
   <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdCopyQueryPoolResults\NUL"#))
@@ -1599,10 +1661,18 @@ initDeviceCmds handle = DeviceCmds
   <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdInsertDebugUtilsLabelEXT\NUL"#))
   <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkGetMemoryHostPointerPropertiesEXT\NUL"#))
   <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdWriteBufferMarkerAMD\NUL"#))
+  <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCreateRenderPass2KHR\NUL"#))
+  <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdBeginRenderPass2KHR\NUL"#))
+  <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdNextSubpass2KHR\NUL"#))
+  <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdEndRenderPass2KHR\NUL"#))
 #if defined(VK_USE_PLATFORM_ANDROID_KHR)
   <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkGetAndroidHardwareBufferPropertiesANDROID\NUL"#))
   <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkGetMemoryAndroidHardwareBufferANDROID\NUL"#))
 #endif
+  <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdDrawIndirectCountKHR\NUL"#))
+  <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdDrawIndexedIndirectCountKHR\NUL"#))
+  <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkCmdSetCheckpointNV\NUL"#))
+  <*> (castPtrToFunPtr <$> vkGetDeviceProcAddr handle (GHC.Ptr.Ptr "vkGetQueueCheckpointDataNV\NUL"#))
 
 initInstanceCmds :: VkInstance -> IO InstanceCmds
 initInstanceCmds handle = InstanceCmds
@@ -1689,6 +1759,10 @@ initInstanceCmds handle = InstanceCmds
   <*> (castPtrToFunPtr <$> vkGetInstanceProcAddr handle (GHC.Ptr.Ptr "vkGetPhysicalDeviceMultisamplePropertiesEXT\NUL"#))
   <*> (castPtrToFunPtr <$> vkGetInstanceProcAddr handle (GHC.Ptr.Ptr "vkGetPhysicalDeviceSurfaceCapabilities2KHR\NUL"#))
   <*> (castPtrToFunPtr <$> vkGetInstanceProcAddr handle (GHC.Ptr.Ptr "vkGetPhysicalDeviceSurfaceFormats2KHR\NUL"#))
+  <*> (castPtrToFunPtr <$> vkGetInstanceProcAddr handle (GHC.Ptr.Ptr "vkGetPhysicalDeviceDisplayProperties2KHR\NUL"#))
+  <*> (castPtrToFunPtr <$> vkGetInstanceProcAddr handle (GHC.Ptr.Ptr "vkGetPhysicalDeviceDisplayPlaneProperties2KHR\NUL"#))
+  <*> (castPtrToFunPtr <$> vkGetInstanceProcAddr handle (GHC.Ptr.Ptr "vkGetDisplayModeProperties2KHR\NUL"#))
+  <*> (castPtrToFunPtr <$> vkGetInstanceProcAddr handle (GHC.Ptr.Ptr "vkGetDisplayPlaneCapabilities2KHR\NUL"#))
   <*> (castPtrToFunPtr <$> vkGetInstanceProcAddr handle (GHC.Ptr.Ptr "vkCreateDebugUtilsMessengerEXT\NUL"#))
   <*> (castPtrToFunPtr <$> vkGetInstanceProcAddr handle (GHC.Ptr.Ptr "vkDestroyDebugUtilsMessengerEXT\NUL"#))
   <*> (castPtrToFunPtr <$> vkGetInstanceProcAddr handle (GHC.Ptr.Ptr "vkSubmitDebugUtilsMessageEXT\NUL"#))
@@ -1919,6 +1993,10 @@ hasCmdBeginQuery :: DeviceCmds -> Bool
 hasCmdBeginQuery = (/= nullFunPtr) . pVkCmdBeginQuery
 hasCmdEndQuery :: DeviceCmds -> Bool
 hasCmdEndQuery = (/= nullFunPtr) . pVkCmdEndQuery
+hasCmdBeginConditionalRenderingEXT :: DeviceCmds -> Bool
+hasCmdBeginConditionalRenderingEXT = (/= nullFunPtr) . pVkCmdBeginConditionalRenderingEXT
+hasCmdEndConditionalRenderingEXT :: DeviceCmds -> Bool
+hasCmdEndConditionalRenderingEXT = (/= nullFunPtr) . pVkCmdEndConditionalRenderingEXT
 hasCmdResetQueryPool :: DeviceCmds -> Bool
 hasCmdResetQueryPool = (/= nullFunPtr) . pVkCmdResetQueryPool
 hasCmdWriteTimestamp :: DeviceCmds -> Bool
@@ -2111,12 +2189,28 @@ hasGetMemoryHostPointerPropertiesEXT :: DeviceCmds -> Bool
 hasGetMemoryHostPointerPropertiesEXT = (/= nullFunPtr) . pVkGetMemoryHostPointerPropertiesEXT
 hasCmdWriteBufferMarkerAMD :: DeviceCmds -> Bool
 hasCmdWriteBufferMarkerAMD = (/= nullFunPtr) . pVkCmdWriteBufferMarkerAMD
+hasCreateRenderPass2KHR :: DeviceCmds -> Bool
+hasCreateRenderPass2KHR = (/= nullFunPtr) . pVkCreateRenderPass2KHR
+hasCmdBeginRenderPass2KHR :: DeviceCmds -> Bool
+hasCmdBeginRenderPass2KHR = (/= nullFunPtr) . pVkCmdBeginRenderPass2KHR
+hasCmdNextSubpass2KHR :: DeviceCmds -> Bool
+hasCmdNextSubpass2KHR = (/= nullFunPtr) . pVkCmdNextSubpass2KHR
+hasCmdEndRenderPass2KHR :: DeviceCmds -> Bool
+hasCmdEndRenderPass2KHR = (/= nullFunPtr) . pVkCmdEndRenderPass2KHR
 #if defined(VK_USE_PLATFORM_ANDROID_KHR)
 hasGetAndroidHardwareBufferPropertiesANDROID :: DeviceCmds -> Bool
 hasGetAndroidHardwareBufferPropertiesANDROID = (/= nullFunPtr) . pVkGetAndroidHardwareBufferPropertiesANDROID
 hasGetMemoryAndroidHardwareBufferANDROID :: DeviceCmds -> Bool
 hasGetMemoryAndroidHardwareBufferANDROID = (/= nullFunPtr) . pVkGetMemoryAndroidHardwareBufferANDROID
 #endif
+hasCmdDrawIndirectCountKHR :: DeviceCmds -> Bool
+hasCmdDrawIndirectCountKHR = (/= nullFunPtr) . pVkCmdDrawIndirectCountKHR
+hasCmdDrawIndexedIndirectCountKHR :: DeviceCmds -> Bool
+hasCmdDrawIndexedIndirectCountKHR = (/= nullFunPtr) . pVkCmdDrawIndexedIndirectCountKHR
+hasCmdSetCheckpointNV :: DeviceCmds -> Bool
+hasCmdSetCheckpointNV = (/= nullFunPtr) . pVkCmdSetCheckpointNV
+hasGetQueueCheckpointDataNV :: DeviceCmds -> Bool
+hasGetQueueCheckpointDataNV = (/= nullFunPtr) . pVkGetQueueCheckpointDataNV
 
 hasDestroyInstance :: InstanceCmds -> Bool
 hasDestroyInstance = (/= nullFunPtr) . pVkDestroyInstance
@@ -2264,6 +2358,14 @@ hasGetPhysicalDeviceSurfaceCapabilities2KHR :: InstanceCmds -> Bool
 hasGetPhysicalDeviceSurfaceCapabilities2KHR = (/= nullFunPtr) . pVkGetPhysicalDeviceSurfaceCapabilities2KHR
 hasGetPhysicalDeviceSurfaceFormats2KHR :: InstanceCmds -> Bool
 hasGetPhysicalDeviceSurfaceFormats2KHR = (/= nullFunPtr) . pVkGetPhysicalDeviceSurfaceFormats2KHR
+hasGetPhysicalDeviceDisplayProperties2KHR :: InstanceCmds -> Bool
+hasGetPhysicalDeviceDisplayProperties2KHR = (/= nullFunPtr) . pVkGetPhysicalDeviceDisplayProperties2KHR
+hasGetPhysicalDeviceDisplayPlaneProperties2KHR :: InstanceCmds -> Bool
+hasGetPhysicalDeviceDisplayPlaneProperties2KHR = (/= nullFunPtr) . pVkGetPhysicalDeviceDisplayPlaneProperties2KHR
+hasGetDisplayModeProperties2KHR :: InstanceCmds -> Bool
+hasGetDisplayModeProperties2KHR = (/= nullFunPtr) . pVkGetDisplayModeProperties2KHR
+hasGetDisplayPlaneCapabilities2KHR :: InstanceCmds -> Bool
+hasGetDisplayPlaneCapabilities2KHR = (/= nullFunPtr) . pVkGetDisplayPlaneCapabilities2KHR
 hasCreateDebugUtilsMessengerEXT :: InstanceCmds -> Bool
 hasCreateDebugUtilsMessengerEXT = (/= nullFunPtr) . pVkCreateDebugUtilsMessengerEXT
 hasDestroyDebugUtilsMessengerEXT :: InstanceCmds -> Bool
@@ -3176,6 +3278,22 @@ foreign import ccall
 #endif
   "dynamic" mkVkCmdEndQuery
   :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("queryPool" ::: VkQueryPool) -> ("query" ::: Word32) -> IO ()) -> (("commandBuffer" ::: VkCommandBuffer) -> ("queryPool" ::: VkQueryPool) -> ("query" ::: Word32) -> IO ())
+cmdBeginConditionalRenderingEXT :: DeviceCmds -> (("commandBuffer" ::: VkCommandBuffer) -> ("pConditionalRenderingBegin" ::: Ptr VkConditionalRenderingBeginInfoEXT) -> IO ())
+cmdBeginConditionalRenderingEXT deviceCmds = mkVkCmdBeginConditionalRenderingEXT (pVkCmdBeginConditionalRenderingEXT deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkCmdBeginConditionalRenderingEXT
+  :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pConditionalRenderingBegin" ::: Ptr VkConditionalRenderingBeginInfoEXT) -> IO ()) -> (("commandBuffer" ::: VkCommandBuffer) -> ("pConditionalRenderingBegin" ::: Ptr VkConditionalRenderingBeginInfoEXT) -> IO ())
+cmdEndConditionalRenderingEXT :: DeviceCmds -> (("commandBuffer" ::: VkCommandBuffer) -> IO ())
+cmdEndConditionalRenderingEXT deviceCmds = mkVkCmdEndConditionalRenderingEXT (pVkCmdEndConditionalRenderingEXT deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkCmdEndConditionalRenderingEXT
+  :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> IO ()) -> (("commandBuffer" ::: VkCommandBuffer) -> IO ())
 cmdResetQueryPool :: DeviceCmds -> (("commandBuffer" ::: VkCommandBuffer) -> ("queryPool" ::: VkQueryPool) -> ("firstQuery" ::: Word32) -> ("queryCount" ::: Word32) -> IO ())
 cmdResetQueryPool deviceCmds = mkVkCmdResetQueryPool (pVkCmdResetQueryPool deviceCmds)
 foreign import ccall
@@ -3920,6 +4038,38 @@ foreign import ccall
 #endif
   "dynamic" mkVkCmdWriteBufferMarkerAMD
   :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pipelineStage" ::: VkPipelineStageFlagBits) -> ("dstBuffer" ::: VkBuffer) -> ("dstOffset" ::: VkDeviceSize) -> ("marker" ::: Word32) -> IO ()) -> (("commandBuffer" ::: VkCommandBuffer) -> ("pipelineStage" ::: VkPipelineStageFlagBits) -> ("dstBuffer" ::: VkBuffer) -> ("dstOffset" ::: VkDeviceSize) -> ("marker" ::: Word32) -> IO ())
+createRenderPass2KHR :: DeviceCmds -> (("device" ::: VkDevice) -> ("pCreateInfo" ::: Ptr VkRenderPassCreateInfo2KHR) -> ("pAllocator" ::: Ptr VkAllocationCallbacks) -> ("pRenderPass" ::: Ptr VkRenderPass) -> IO VkResult)
+createRenderPass2KHR deviceCmds = mkVkCreateRenderPass2KHR (pVkCreateRenderPass2KHR deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkCreateRenderPass2KHR
+  :: FunPtr (("device" ::: VkDevice) -> ("pCreateInfo" ::: Ptr VkRenderPassCreateInfo2KHR) -> ("pAllocator" ::: Ptr VkAllocationCallbacks) -> ("pRenderPass" ::: Ptr VkRenderPass) -> IO VkResult) -> (("device" ::: VkDevice) -> ("pCreateInfo" ::: Ptr VkRenderPassCreateInfo2KHR) -> ("pAllocator" ::: Ptr VkAllocationCallbacks) -> ("pRenderPass" ::: Ptr VkRenderPass) -> IO VkResult)
+cmdBeginRenderPass2KHR :: DeviceCmds -> (("commandBuffer" ::: VkCommandBuffer) -> ("pRenderPassBegin" ::: Ptr VkRenderPassBeginInfo) -> ("pSubpassBeginInfo" ::: Ptr VkSubpassBeginInfoKHR) -> IO ())
+cmdBeginRenderPass2KHR deviceCmds = mkVkCmdBeginRenderPass2KHR (pVkCmdBeginRenderPass2KHR deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkCmdBeginRenderPass2KHR
+  :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pRenderPassBegin" ::: Ptr VkRenderPassBeginInfo) -> ("pSubpassBeginInfo" ::: Ptr VkSubpassBeginInfoKHR) -> IO ()) -> (("commandBuffer" ::: VkCommandBuffer) -> ("pRenderPassBegin" ::: Ptr VkRenderPassBeginInfo) -> ("pSubpassBeginInfo" ::: Ptr VkSubpassBeginInfoKHR) -> IO ())
+cmdNextSubpass2KHR :: DeviceCmds -> (("commandBuffer" ::: VkCommandBuffer) -> ("pSubpassBeginInfo" ::: Ptr VkSubpassBeginInfoKHR) -> ("pSubpassEndInfo" ::: Ptr VkSubpassEndInfoKHR) -> IO ())
+cmdNextSubpass2KHR deviceCmds = mkVkCmdNextSubpass2KHR (pVkCmdNextSubpass2KHR deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkCmdNextSubpass2KHR
+  :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pSubpassBeginInfo" ::: Ptr VkSubpassBeginInfoKHR) -> ("pSubpassEndInfo" ::: Ptr VkSubpassEndInfoKHR) -> IO ()) -> (("commandBuffer" ::: VkCommandBuffer) -> ("pSubpassBeginInfo" ::: Ptr VkSubpassBeginInfoKHR) -> ("pSubpassEndInfo" ::: Ptr VkSubpassEndInfoKHR) -> IO ())
+cmdEndRenderPass2KHR :: DeviceCmds -> (("commandBuffer" ::: VkCommandBuffer) -> ("pSubpassEndInfo" ::: Ptr VkSubpassEndInfoKHR) -> IO ())
+cmdEndRenderPass2KHR deviceCmds = mkVkCmdEndRenderPass2KHR (pVkCmdEndRenderPass2KHR deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkCmdEndRenderPass2KHR
+  :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pSubpassEndInfo" ::: Ptr VkSubpassEndInfoKHR) -> IO ()) -> (("commandBuffer" ::: VkCommandBuffer) -> ("pSubpassEndInfo" ::: Ptr VkSubpassEndInfoKHR) -> IO ())
 #if defined(VK_USE_PLATFORM_ANDROID_KHR)
 getAndroidHardwareBufferPropertiesANDROID :: DeviceCmds -> (("device" ::: VkDevice) -> ("buffer" ::: Ptr AHardwareBuffer) -> ("pProperties" ::: Ptr VkAndroidHardwareBufferPropertiesANDROID) -> IO VkResult)
 getAndroidHardwareBufferPropertiesANDROID deviceCmds = mkVkGetAndroidHardwareBufferPropertiesANDROID (pVkGetAndroidHardwareBufferPropertiesANDROID deviceCmds)
@@ -3938,6 +4088,38 @@ foreign import ccall
   "dynamic" mkVkGetMemoryAndroidHardwareBufferANDROID
   :: FunPtr (("device" ::: VkDevice) -> ("pInfo" ::: Ptr VkMemoryGetAndroidHardwareBufferInfoANDROID) -> ("pBuffer" ::: Ptr (Ptr AHardwareBuffer)) -> IO VkResult) -> (("device" ::: VkDevice) -> ("pInfo" ::: Ptr VkMemoryGetAndroidHardwareBufferInfoANDROID) -> ("pBuffer" ::: Ptr (Ptr AHardwareBuffer)) -> IO VkResult)
 #endif
+cmdDrawIndirectCountKHR :: DeviceCmds -> (("commandBuffer" ::: VkCommandBuffer) -> ("buffer" ::: VkBuffer) -> ("offset" ::: VkDeviceSize) -> ("countBuffer" ::: VkBuffer) -> ("countBufferOffset" ::: VkDeviceSize) -> ("maxDrawCount" ::: Word32) -> ("stride" ::: Word32) -> IO ())
+cmdDrawIndirectCountKHR deviceCmds = mkVkCmdDrawIndirectCountKHR (pVkCmdDrawIndirectCountKHR deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkCmdDrawIndirectCountKHR
+  :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("buffer" ::: VkBuffer) -> ("offset" ::: VkDeviceSize) -> ("countBuffer" ::: VkBuffer) -> ("countBufferOffset" ::: VkDeviceSize) -> ("maxDrawCount" ::: Word32) -> ("stride" ::: Word32) -> IO ()) -> (("commandBuffer" ::: VkCommandBuffer) -> ("buffer" ::: VkBuffer) -> ("offset" ::: VkDeviceSize) -> ("countBuffer" ::: VkBuffer) -> ("countBufferOffset" ::: VkDeviceSize) -> ("maxDrawCount" ::: Word32) -> ("stride" ::: Word32) -> IO ())
+cmdDrawIndexedIndirectCountKHR :: DeviceCmds -> (("commandBuffer" ::: VkCommandBuffer) -> ("buffer" ::: VkBuffer) -> ("offset" ::: VkDeviceSize) -> ("countBuffer" ::: VkBuffer) -> ("countBufferOffset" ::: VkDeviceSize) -> ("maxDrawCount" ::: Word32) -> ("stride" ::: Word32) -> IO ())
+cmdDrawIndexedIndirectCountKHR deviceCmds = mkVkCmdDrawIndexedIndirectCountKHR (pVkCmdDrawIndexedIndirectCountKHR deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkCmdDrawIndexedIndirectCountKHR
+  :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("buffer" ::: VkBuffer) -> ("offset" ::: VkDeviceSize) -> ("countBuffer" ::: VkBuffer) -> ("countBufferOffset" ::: VkDeviceSize) -> ("maxDrawCount" ::: Word32) -> ("stride" ::: Word32) -> IO ()) -> (("commandBuffer" ::: VkCommandBuffer) -> ("buffer" ::: VkBuffer) -> ("offset" ::: VkDeviceSize) -> ("countBuffer" ::: VkBuffer) -> ("countBufferOffset" ::: VkDeviceSize) -> ("maxDrawCount" ::: Word32) -> ("stride" ::: Word32) -> IO ())
+cmdSetCheckpointNV :: DeviceCmds -> (("commandBuffer" ::: VkCommandBuffer) -> ("pCheckpointMarker" ::: Ptr ()) -> IO ())
+cmdSetCheckpointNV deviceCmds = mkVkCmdSetCheckpointNV (pVkCmdSetCheckpointNV deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkCmdSetCheckpointNV
+  :: FunPtr (("commandBuffer" ::: VkCommandBuffer) -> ("pCheckpointMarker" ::: Ptr ()) -> IO ()) -> (("commandBuffer" ::: VkCommandBuffer) -> ("pCheckpointMarker" ::: Ptr ()) -> IO ())
+getQueueCheckpointDataNV :: DeviceCmds -> (("queue" ::: VkQueue) -> ("pCheckpointDataCount" ::: Ptr Word32) -> ("pCheckpointData" ::: Ptr VkCheckpointDataNV) -> IO ())
+getQueueCheckpointDataNV deviceCmds = mkVkGetQueueCheckpointDataNV (pVkGetQueueCheckpointDataNV deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkGetQueueCheckpointDataNV
+  :: FunPtr (("queue" ::: VkQueue) -> ("pCheckpointDataCount" ::: Ptr Word32) -> ("pCheckpointData" ::: Ptr VkCheckpointDataNV) -> IO ()) -> (("queue" ::: VkQueue) -> ("pCheckpointDataCount" ::: Ptr Word32) -> ("pCheckpointData" ::: Ptr VkCheckpointDataNV) -> IO ())
 
 -- * Instance commands
 destroyInstance :: InstanceCmds -> (("instance" ::: VkInstance) -> ("pAllocator" ::: Ptr VkAllocationCallbacks) -> IO ())
@@ -4464,6 +4646,38 @@ foreign import ccall
 #endif
   "dynamic" mkVkGetPhysicalDeviceSurfaceFormats2KHR
   :: FunPtr (("physicalDevice" ::: VkPhysicalDevice) -> ("pSurfaceInfo" ::: Ptr VkPhysicalDeviceSurfaceInfo2KHR) -> ("pSurfaceFormatCount" ::: Ptr Word32) -> ("pSurfaceFormats" ::: Ptr VkSurfaceFormat2KHR) -> IO VkResult) -> (("physicalDevice" ::: VkPhysicalDevice) -> ("pSurfaceInfo" ::: Ptr VkPhysicalDeviceSurfaceInfo2KHR) -> ("pSurfaceFormatCount" ::: Ptr Word32) -> ("pSurfaceFormats" ::: Ptr VkSurfaceFormat2KHR) -> IO VkResult)
+getPhysicalDeviceDisplayProperties2KHR :: InstanceCmds -> (("physicalDevice" ::: VkPhysicalDevice) -> ("pPropertyCount" ::: Ptr Word32) -> ("pProperties" ::: Ptr VkDisplayProperties2KHR) -> IO VkResult)
+getPhysicalDeviceDisplayProperties2KHR deviceCmds = mkVkGetPhysicalDeviceDisplayProperties2KHR (pVkGetPhysicalDeviceDisplayProperties2KHR deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkGetPhysicalDeviceDisplayProperties2KHR
+  :: FunPtr (("physicalDevice" ::: VkPhysicalDevice) -> ("pPropertyCount" ::: Ptr Word32) -> ("pProperties" ::: Ptr VkDisplayProperties2KHR) -> IO VkResult) -> (("physicalDevice" ::: VkPhysicalDevice) -> ("pPropertyCount" ::: Ptr Word32) -> ("pProperties" ::: Ptr VkDisplayProperties2KHR) -> IO VkResult)
+getPhysicalDeviceDisplayPlaneProperties2KHR :: InstanceCmds -> (("physicalDevice" ::: VkPhysicalDevice) -> ("pPropertyCount" ::: Ptr Word32) -> ("pProperties" ::: Ptr VkDisplayPlaneProperties2KHR) -> IO VkResult)
+getPhysicalDeviceDisplayPlaneProperties2KHR deviceCmds = mkVkGetPhysicalDeviceDisplayPlaneProperties2KHR (pVkGetPhysicalDeviceDisplayPlaneProperties2KHR deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkGetPhysicalDeviceDisplayPlaneProperties2KHR
+  :: FunPtr (("physicalDevice" ::: VkPhysicalDevice) -> ("pPropertyCount" ::: Ptr Word32) -> ("pProperties" ::: Ptr VkDisplayPlaneProperties2KHR) -> IO VkResult) -> (("physicalDevice" ::: VkPhysicalDevice) -> ("pPropertyCount" ::: Ptr Word32) -> ("pProperties" ::: Ptr VkDisplayPlaneProperties2KHR) -> IO VkResult)
+getDisplayModeProperties2KHR :: InstanceCmds -> (("physicalDevice" ::: VkPhysicalDevice) -> ("display" ::: VkDisplayKHR) -> ("pPropertyCount" ::: Ptr Word32) -> ("pProperties" ::: Ptr VkDisplayModeProperties2KHR) -> IO VkResult)
+getDisplayModeProperties2KHR deviceCmds = mkVkGetDisplayModeProperties2KHR (pVkGetDisplayModeProperties2KHR deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkGetDisplayModeProperties2KHR
+  :: FunPtr (("physicalDevice" ::: VkPhysicalDevice) -> ("display" ::: VkDisplayKHR) -> ("pPropertyCount" ::: Ptr Word32) -> ("pProperties" ::: Ptr VkDisplayModeProperties2KHR) -> IO VkResult) -> (("physicalDevice" ::: VkPhysicalDevice) -> ("display" ::: VkDisplayKHR) -> ("pPropertyCount" ::: Ptr Word32) -> ("pProperties" ::: Ptr VkDisplayModeProperties2KHR) -> IO VkResult)
+getDisplayPlaneCapabilities2KHR :: InstanceCmds -> (("physicalDevice" ::: VkPhysicalDevice) -> ("pDisplayPlaneInfo" ::: Ptr VkDisplayPlaneInfo2KHR) -> ("pCapabilities" ::: Ptr VkDisplayPlaneCapabilities2KHR) -> IO VkResult)
+getDisplayPlaneCapabilities2KHR deviceCmds = mkVkGetDisplayPlaneCapabilities2KHR (pVkGetDisplayPlaneCapabilities2KHR deviceCmds)
+foreign import ccall
+#if !defined(SAFE_FOREIGN_CALLS)
+  unsafe
+#endif
+  "dynamic" mkVkGetDisplayPlaneCapabilities2KHR
+  :: FunPtr (("physicalDevice" ::: VkPhysicalDevice) -> ("pDisplayPlaneInfo" ::: Ptr VkDisplayPlaneInfo2KHR) -> ("pCapabilities" ::: Ptr VkDisplayPlaneCapabilities2KHR) -> IO VkResult) -> (("physicalDevice" ::: VkPhysicalDevice) -> ("pDisplayPlaneInfo" ::: Ptr VkDisplayPlaneInfo2KHR) -> ("pCapabilities" ::: Ptr VkDisplayPlaneCapabilities2KHR) -> IO VkResult)
 createDebugUtilsMessengerEXT :: InstanceCmds -> (("instance" ::: VkInstance) -> ("pCreateInfo" ::: Ptr VkDebugUtilsMessengerCreateInfoEXT) -> ("pAllocator" ::: Ptr VkAllocationCallbacks) -> ("pMessenger" ::: Ptr VkDebugUtilsMessengerEXT) -> IO VkResult)
 createDebugUtilsMessengerEXT deviceCmds = mkVkCreateDebugUtilsMessengerEXT (pVkCreateDebugUtilsMessengerEXT deviceCmds)
 foreign import ccall

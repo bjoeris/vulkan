@@ -71,7 +71,7 @@ import Text.Read.Lex
 
 
 import Graphics.Vulkan.Core10.CommandPool
-  ( VkCommandPool
+  ( VkCommandPool(..)
   )
 import Graphics.Vulkan.Core10.Core
   ( VkBool32(..)
@@ -83,10 +83,10 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkDevice
   )
 import Graphics.Vulkan.Core10.Pass
-  ( VkFramebuffer
+  ( VkFramebuffer(..)
   )
 import Graphics.Vulkan.Core10.Pipeline
-  ( VkRenderPass
+  ( VkRenderPass(..)
   )
 import Graphics.Vulkan.Core10.Query
   ( VkQueryPipelineStatisticFlags
@@ -248,11 +248,12 @@ pattern VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT = VkCommandBufferUsageFlagB
 --     @VkCommandBufferAllocateInfo@ structure describing parameters of the
 --     allocation.
 --
--- -   @pCommandBuffers@ is a pointer to an array of @VkCommandBuffer@
---     handles in which the resulting command buffer objects are returned.
---     The array /must/ be at least the length specified by the
---     @commandBufferCount@ member of @pAllocateInfo@. Each allocated
---     command buffer begins in the initial state.
+-- -   @pCommandBuffers@ is a pointer to an array of
+--     'Graphics.Vulkan.Core10.Queue.VkCommandBuffer' handles in which the
+--     resulting command buffer objects are returned. The array /must/ be
+--     at least the length specified by the @commandBufferCount@ member of
+--     @pAllocateInfo@. Each allocated command buffer begins in the initial
+--     state.
 --
 -- = Description
 --
@@ -367,7 +368,7 @@ foreign import ccall
 -- -   @commandBuffer@ is the handle of the command buffer which is to be
 --     put in the recording state.
 --
--- -   @pBeginInfo@ is an instance of the @VkCommandBufferBeginInfo@
+-- -   @pBeginInfo@ is an instance of the 'VkCommandBufferBeginInfo'
 --     structure, which defines additional information about how the
 --     command buffer begins recording.
 --
@@ -454,6 +455,9 @@ foreign import ccall
 --     [active](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#queries-operation-active)
 --     during the recording of @commandBuffer@ /must/ have been made
 --     inactive
+--
+-- -   Conditional rendering must not be
+--     [active](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#active-conditional-rendering)
 --
 -- -   If @commandBuffer@ is a secondary command buffer, there /must/ not
 --     be an outstanding
@@ -587,7 +591,7 @@ data VkCommandBufferAllocateInfo = VkCommandBufferAllocateInfo
   , -- | @commandPool@ is the command pool from which the command buffers are
   -- allocated.
   vkCommandPool :: VkCommandPool
-  , -- | @level@ is an 'VkCommandBufferLevel' value specifying the command buffer
+  , -- | @level@ is a 'VkCommandBufferLevel' value specifying the command buffer
   -- level.
   vkLevel :: VkCommandBufferLevel
   , -- | @commandBufferCount@ is the number of command buffers to allocate from
@@ -618,8 +622,8 @@ instance Storable VkCommandBufferAllocateInfo where
 --
 -- -   @pNext@ is @NULL@ or a pointer to an extension-specific structure.
 --
--- -   @renderPass@ is a @VkRenderPass@ object defining which render passes
---     the @VkCommandBuffer@ will be
+-- -   @renderPass@ is a 'Graphics.Vulkan.Core10.Pipeline.VkRenderPass'
+--     object defining which render passes the @VkCommandBuffer@ will be
 --     [compatible](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#renderpass-compatibility)
 --     with and /can/ be executed within. If the @VkCommandBuffer@ will not
 --     be executed within a render pass instance, @renderPass@ is ignored.
@@ -629,9 +633,10 @@ instance Storable VkCommandBufferAllocateInfo where
 --     @VkCommandBuffer@ will not be executed within a render pass
 --     instance, @subpass@ is ignored.
 --
--- -   @framebuffer@ optionally refers to the @VkFramebuffer@ object that
---     the @VkCommandBuffer@ will be rendering to if it is executed within
---     a render pass instance. It /can/ be
+-- -   @framebuffer@ optionally refers to the
+--     'Graphics.Vulkan.Core10.Pass.VkFramebuffer' object that the
+--     @VkCommandBuffer@ will be rendering to if it is executed within a
+--     render pass instance. It /can/ be
 --     'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE' if the framebuffer
 --     is not known, or if the @VkCommandBuffer@ will not be executed
 --     within a render pass instance.

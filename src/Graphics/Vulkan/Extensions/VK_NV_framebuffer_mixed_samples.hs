@@ -73,7 +73,7 @@ import Graphics.Vulkan.Core10.Core
 --
 -- = See Also
 --
--- 'VkPipelineCoverageModulationStateCreateInfoNV'
+-- No cross-references are available
 newtype VkCoverageModulationModeNV = VkCoverageModulationModeNV Int32
   deriving (Eq, Ord, Storable)
 
@@ -127,7 +127,7 @@ pattern VK_COVERAGE_MODULATION_MODE_RGBA_NV = VkCoverageModulationModeNV 3
 --
 -- = See Also
 --
--- 'VkPipelineCoverageModulationStateCreateInfoNV'
+-- No cross-references are available
 newtype VkPipelineCoverageModulationStateCreateFlagsNV = VkPipelineCoverageModulationStateCreateFlagsNV VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -203,23 +203,13 @@ pattern VK_NV_FRAMEBUFFER_MIXED_SAMPLES_EXTENSION_NAME = "VK_NV_framebuffer_mixe
 --     rasterization samples divided by the number of color samples in the
 --     subpass.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV@
---
--- -   @flags@ /must/ be @0@
---
--- -   @coverageModulationMode@ /must/ be a valid
---     'VkCoverageModulationModeNV' value
---
--- -   @coverageModulationTableCount@ /must/ be greater than @0@
+-- Unresolved directive in
+-- VkPipelineCoverageModulationStateCreateInfoNV.txt -
+-- include::..\/validity\/structs\/VkPipelineCoverageModulationStateCreateInfoNV.txt[]
 --
 -- = See Also
 --
--- @VkBool32@, 'VkCoverageModulationModeNV',
--- 'VkPipelineCoverageModulationStateCreateFlagsNV',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPipelineCoverageModulationStateCreateInfoNV = VkPipelineCoverageModulationStateCreateInfoNV
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

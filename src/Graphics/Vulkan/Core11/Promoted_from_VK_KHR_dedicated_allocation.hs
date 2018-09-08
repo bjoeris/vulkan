@@ -25,8 +25,8 @@ import Graphics.Vulkan.Core10.Core
   , VkStructureType(..)
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkBuffer
-  , VkImage
+  ( VkBuffer(..)
+  , VkImage(..)
   )
 
 
@@ -40,6 +40,9 @@ pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO = VkStructureType 10001
 -- allocation requirements of buffer and image resources
 --
 -- = Description
+--
+-- When the implementation sets @requiresDedicatedAllocation@ to @VK_TRUE@,
+-- it /must/ also set @prefersDedicatedAllocation@ to @VK_TRUE@.
 --
 -- If the @VkMemoryDedicatedRequirements@ structure is included in the
 -- @pNext@ chain of the

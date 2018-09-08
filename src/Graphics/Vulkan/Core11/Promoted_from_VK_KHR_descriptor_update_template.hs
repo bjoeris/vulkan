@@ -12,7 +12,7 @@ module Graphics.Vulkan.Core11.Promoted_from_VK_KHR_descriptor_update_template
   , VkDescriptorUpdateTemplateCreateFlags(..)
   , pattern VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO
   , pattern VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE
-  , VkDescriptorUpdateTemplate
+  , VkDescriptorUpdateTemplate(..)
   , vkCreateDescriptorUpdateTemplate
   , vkDestroyDescriptorUpdateTemplate
   , vkUpdateDescriptorSetWithTemplate
@@ -29,12 +29,14 @@ import Data.Int
   )
 import Data.Word
   ( Word32
+  , Word64
   )
 import Foreign.C.Types
   ( CSize(..)
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -69,8 +71,8 @@ import Graphics.Vulkan.Core10.Core
   , VkFlags
   )
 import Graphics.Vulkan.Core10.DescriptorSet
-  ( VkDescriptorType(..)
-  , VkDescriptorSet
+  ( VkDescriptorSet(..)
+  , VkDescriptorType(..)
   )
 import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkAllocationCallbacks(..)
@@ -80,10 +82,10 @@ import Graphics.Vulkan.Core10.Pass
   ( VkPipelineBindPoint(..)
   )
 import Graphics.Vulkan.Core10.Pipeline
-  ( VkPipelineLayout
+  ( VkPipelineLayout(..)
   )
 import Graphics.Vulkan.Core10.PipelineLayout
-  ( VkDescriptorSetLayout
+  ( VkDescriptorSetLayout(..)
   )
 
 
@@ -157,21 +159,21 @@ pattern VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO = VkStructureTy
 -- No documentation found for Nested "VkObjectType" "VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE"
 pattern VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE :: VkObjectType
 pattern VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE = VkObjectType 1000085000
--- | Dummy data to tag the 'Ptr' with
-data VkDescriptorUpdateTemplate_T
 -- | VkDescriptorUpdateTemplate - Opaque handle to a descriptor update
 -- template
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_KHR_push_descriptor.vkCmdPushDescriptorSetWithTemplateKHR',
--- 'vkCreateDescriptorUpdateTemplate',
--- 'Graphics.Vulkan.Extensions.VK_KHR_descriptor_update_template.vkCreateDescriptorUpdateTemplateKHR',
--- 'vkDestroyDescriptorUpdateTemplate',
--- 'Graphics.Vulkan.Extensions.VK_KHR_descriptor_update_template.vkDestroyDescriptorUpdateTemplateKHR',
--- 'vkUpdateDescriptorSetWithTemplate',
--- 'Graphics.Vulkan.Extensions.VK_KHR_descriptor_update_template.vkUpdateDescriptorSetWithTemplateKHR'
-type VkDescriptorUpdateTemplate = Ptr VkDescriptorUpdateTemplate_T
+-- 'vkCreateDescriptorUpdateTemplate', 'vkDestroyDescriptorUpdateTemplate',
+-- 'vkUpdateDescriptorSetWithTemplate'
+newtype VkDescriptorUpdateTemplate = VkDescriptorUpdateTemplate Word64
+  deriving (Eq, Show)
+
+instance Storable VkDescriptorUpdateTemplate where
+  sizeOf (VkDescriptorUpdateTemplate w) = sizeOf w
+  alignment (VkDescriptorUpdateTemplate w) = alignment w
+  peek ptr = VkDescriptorUpdateTemplate <$> peek (castPtr ptr)
+  poke ptr (VkDescriptorUpdateTemplate w) = poke (castPtr ptr) w
 -- | vkCreateDescriptorUpdateTemplate - Create a new descriptor update
 -- template
 --
@@ -291,7 +293,7 @@ foreign import ccall
 --
 -- -   @descriptorSet@ is the descriptor set to update
 --
--- -   @descriptorUpdateTemplate@ is the @VkDescriptorUpdateTemplate@ which
+-- -   @descriptorUpdateTemplate@ is the 'VkDescriptorUpdateTemplate' which
 --     specifies the update mapping between @pData@ and the descriptor set
 --     to update.
 --
@@ -375,7 +377,7 @@ foreign import ccall
 -- >     },
 -- > };
 -- >
--- > // create an descriptor update template for descriptor set updates
+-- > // create a descriptor update template for descriptor set updates
 -- > const VkDescriptorUpdateTemplateCreateInfo createInfo =
 -- > {
 -- >     VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO,  // sType
@@ -561,8 +563,7 @@ instance Storable VkDescriptorUpdateTemplateEntry where
 -- 'Graphics.Vulkan.Core10.Pass.VkPipelineBindPoint',
 -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineLayout',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkCreateDescriptorUpdateTemplate',
--- 'Graphics.Vulkan.Extensions.VK_KHR_descriptor_update_template.vkCreateDescriptorUpdateTemplateKHR'
+-- 'vkCreateDescriptorUpdateTemplate'
 data VkDescriptorUpdateTemplateCreateInfo = VkDescriptorUpdateTemplateCreateInfo
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -601,8 +602,9 @@ data VkDescriptorUpdateTemplateCreateInfo = VkDescriptorUpdateTemplateCreateInfo
   -- This parameter is ignored if @templateType@ is not
   -- @VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR@
   vkPipelineBindPoint :: VkPipelineBindPoint
-  , -- | @pipelineLayout@ is a @VkPipelineLayout@ object used to program the
-  -- bindings. This parameter is ignored if @templateType@ is not
+  , -- | @pipelineLayout@ is a 'Graphics.Vulkan.Core10.Pipeline.VkPipelineLayout'
+  -- object used to program the bindings. This parameter is ignored if
+  -- @templateType@ is not
   -- @VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR@
   vkPipelineLayout :: VkPipelineLayout
   , -- | @set@ is the set number of the descriptor set in the pipeline layout

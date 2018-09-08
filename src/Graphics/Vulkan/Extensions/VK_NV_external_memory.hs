@@ -49,19 +49,14 @@ pattern VK_NV_EXTERNAL_MEMORY_EXTENSION_NAME = "VK_NV_external_memory"
 -- | VkExternalMemoryImageCreateInfoNV - Specify that an image may be backed
 -- by external memory
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV@
---
--- -   @handleTypes@ /must/ be a valid combination of
---     'Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities.VkExternalMemoryHandleTypeFlagBitsNV'
---     values
+-- Unresolved directive in VkExternalMemoryImageCreateInfoNV.txt -
+-- include::..\/validity\/structs\/VkExternalMemoryImageCreateInfoNV.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities.VkExternalMemoryHandleTypeFlagsNV',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkExternalMemoryImageCreateInfoNV = VkExternalMemoryImageCreateInfoNV
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -86,18 +81,14 @@ instance Storable VkExternalMemoryImageCreateInfoNV where
 -- | VkExportMemoryAllocateInfoNV - Specify memory handle types that may be
 -- exported
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO_NV@
---
--- -   @handleTypes@ /must/ be a valid combination of
---     'Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities.VkExternalMemoryHandleTypeFlagBitsNV'
---     values
+-- Unresolved directive in VkExportMemoryAllocateInfoNV.txt -
+-- include::..\/validity\/structs\/VkExportMemoryAllocateInfoNV.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities.VkExternalMemoryHandleTypeFlagsNV',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkExportMemoryAllocateInfoNV = VkExportMemoryAllocateInfoNV
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

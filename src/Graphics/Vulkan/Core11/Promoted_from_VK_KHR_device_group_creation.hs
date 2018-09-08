@@ -141,8 +141,7 @@ foreign import ccall
 -- @VkBool32@,
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDevice',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkEnumeratePhysicalDeviceGroups',
--- 'Graphics.Vulkan.Extensions.VK_KHR_device_group_creation.vkEnumeratePhysicalDeviceGroupsKHR'
+-- 'vkEnumeratePhysicalDeviceGroups'
 data VkPhysicalDeviceGroupProperties = VkPhysicalDeviceGroupProperties
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

@@ -186,14 +186,7 @@ pattern VK_IMAGE_CREATE_EXTENDED_USAGE_BIT = VkImageCreateFlagBits 0x00000100
 --
 -- == Valid Usage
 --
--- -   There /must/ be an input attachment at
---     @pCreateInfo@::@pSubpasses@[@subpass@].@pInputAttachments@[@inputAttachmentIndex@].
---
--- -   The specified input attachment /must/ have more than one aspect
---     mask.
---
--- -   @aspectMask@ /must/ be a subset of the aspect masks in the specified
---     input attachment.
+-- -   @aspectMask@ /must/ not include @VK_IMAGE_ASPECT_METADATA_BIT@
 --
 -- == Valid Usage (Implicit)
 --

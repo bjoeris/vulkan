@@ -66,7 +66,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
 --
 -- = See Also
 --
--- 'VkSamplerReductionModeCreateInfoEXT'
+-- No cross-references are available
 newtype VkSamplerReductionModeEXT = VkSamplerReductionModeEXT Int32
   deriving (Eq, Ord, Storable)
 
@@ -187,14 +187,13 @@ pattern VK_EXT_SAMPLER_FILTER_MINMAX_EXTENSION_NAME = "VK_EXT_sampler_filter_min
 -- @filterMinmaxImageComponentMapping@ is @VK_TRUE@ this restriction does
 -- not apply and image component mapping works as normal.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES_EXT@
+-- Unresolved directive in
+-- VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT.txt -
+-- include::..\/validity\/structs\/VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT.txt[]
 --
 -- = See Also
 --
--- @VkBool32@, 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT = VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
   { -- No documentation found for Nested "VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT" "sType"
   vkSType :: VkStructureType
@@ -226,17 +225,12 @@ instance Storable VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT where
 -- If this structure is not present, @reductionMode@ is considered to be
 -- @VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT@.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT@
---
--- -   @reductionMode@ /must/ be a valid 'VkSamplerReductionModeEXT' value
+-- Unresolved directive in VkSamplerReductionModeCreateInfoEXT.txt -
+-- include::..\/validity\/structs\/VkSamplerReductionModeCreateInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'VkSamplerReductionModeEXT',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkSamplerReductionModeCreateInfoEXT = VkSamplerReductionModeCreateInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

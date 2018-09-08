@@ -33,7 +33,7 @@ import Data.Word
 --
 -- No cross-references are available
 pattern VK_HEADER_VERSION :: Integral a => a
-pattern VK_HEADER_VERSION = 73
+pattern VK_HEADER_VERSION = 83
 -- | VK_MAKE_VERSION - Construct an API version number
 --
 -- = Description

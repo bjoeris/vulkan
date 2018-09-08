@@ -78,6 +78,7 @@ module Graphics.Vulkan.Extensions
 #endif
   , module Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_fd
   , module Graphics.Vulkan.Extensions.VK_KHR_push_descriptor
+  , module Graphics.Vulkan.Extensions.VK_EXT_conditional_rendering
   , module Graphics.Vulkan.Extensions.VK_KHR_16bit_storage
   , module Graphics.Vulkan.Extensions.VK_KHR_incremental_present
   , module Graphics.Vulkan.Extensions.VK_KHR_descriptor_update_template
@@ -99,6 +100,7 @@ module Graphics.Vulkan.Extensions
   , module Graphics.Vulkan.Extensions.VK_EXT_conservative_rasterization
   , module Graphics.Vulkan.Extensions.VK_EXT_swapchain_colorspace
   , module Graphics.Vulkan.Extensions.VK_EXT_hdr_metadata
+  , module Graphics.Vulkan.Extensions.VK_KHR_create_renderpass2
   , module Graphics.Vulkan.Extensions.VK_KHR_shared_presentable_image
   , module Graphics.Vulkan.Extensions.VK_KHR_external_fence_capabilities
   , module Graphics.Vulkan.Extensions.VK_KHR_external_fence
@@ -109,6 +111,7 @@ module Graphics.Vulkan.Extensions
   , module Graphics.Vulkan.Extensions.VK_KHR_maintenance2
   , module Graphics.Vulkan.Extensions.VK_KHR_get_surface_capabilities2
   , module Graphics.Vulkan.Extensions.VK_KHR_variable_pointers
+  , module Graphics.Vulkan.Extensions.VK_KHR_get_display_properties2
 #if defined(VK_USE_PLATFORM_IOS_MVK)
   , module Graphics.Vulkan.Extensions.VK_MVK_ios_surface
 #endif
@@ -143,12 +146,15 @@ module Graphics.Vulkan.Extensions
   , module Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing
   , module Graphics.Vulkan.Extensions.VK_EXT_shader_viewport_index_layer
   , module Graphics.Vulkan.Extensions.VK_KHR_maintenance3
+  , module Graphics.Vulkan.Extensions.VK_KHR_draw_indirect_count
   , module Graphics.Vulkan.Extensions.VK_EXT_global_priority
+  , module Graphics.Vulkan.Extensions.VK_KHR_8bit_storage
   , module Graphics.Vulkan.Extensions.VK_EXT_external_memory_host
   , module Graphics.Vulkan.Extensions.VK_AMD_buffer_marker
   , module Graphics.Vulkan.Extensions.VK_AMD_shader_core_properties
   , module Graphics.Vulkan.Extensions.VK_EXT_vertex_attribute_divisor
   , module Graphics.Vulkan.Extensions.VK_NV_shader_subgroup_partitioned
+  , module Graphics.Vulkan.Extensions.VK_NV_device_diagnostic_checkpoints
   ) where
 
 
@@ -229,6 +235,7 @@ import Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_win32
 #endif
 import Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_fd
 import Graphics.Vulkan.Extensions.VK_KHR_push_descriptor
+import Graphics.Vulkan.Extensions.VK_EXT_conditional_rendering
 import Graphics.Vulkan.Extensions.VK_KHR_16bit_storage
 import Graphics.Vulkan.Extensions.VK_KHR_incremental_present
 import Graphics.Vulkan.Extensions.VK_KHR_descriptor_update_template
@@ -250,6 +257,7 @@ import Graphics.Vulkan.Extensions.VK_EXT_discard_rectangles
 import Graphics.Vulkan.Extensions.VK_EXT_conservative_rasterization
 import Graphics.Vulkan.Extensions.VK_EXT_swapchain_colorspace
 import Graphics.Vulkan.Extensions.VK_EXT_hdr_metadata
+import Graphics.Vulkan.Extensions.VK_KHR_create_renderpass2
 import Graphics.Vulkan.Extensions.VK_KHR_shared_presentable_image
 import Graphics.Vulkan.Extensions.VK_KHR_external_fence_capabilities
 import Graphics.Vulkan.Extensions.VK_KHR_external_fence
@@ -260,6 +268,7 @@ import Graphics.Vulkan.Extensions.VK_KHR_external_fence_fd
 import Graphics.Vulkan.Extensions.VK_KHR_maintenance2
 import Graphics.Vulkan.Extensions.VK_KHR_get_surface_capabilities2
 import Graphics.Vulkan.Extensions.VK_KHR_variable_pointers
+import Graphics.Vulkan.Extensions.VK_KHR_get_display_properties2
 #if defined(VK_USE_PLATFORM_IOS_MVK)
 import Graphics.Vulkan.Extensions.VK_MVK_ios_surface
 #endif
@@ -294,12 +303,15 @@ import Graphics.Vulkan.Extensions.VK_EXT_validation_cache
 import Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing
 import Graphics.Vulkan.Extensions.VK_EXT_shader_viewport_index_layer
 import Graphics.Vulkan.Extensions.VK_KHR_maintenance3
+import Graphics.Vulkan.Extensions.VK_KHR_draw_indirect_count
 import Graphics.Vulkan.Extensions.VK_EXT_global_priority
+import Graphics.Vulkan.Extensions.VK_KHR_8bit_storage
 import Graphics.Vulkan.Extensions.VK_EXT_external_memory_host
 import Graphics.Vulkan.Extensions.VK_AMD_buffer_marker
 import Graphics.Vulkan.Extensions.VK_AMD_shader_core_properties
 import Graphics.Vulkan.Extensions.VK_EXT_vertex_attribute_divisor
 import Graphics.Vulkan.Extensions.VK_NV_shader_subgroup_partitioned
+import Graphics.Vulkan.Extensions.VK_NV_device_diagnostic_checkpoints
 
 
 

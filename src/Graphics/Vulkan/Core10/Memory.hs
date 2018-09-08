@@ -8,7 +8,7 @@
 
 module Graphics.Vulkan.Core10.Memory
   ( VkMemoryMapFlags(..)
-  , VkDeviceMemory
+  , VkDeviceMemory(..)
   , vkAllocateMemory
   , vkFreeMemory
   , vkMapMemory
@@ -26,9 +26,11 @@ import Data.Bits
   )
 import Data.Word
   ( Word32
+  , Word64
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -98,8 +100,6 @@ instance Read VkMemoryMapFlags where
                     )
 
 
--- | Dummy data to tag the 'Ptr' with
-data VkDeviceMemory_T
 -- | VkDeviceMemory - Opaque handle to a device memory object
 --
 -- = See Also
@@ -107,20 +107,21 @@ data VkDeviceMemory_T
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_bind_memory2.VkBindBufferMemoryInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_bind_memory2.VkBindImageMemoryInfo',
 -- 'VkMappedMemoryRange',
--- 'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkMemoryGetAndroidHardwareBufferInfoANDROID',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_fd.VkMemoryGetFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_win32.VkMemoryGetWin32HandleInfoKHR',
 -- 'Graphics.Vulkan.Core10.SparseResourceMemoryManagement.VkSparseImageMemoryBind',
 -- 'Graphics.Vulkan.Core10.SparseResourceMemoryManagement.VkSparseMemoryBind',
--- 'Graphics.Vulkan.Extensions.VK_KHR_win32_keyed_mutex.VkWin32KeyedMutexAcquireReleaseInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_NV_win32_keyed_mutex.VkWin32KeyedMutexAcquireReleaseInfoNV',
 -- 'vkAllocateMemory',
 -- 'Graphics.Vulkan.Core10.MemoryManagement.vkBindBufferMemory',
 -- 'Graphics.Vulkan.Core10.MemoryManagement.vkBindImageMemory',
--- 'vkFreeMemory', 'vkGetDeviceMemoryCommitment',
--- 'Graphics.Vulkan.Extensions.VK_NV_external_memory_win32.vkGetMemoryWin32HandleNV',
--- 'vkMapMemory', 'vkUnmapMemory'
-type VkDeviceMemory = Ptr VkDeviceMemory_T
+-- 'vkFreeMemory', 'vkGetDeviceMemoryCommitment', 'vkMapMemory',
+-- 'vkUnmapMemory'
+newtype VkDeviceMemory = VkDeviceMemory Word64
+  deriving (Eq, Show)
+
+instance Storable VkDeviceMemory where
+  sizeOf (VkDeviceMemory w) = sizeOf w
+  alignment (VkDeviceMemory w) = alignment w
+  peek ptr = VkDeviceMemory <$> peek (castPtr ptr)
+  poke ptr (VkDeviceMemory w) = poke (castPtr ptr) w
 -- | vkAllocateMemory - Allocate device memory
 --
 -- = Parameters
@@ -138,7 +139,7 @@ type VkDeviceMemory = Ptr VkDeviceMemory_T
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pMemory@ is a pointer to a @VkDeviceMemory@ handle in which
+-- -   @pMemory@ is a pointer to a 'VkDeviceMemory' handle in which
 --     information about the allocated memory is returned.
 --
 -- = Description
@@ -232,7 +233,7 @@ foreign import ccall
 --
 -- -   @device@ is the logical device that owns the memory.
 --
--- -   @memory@ is the @VkDeviceMemory@ object to be freed.
+-- -   @memory@ is the 'VkDeviceMemory' object to be freed.
 --
 -- -   @pAllocator@ controls host memory allocation as described in the
 --     [Memory
@@ -306,7 +307,7 @@ foreign import ccall
 --
 -- -   @device@ is the logical device that owns the memory.
 --
--- -   @memory@ is the @VkDeviceMemory@ object to be mapped.
+-- -   @memory@ is the 'VkDeviceMemory' object to be mapped.
 --
 -- -   @offset@ is a zero-based byte offset from the beginning of the
 --     memory object.
@@ -635,15 +636,19 @@ foreign import ccall
 --
 -- An instance of the 'VkMemoryAllocateInfo' structure defines a memory
 -- import operation if the @pNext@ chain contains an instance of one of the
--- following structures: *
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_win32.VkImportMemoryWin32HandleInfoKHR'
--- with non-zero @handleType@ value *
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_fd.VkImportMemoryFdInfoKHR'
--- with a non-zero @handleType@ value *
--- 'Graphics.Vulkan.Extensions.VK_EXT_external_memory_host.VkImportMemoryHostPointerInfoEXT'
--- with a non-zero @handleType@ value *
--- 'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkImportAndroidHardwareBufferInfoANDROID'
--- with a non-@NULL@ @buffer@ value
+-- following structures:
+--
+-- -   'Graphics.Vulkan.Extensions.VK_KHR_external_memory_win32.VkImportMemoryWin32HandleInfoKHR'
+--     with non-zero @handleType@ value
+--
+-- -   'Graphics.Vulkan.Extensions.VK_KHR_external_memory_fd.VkImportMemoryFdInfoKHR'
+--     with a non-zero @handleType@ value
+--
+-- -   'Graphics.Vulkan.Extensions.VK_EXT_external_memory_host.VkImportMemoryHostPointerInfoEXT'
+--     with a non-zero @handleType@ value
+--
+-- -   'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkImportAndroidHardwareBufferInfoANDROID'
+--     with a non-@NULL@ @buffer@ value
 --
 -- Importing memory /must/ not modify the content of the memory.
 -- Implementations /must/ ensure that importing memory does not enable the
@@ -773,7 +778,7 @@ foreign import ccall
 --         'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.vkGetAndroidHardwareBufferPropertiesANDROID'
 --         for the Android hardware buffer
 --
---     -   If the @pNext@ chain doesn’t contain an instance of
+--     -   If the @pNext@ chain does not contain an instance of
 --         'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_dedicated_allocation.VkMemoryDedicatedAllocateInfo'
 --         or @VkMemoryDedicatedAllocateInfo@::@image@ is
 --         'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE', the Android
@@ -807,22 +812,22 @@ foreign import ccall
 --         of @AHARDWAREBUFFER_USAGE_GPU_COLOR_OUTPUT@ or
 --         @AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE@
 --
---     -   The @image@’s format /must/ be @VK_FORMAT_UNDEFINED@ or the
+--     -   The format of @image@ /must/ be @VK_FORMAT_UNDEFINED@ or the
 --         format returned by
 --         'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.vkGetAndroidHardwareBufferPropertiesANDROID'
 --         in
 --         'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkAndroidHardwareBufferFormatPropertiesANDROID'::@format@
 --         for the Android hardware buffer.
 --
---     -   The image’s and Android hardware buffer’s width, height, and
---         array layer dimensions /must/ be the same
+--     -   The width, height, and array layer dimensions of @image@ and the
+--         Android hardware buffer /must/ be identical
 --
 --     -   If the Android hardware buffer’s usage includes
---         @AHARDWAREBUFFER_USAGE_GPU_MIPMAP_COMPLETE@, the image must have
---         ⌊log2(max(@width@, @height@))⌋ + 1 mip levels, otherwise it must
---         have exactly @1@ mip level.
+--         @AHARDWAREBUFFER_USAGE_GPU_MIPMAP_COMPLETE@, the @image@ /must/
+--         have ⌊log2(max(@width@, @height@))⌋ + 1 mip levels, otherwise it
+--         /must/ have exactly @1@ mip level.
 --
---     -   Each bit set in the image’s usage /must/ be listed in
+--     -   Each bit set in the usage of @image@ /must/ be listed in
 --         [AHardwareBuffer Usage
 --         Equivalence](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-external-android-hardware-buffer-usage),
 --         and if there is a corresponding @AHARDWAREBUFFER_USAGE@ bit
@@ -836,16 +841,7 @@ foreign import ccall
 -- -   Each @pNext@ member of any structure (including this one) in the
 --     @pNext@ chain /must/ be either @NULL@ or a pointer to a valid
 --     instance of
---     'Graphics.Vulkan.Extensions.VK_NV_dedicated_allocation.VkDedicatedAllocationMemoryAllocateInfoNV',
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory.VkExportMemoryAllocateInfo',
---     'Graphics.Vulkan.Extensions.VK_NV_external_memory.VkExportMemoryAllocateInfoNV',
---     'Graphics.Vulkan.Extensions.VK_KHR_external_memory_win32.VkExportMemoryWin32HandleInfoKHR',
---     'Graphics.Vulkan.Extensions.VK_NV_external_memory_win32.VkExportMemoryWin32HandleInfoNV',
---     'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkImportAndroidHardwareBufferInfoANDROID',
---     'Graphics.Vulkan.Extensions.VK_KHR_external_memory_fd.VkImportMemoryFdInfoKHR',
---     'Graphics.Vulkan.Extensions.VK_EXT_external_memory_host.VkImportMemoryHostPointerInfoEXT',
---     'Graphics.Vulkan.Extensions.VK_KHR_external_memory_win32.VkImportMemoryWin32HandleInfoKHR',
---     'Graphics.Vulkan.Extensions.VK_NV_external_memory_win32.VkImportMemoryWin32HandleInfoNV',
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_device_group.VkMemoryAllocateFlagsInfo',
 --     or
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_dedicated_allocation.VkMemoryDedicatedAllocateInfo'

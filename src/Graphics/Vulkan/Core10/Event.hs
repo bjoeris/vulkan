@@ -8,7 +8,7 @@
 
 module Graphics.Vulkan.Core10.Event
   ( VkEventCreateFlags(..)
-  , VkEvent
+  , VkEvent(..)
   , vkCreateEvent
   , vkDestroyEvent
   , vkGetEventStatus
@@ -21,8 +21,12 @@ import Data.Bits
   ( Bits
   , FiniteBits
   )
+import Data.Word
+  ( Word64
+  )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -91,9 +95,7 @@ instance Read VkEventCreateFlags where
                     )
 
 
--- | Dummy data to tag the 'Ptr' with
-data VkEvent_T
--- | VkEvent - Opaque handle to a event object
+-- | VkEvent - Opaque handle to an event object
 --
 -- = See Also
 --
@@ -102,7 +104,14 @@ data VkEvent_T
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdWaitEvents',
 -- 'vkCreateEvent', 'vkDestroyEvent', 'vkGetEventStatus', 'vkResetEvent',
 -- 'vkSetEvent'
-type VkEvent = Ptr VkEvent_T
+newtype VkEvent = VkEvent Word64
+  deriving (Eq, Show)
+
+instance Storable VkEvent where
+  sizeOf (VkEvent w) = sizeOf w
+  alignment (VkEvent w) = alignment w
+  peek ptr = VkEvent <$> peek (castPtr ptr)
+  poke ptr (VkEvent w) = poke (castPtr ptr) w
 -- | vkCreateEvent - Create a new event object
 --
 -- = Parameters

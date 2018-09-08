@@ -26,7 +26,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkDeviceSize
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkBuffer
+  ( VkBuffer(..)
   )
 import Graphics.Vulkan.Core10.Queue
   ( VkPipelineStageFlagBits(..)
@@ -103,49 +103,12 @@ pattern VK_AMD_BUFFER_MARKER_EXTENSION_NAME = "VK_AMD_buffer_marker"
 --
 -- -   @dstOffset@ /must/ be a multiple of @4@
 --
--- == Valid Usage (Implicit)
---
--- -   @commandBuffer@ /must/ be a valid @VkCommandBuffer@ handle
---
--- -   @pipelineStage@ /must/ be a valid
---     'Graphics.Vulkan.Core10.Queue.VkPipelineStageFlagBits' value
---
--- -   @dstBuffer@ /must/ be a valid @VkBuffer@ handle
---
--- -   @commandBuffer@ /must/ be in the [recording
---     state](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#commandbuffers-lifecycle)
---
--- -   The @VkCommandPool@ that @commandBuffer@ was allocated from /must/
---     support transfer, graphics, or compute operations
---
--- -   Both of @commandBuffer@, and @dstBuffer@ /must/ have been created,
---     allocated, or retrieved from the same @VkDevice@
---
--- == Host Synchronization
---
--- -   Host access to @commandBuffer@ /must/ be externally synchronized
---
--- -   Host access to the @VkCommandPool@ that @commandBuffer@ was
---     allocated from /must/ be externally synchronized
---
--- == Command Properties
---
--- \'
---
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
--- | [Command Buffer                                                                                             | [Render Pass                                                                                               | [Supported Queue                                                                                      | [Pipeline                                                                                                                  |
--- | Levels](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkCommandBufferLevel) | Scope](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#vkCmdBeginRenderPass) | Types](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkQueueFlagBits) | Type](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#synchronization-pipeline-stages-types) |
--- +=============================================================================================================+============================================================================================================+=======================================================================================================+============================================================================================================================+
--- | Primary                                                                                                     | Both                                                                                                       | Transfer                                                                                              | Transfer                                                                                                                   |
--- | Secondary                                                                                                   |                                                                                                            | Graphics                                                                                              |                                                                                                                            |
--- |                                                                                                             |                                                                                                            | Compute                                                                                               |                                                                                                                            |
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+-- Unresolved directive in vkCmdWriteBufferMarkerAMD.txt -
+-- include::..\/validity\/protos\/vkCmdWriteBufferMarkerAMD.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer',
--- 'Graphics.Vulkan.Core10.Queue.VkCommandBuffer', @VkDeviceSize@,
--- 'Graphics.Vulkan.Core10.Queue.VkPipelineStageFlagBits'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe

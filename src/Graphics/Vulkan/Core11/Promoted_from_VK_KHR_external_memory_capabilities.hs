@@ -222,17 +222,8 @@ import Graphics.Vulkan.Core10.DeviceInitialization
 --
 -- = See Also
 --
--- 'VkExternalMemoryHandleTypeFlags',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_fd.VkImportMemoryFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_EXT_external_memory_host.VkImportMemoryHostPointerInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_win32.VkImportMemoryWin32HandleInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_fd.VkMemoryGetFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_win32.VkMemoryGetWin32HandleInfoKHR',
--- 'VkPhysicalDeviceExternalBufferInfo',
--- 'VkPhysicalDeviceExternalImageFormatInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_fd.vkGetMemoryFdPropertiesKHR',
--- 'Graphics.Vulkan.Extensions.VK_EXT_external_memory_host.vkGetMemoryHostPointerPropertiesEXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_win32.vkGetMemoryWin32HandlePropertiesKHR'
+-- 'VkExternalMemoryHandleTypeFlags', 'VkPhysicalDeviceExternalBufferInfo',
+-- 'VkPhysicalDeviceExternalImageFormatInfo'
 newtype VkExternalMemoryHandleTypeFlagBits = VkExternalMemoryHandleTypeFlagBits VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -585,8 +576,7 @@ instance Storable VkExternalImageFormatProperties where
 -- 'Graphics.Vulkan.Core10.Buffer.VkBufferUsageFlags',
 -- 'VkExternalMemoryHandleTypeFlagBits',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceExternalBufferProperties',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_capabilities.vkGetPhysicalDeviceExternalBufferPropertiesKHR'
+-- 'vkGetPhysicalDeviceExternalBufferProperties'
 data VkPhysicalDeviceExternalBufferInfo = VkPhysicalDeviceExternalBufferInfo
   { -- | @sType@ is the type of this structure
   vkSType :: VkStructureType
@@ -635,8 +625,7 @@ instance Storable VkPhysicalDeviceExternalBufferInfo where
 --
 -- 'VkExternalMemoryProperties',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceExternalBufferProperties',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_memory_capabilities.vkGetPhysicalDeviceExternalBufferPropertiesKHR'
+-- 'vkGetPhysicalDeviceExternalBufferProperties'
 data VkExternalBufferProperties = VkExternalBufferProperties
   { -- | @sType@ is the type of this structure
   vkSType :: VkStructureType

@@ -138,7 +138,7 @@ import Graphics.Vulkan.Core10.DescriptorSet
 --
 -- = See Also
 --
--- 'VkDescriptorBindingFlagsEXT'
+-- No cross-references are available
 newtype VkDescriptorBindingFlagBitsEXT = VkDescriptorBindingFlagBitsEXT VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -209,7 +209,7 @@ pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT = VkDescr
 -- | @VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT@ specifies that
 -- descriptor sets allocated from this pool /can/ include bindings with the
 -- @VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT@ bit set. It is valid
--- to allocate descriptor sets that have bindings that don’t set the
+-- to allocate descriptor sets that have bindings that do not set the
 -- @VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT@ bit from a pool that
 -- has @VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT@ set.
 pattern VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT :: VkDescriptorPoolCreateFlagBits
@@ -394,14 +394,13 @@ pattern VK_EXT_DESCRIPTOR_INDEXING_EXTENSION_NAME = "VK_EXT_descriptor_indexing"
 -- the @pNext@ chain of 'Graphics.Vulkan.Core10.Device.VkDeviceCreateInfo'
 -- to enable features.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT@
+-- Unresolved directive in
+-- VkPhysicalDeviceDescriptorIndexingFeaturesEXT.txt -
+-- include::..\/validity\/structs\/VkPhysicalDeviceDescriptorIndexingFeaturesEXT.txt[]
 --
 -- = See Also
 --
--- @VkBool32@, 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPhysicalDeviceDescriptorIndexingFeaturesEXT = VkPhysicalDeviceDescriptorIndexingFeaturesEXT
   { -- No documentation found for Nested "VkPhysicalDeviceDescriptorIndexingFeaturesEXT" "sType"
   vkSType :: VkStructureType
@@ -513,7 +512,7 @@ instance Storable VkPhysicalDeviceDescriptorIndexingFeaturesEXT where
 --     across all pools that are created with the
 --     @VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT@ bit set. Pool
 --     creation /may/ fail when this limit is exceeded, or when the space
---     this limit represents can’t satisfy a pool creation due to
+--     this limit represents is unable to satisfy a pool creation due to
 --     fragmentation.
 --
 -- -   @shaderUniformBufferArrayNonUniformIndexingNative@ is a boolean
@@ -663,14 +662,13 @@ instance Storable VkPhysicalDeviceDescriptorIndexingFeaturesEXT where
 -- 'Graphics.Vulkan.Extensions.VK_KHR_get_physical_device_properties2.VkPhysicalDeviceProperties2KHR',
 -- it is filled with the implementation-dependent limits.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT@
+-- Unresolved directive in
+-- VkPhysicalDeviceDescriptorIndexingPropertiesEXT.txt -
+-- include::..\/validity\/structs\/VkPhysicalDeviceDescriptorIndexingPropertiesEXT.txt[]
 --
 -- = See Also
 --
--- @VkBool32@, 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPhysicalDeviceDescriptorIndexingPropertiesEXT = VkPhysicalDeviceDescriptorIndexingPropertiesEXT
   { -- No documentation found for Nested "VkPhysicalDeviceDescriptorIndexingPropertiesEXT" "sType"
   vkSType :: VkStructureType
@@ -874,21 +872,13 @@ instance Storable VkPhysicalDeviceDescriptorIndexingPropertiesEXT where
 --     @VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC@ or
 --     @VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC@
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT@
---
--- -   If @bindingCount@ is not @0@, @pBindingFlags@ /must/ be a valid
---     pointer to an array of @bindingCount@ valid combinations of
---     'VkDescriptorBindingFlagBitsEXT' values
---
--- -   Each element of @pBindingFlags@ /must/ not be @0@
+-- Unresolved directive in
+-- VkDescriptorSetLayoutBindingFlagsCreateInfoEXT.txt -
+-- include::..\/validity\/structs\/VkDescriptorSetLayoutBindingFlagsCreateInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'VkDescriptorBindingFlagsEXT',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkDescriptorSetLayoutBindingFlagsCreateInfoEXT = VkDescriptorSetLayoutBindingFlagsCreateInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -940,17 +930,13 @@ instance Storable VkDescriptorSetLayoutBindingFlagsCreateInfoEXT where
 --     /must/ be less than or equal to the descriptor count specified for
 --     that binding when the descriptor set layout was created.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT@
---
--- -   If @descriptorSetCount@ is not @0@, @pDescriptorCounts@ /must/ be a
---     valid pointer to an array of @descriptorSetCount@ @uint32_t@ values
+-- Unresolved directive in
+-- VkDescriptorSetVariableDescriptorCountAllocateInfoEXT.txt -
+-- include::..\/validity\/structs\/VkDescriptorSetVariableDescriptorCountAllocateInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkDescriptorSetVariableDescriptorCountAllocateInfoEXT = VkDescriptorSetVariableDescriptorCountAllocateInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -998,14 +984,13 @@ instance Storable VkDescriptorSetVariableDescriptorCountAllocateInfoEXT where
 -- supported, then the value written to @maxVariableDescriptorCount@ is
 -- undefined.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT@
+-- Unresolved directive in
+-- VkDescriptorSetVariableDescriptorCountLayoutSupportEXT.txt -
+-- include::..\/validity\/structs\/VkDescriptorSetVariableDescriptorCountLayoutSupportEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkDescriptorSetVariableDescriptorCountLayoutSupportEXT = VkDescriptorSetVariableDescriptorCountLayoutSupportEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

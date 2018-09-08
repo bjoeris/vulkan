@@ -5,8 +5,8 @@
 {-# language DuplicateRecordFields #-}
 
 module Graphics.Vulkan.Core10.MemoryManagement
-  ( VkBuffer
-  , VkImage
+  ( VkBuffer(..)
+  , VkImage(..)
   , vkGetBufferMemoryRequirements
   , vkBindBufferMemory
   , vkGetImageMemoryRequirements
@@ -16,9 +16,11 @@ module Graphics.Vulkan.Core10.MemoryManagement
 
 import Data.Word
   ( Word32
+  , Word64
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -38,12 +40,10 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkDeviceSize
   )
 import Graphics.Vulkan.Core10.Memory
-  ( VkDeviceMemory
+  ( VkDeviceMemory(..)
   )
 
 
--- | Dummy data to tag the 'Ptr' with
-data VkBuffer_T
 -- | VkBuffer - Opaque handle to a buffer object
 --
 -- = See Also
@@ -52,13 +52,8 @@ data VkBuffer_T
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.VkBufferMemoryBarrier',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_memory_requirements2.VkBufferMemoryRequirementsInfo2',
 -- 'Graphics.Vulkan.Core10.BufferView.VkBufferViewCreateInfo',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkCmdProcessCommandsInfoNVX',
--- 'Graphics.Vulkan.Extensions.VK_NV_dedicated_allocation.VkDedicatedAllocationMemoryAllocateInfoNV',
 -- 'Graphics.Vulkan.Core10.DescriptorSet.VkDescriptorBufferInfo',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkIndirectCommandsTokenNVX',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_dedicated_allocation.VkMemoryDedicatedAllocateInfo',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkObjectTableIndexBufferEntryNVX',
--- 'Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands.VkObjectTableVertexBufferEntryNVX',
 -- 'Graphics.Vulkan.Core10.SparseResourceMemoryManagement.VkSparseBufferMemoryBindInfo',
 -- 'vkBindBufferMemory',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdBindIndexBuffer',
@@ -69,24 +64,25 @@ data VkBuffer_T
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdCopyQueryPoolResults',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdDispatchIndirect',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdDrawIndexedIndirect',
--- 'Graphics.Vulkan.Extensions.VK_AMD_draw_indirect_count.vkCmdDrawIndexedIndirectCountAMD',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdDrawIndirect',
--- 'Graphics.Vulkan.Extensions.VK_AMD_draw_indirect_count.vkCmdDrawIndirectCountAMD',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdFillBuffer',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdUpdateBuffer',
--- 'Graphics.Vulkan.Extensions.VK_AMD_buffer_marker.vkCmdWriteBufferMarkerAMD',
 -- 'Graphics.Vulkan.Core10.Buffer.vkCreateBuffer',
 -- 'Graphics.Vulkan.Core10.Buffer.vkDestroyBuffer',
 -- 'vkGetBufferMemoryRequirements'
-type VkBuffer = Ptr VkBuffer_T
--- | Dummy data to tag the 'Ptr' with
-data VkImage_T
--- | VkImage - Opaque handle to a image object
+newtype VkBuffer = VkBuffer Word64
+  deriving (Eq, Show)
+
+instance Storable VkBuffer where
+  sizeOf (VkBuffer w) = sizeOf w
+  alignment (VkBuffer w) = alignment w
+  peek ptr = VkBuffer <$> peek (castPtr ptr)
+  poke ptr (VkBuffer w) = poke (castPtr ptr) w
+-- | VkImage - Opaque handle to an image object
 --
 -- = See Also
 --
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_bind_memory2.VkBindImageMemoryInfo',
--- 'Graphics.Vulkan.Extensions.VK_NV_dedicated_allocation.VkDedicatedAllocationMemoryAllocateInfoNV',
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.VkImageMemoryBarrier',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_memory_requirements2.VkImageMemoryRequirementsInfo2',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_memory_requirements2.VkImageSparseMemoryRequirementsInfo2',
@@ -106,9 +102,15 @@ data VkImage_T
 -- 'Graphics.Vulkan.Core10.Image.vkDestroyImage',
 -- 'vkGetImageMemoryRequirements',
 -- 'Graphics.Vulkan.Core10.SparseResourceMemoryManagement.vkGetImageSparseMemoryRequirements',
--- 'Graphics.Vulkan.Core10.Image.vkGetImageSubresourceLayout',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.vkGetSwapchainImagesKHR'
-type VkImage = Ptr VkImage_T
+-- 'Graphics.Vulkan.Core10.Image.vkGetImageSubresourceLayout'
+newtype VkImage = VkImage Word64
+  deriving (Eq, Show)
+
+instance Storable VkImage where
+  sizeOf (VkImage w) = sizeOf w
+  alignment (VkImage w) = alignment w
+  peek ptr = VkImage <$> peek (castPtr ptr)
+  poke ptr (VkImage w) = poke (castPtr ptr) w
 -- | vkGetBufferMemoryRequirements - Returns the memory requirements for
 -- specified Vulkan object
 --
@@ -151,8 +153,8 @@ foreign import ccall
 --
 -- -   @buffer@ is the buffer to be attached to memory.
 --
--- -   @memory@ is a @VkDeviceMemory@ object describing the device memory
---     to attach.
+-- -   @memory@ is a 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory' object
+--     describing the device memory to attach.
 --
 -- -   @memoryOffset@ is the start offset of the region of @memory@ which
 --     is to be bound to the buffer. The number of bytes returned in the
@@ -175,22 +177,6 @@ foreign import ccall
 --     flags
 --
 -- -   @memoryOffset@ /must/ be less than the size of @memory@
---
--- -   If @buffer@ was created with the
---     @VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT@ or
---     @VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT@, @memoryOffset@ /must/ be
---     a multiple of
---     @VkPhysicalDeviceLimits@::@minTexelBufferOffsetAlignment@
---
--- -   If @buffer@ was created with the
---     @VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT@, @memoryOffset@ /must/ be a
---     multiple of
---     @VkPhysicalDeviceLimits@::@minUniformBufferOffsetAlignment@
---
--- -   If @buffer@ was created with the
---     @VK_BUFFER_USAGE_STORAGE_BUFFER_BIT@, @memoryOffset@ /must/ be a
---     multiple of
---     @VkPhysicalDeviceLimits@::@minStorageBufferOffsetAlignment@
 --
 -- -   @memory@ /must/ have been allocated using one of the memory types
 --     allowed in the @memoryTypeBits@ member of the @VkMemoryRequirements@
@@ -313,8 +299,8 @@ foreign import ccall
 --
 -- -   @image@ is the image.
 --
--- -   @memory@ is the @VkDeviceMemory@ object describing the device memory
---     to attach.
+-- -   @memory@ is the 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory'
+--     object describing the device memory to attach.
 --
 -- -   @memoryOffset@ is the start offset of the region of @memory@ which
 --     is to be bound to the image. The number of bytes returned in the

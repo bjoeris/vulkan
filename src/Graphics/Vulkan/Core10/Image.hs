@@ -79,7 +79,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkImageUsageFlags
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkImage
+  ( VkImage(..)
   )
 import Graphics.Vulkan.Core10.SparseResourceMemoryManagement
   ( VkImageSubresource(..)
@@ -213,42 +213,6 @@ import Graphics.Vulkan.Core10.SparseResourceMemoryManagement
 -- For use in a descriptor set, this is a member in the
 -- @VkDescriptorImageInfo@ structure (see
 -- [{html_spec_relative}#descriptorsets-updates](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#descriptorsets-updates)).
--- At the time that any command buffer command accessing an image executes
--- on any queue, the layouts of the image subresources that are accessed
--- /must/ all match the layout specified via the API controlling those
--- accesses.
---
--- When performing a layout transition on an image subresource, the old
--- layout value /must/ either equal the current layout of the image
--- subresource (at the time the transition executes), or else be
--- @VK_IMAGE_LAYOUT_UNDEFINED@ (implying that the contents of the image
--- subresource need not be preserved). The new layout used in a transition
--- /must/ not be @VK_IMAGE_LAYOUT_UNDEFINED@ or
--- @VK_IMAGE_LAYOUT_PREINITIALIZED@.
---
--- The image layout of each image subresource of a depth\/stencil image
--- created with @VK_IMAGE_CREATE_SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_BIT_EXT@
--- is dependent on the last sample locations used to render to the image
--- subresource as a depth\/stencil attachment, thus applications /must/
--- provide the same sample locations that were last used to render to the
--- given image subresource whenever a layout transition of the image
--- subresource happens, otherwise the contents of the depth aspect of the
--- image subresource become undefined.
---
--- In addition, depth reads from a depth\/stencil attachment referring to
--- an image subresource range of a depth\/stencil image created with
--- @VK_IMAGE_CREATE_SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_BIT_EXT@ using
--- different sample locations than what have been last used to perform
--- depth writes to the image subresources of the same image subresource
--- range produce undefined results.
---
--- Similarly, depth writes to a depth\/stencil attachment referring to an
--- image subresource range of a depth\/stencil image created with
--- @VK_IMAGE_CREATE_SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_BIT_EXT@ using
--- different sample locations than what have been last used to perform
--- depth writes to the image subresources of the same image subresource
--- range make the contents of the depth aspect of those image subresources
--- undefined.
 --
 -- = See Also
 --
@@ -356,8 +320,9 @@ pattern VK_IMAGE_LAYOUT_PREINITIALIZED = VkImageLayout 8
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pImage@ points to a @VkImage@ handle in which the resulting image
---     object is returned.
+-- -   @pImage@ points to a
+--     'Graphics.Vulkan.Core10.MemoryManagement.VkImage' handle in which
+--     the resulting image object is returned.
 --
 -- == Valid Usage
 --
@@ -473,9 +438,9 @@ foreign import ccall
 -- format](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#features-formats-requiring-sampler-ycbcr-conversion),
 -- @vkGetImageSubresourceLayout@ describes one plane of the image.
 --
--- 'vkGetImageSubresourceLayout' is invariant for the lifetime of a single
+-- @vkGetImageSubresourceLayout@ is invariant for the lifetime of a single
 -- image. However, the subresource layout of images in Android hardware
--- buffer external memory isn’t known until the image has been bound to
+-- buffer external memory is not known until the image has been bound to
 -- memory, so calling @vkGetImageSubresourceLayout@ for such an image
 -- before it has been bound will result in undefined behavior.
 --
@@ -507,7 +472,7 @@ foreign import ccall
 --     @VK_IMAGE_ASPECT_PLANE_2_BIT@
 --
 -- -   If @image@ was created with the
---     VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID
+--     @VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID@
 --     external memory handle type, then @image@ /must/ be bound to memory.
 --
 -- == Valid Usage (Implicit)
@@ -573,7 +538,7 @@ foreign import ccall
 -- specifies the set of valid @samples@ bits and the limits for @extent@,
 -- @mipLevels@, @arrayLayers@, and @maxResourceSize@. Even if
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceImageFormatProperties2'.
--- returns success and the parameters to vkCreateImage are all within the
+-- returns success and the parameters to @vkCreateImage@ are all within the
 -- returned limits, @vkCreateImage@ /must/ fail and return
 -- @VK_ERROR_OUT_OF_DEVICE_MEMORY@ if the resulting size of the image would
 -- be larger than @maxResourceSize@.
@@ -595,9 +560,9 @@ foreign import ccall
 --
 -- == Valid Usage
 --
--- -   If the @pNext@ chain doesn’t contain an instance of
+-- -   If the @pNext@ chain does not contain an instance of
 --     'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkExternalFormatANDROID',
---     or if @format@ is not VK_FORMAT_UNDEFINED, the combination of
+--     or if @format@ is not @VK_FORMAT_UNDEFINED@, the combination of
 --     @format@, @imageType@, @tiling@, @usage@, and @flags@ /must/ be
 --     supported, as indicated by a @VK_SUCCESS@ return value from
 --     @vkGetPhysicalDeviceImageFormatProperties@ invoked with the same
@@ -618,7 +583,15 @@ foreign import ccall
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceQueueFamilyProperties2'
 --     for the @physicalDevice@ that was used to create @device@
 --
--- -   @format@ /must/ not be @VK_FORMAT_UNDEFINED@
+-- -   If the @pNext@ chain contains an instance of
+--     'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkExternalFormatANDROID',
+--     and its member @externalFormat@ is non-zero the @format@ /must/ be
+--     @VK_FORMAT_UNDEFINED@.
+--
+-- -   If the @pNext@ chain does not contain an instance of
+--     'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkExternalFormatANDROID',
+--     or does and its member @externalFormat@ is @0@ the @format@ /must/
+--     not be @VK_FORMAT_UNDEFINED@.
 --
 -- -   @extent@::@width@ /must/ be greater than @0@.
 --
@@ -784,68 +757,6 @@ foreign import ccall
 --     @samples@ is @VK_SAMPLE_COUNT_16_BIT@, @flags@ /must/ not contain
 --     @VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT@
 --
--- -   If @tiling@ is @VK_IMAGE_TILING_LINEAR@, @format@ /must/ be a format
---     that has at least one supported feature bit present in the value of
---     @VkFormatProperties@::@linearTilingFeatures@ returned by
---     @vkGetPhysicalDeviceFormatProperties@ with the same value of
---     @format@
---
--- -   If @tiling@ is @VK_IMAGE_TILING_LINEAR@, and
---     @VkFormatProperties@::@linearTilingFeatures@ (as returned by
---     @vkGetPhysicalDeviceFormatProperties@ with the same value of
---     @format@) does not include @VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT@,
---     @usage@ /must/ not contain @VK_IMAGE_USAGE_SAMPLED_BIT@
---
--- -   If @tiling@ is @VK_IMAGE_TILING_LINEAR@, and
---     @VkFormatProperties@::@linearTilingFeatures@ (as returned by
---     @vkGetPhysicalDeviceFormatProperties@ with the same value of
---     @format@) does not include @VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT@,
---     @usage@ /must/ not contain @VK_IMAGE_USAGE_STORAGE_BIT@
---
--- -   If @tiling@ is @VK_IMAGE_TILING_LINEAR@, and
---     @VkFormatProperties@::@linearTilingFeatures@ (as returned by
---     @vkGetPhysicalDeviceFormatProperties@ with the same value of
---     @format@) does not include @VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT@,
---     @usage@ /must/ not contain @VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT@
---
--- -   If @tiling@ is @VK_IMAGE_TILING_LINEAR@, and
---     @VkFormatProperties@::@linearTilingFeatures@ (as returned by
---     @vkGetPhysicalDeviceFormatProperties@ with the same value of
---     @format@) does not include
---     @VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT@, @usage@ /must/ not
---     contain @VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT@
---
--- -   If @tiling@ is @VK_IMAGE_TILING_OPTIMAL@, @format@ /must/ be a
---     format that has at least one supported feature bit present in the
---     value of @VkFormatProperties@::@optimalTilingFeatures@ returned by
---     @vkGetPhysicalDeviceFormatProperties@ with the same value of
---     @format@
---
--- -   If @tiling@ is @VK_IMAGE_TILING_OPTIMAL@, and
---     @VkFormatProperties@::@optimalTilingFeatures@ (as returned by
---     @vkGetPhysicalDeviceFormatProperties@ with the same value of
---     @format@) does not include @VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT@,
---     @usage@ /must/ not contain @VK_IMAGE_USAGE_SAMPLED_BIT@
---
--- -   If @tiling@ is @VK_IMAGE_TILING_OPTIMAL@, and
---     @VkFormatProperties@::@optimalTilingFeatures@ (as returned by
---     @vkGetPhysicalDeviceFormatProperties@ with the same value of
---     @format@) does not include @VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT@,
---     @usage@ /must/ not contain @VK_IMAGE_USAGE_STORAGE_BIT@
---
--- -   If @tiling@ is @VK_IMAGE_TILING_OPTIMAL@, and
---     @VkFormatProperties@::@optimalTilingFeatures@ (as returned by
---     @vkGetPhysicalDeviceFormatProperties@ with the same value of
---     @format@) does not include @VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT@,
---     @usage@ /must/ not contain @VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT@
---
--- -   If @tiling@ is @VK_IMAGE_TILING_OPTIMAL@, and
---     @VkFormatProperties@::@optimalTilingFeatures@ (as returned by
---     @vkGetPhysicalDeviceFormatProperties@ with the same value of
---     @format@) does not include
---     @VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT@, @usage@ /must/ not
---     contain @VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT@
---
 -- -   If @flags@ contains @VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT@ or
 --     @VK_IMAGE_CREATE_SPARSE_ALIASED_BIT@, it /must/ also contain
 --     @VK_IMAGE_CREATE_SPARSE_BINDING_BIT@
@@ -863,7 +774,7 @@ foreign import ccall
 -- -   If the @pNext@ chain contains an instance of
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory.VkExternalMemoryImageCreateInfo',
 --     its @handleTypes@ member /must/ only contain bits that are also in
---     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalImageFormatProperties'::@externalMemoryProperties@::@compatibleHandleTypes@,
+--     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalImageFormatProperties'::@externalMemoryProperties.compatibleHandleTypes@,
 --     as returned by
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceImageFormatProperties2'
 --     with @format@, @imageType@, @tiling@, @usage@, and @flags@ equal to
@@ -876,7 +787,7 @@ foreign import ccall
 -- -   If the @pNext@ chain contains an instance of
 --     'Graphics.Vulkan.Extensions.VK_NV_external_memory.VkExternalMemoryImageCreateInfoNV',
 --     its @handleTypes@ member /must/ only contain bits that are also in
---     'Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities.VkExternalImageFormatPropertiesNV'::@externalMemoryProperties@::@compatibleHandleTypes@,
+--     'Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities.VkExternalImageFormatPropertiesNV'::@externalMemoryProperties.compatibleHandleTypes@,
 --     as returned by
 --     'Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities.vkGetPhysicalDeviceExternalImageFormatPropertiesNV'
 --     with @format@, @imageType@, @tiling@, @usage@, and @flags@ equal to
@@ -979,7 +890,7 @@ foreign import ccall
 --
 --     -   @format@ /must/ be @VK_FORMAT_UNDEFINED@
 --
---     -   @flags@ /must/ not include VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT
+--     -   @flags@ /must/ not include @VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT@
 --
 --     -   @usage@ /must/ not include any usages except
 --         @VK_IMAGE_USAGE_SAMPLED_BIT@
@@ -990,18 +901,8 @@ foreign import ccall
 --
 -- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO@
 --
--- -   Each @pNext@ member of any structure (including this one) in the
---     @pNext@ chain /must/ be either @NULL@ or a pointer to a valid
---     instance of
---     'Graphics.Vulkan.Extensions.VK_NV_dedicated_allocation.VkDedicatedAllocationImageCreateInfoNV',
---     'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkExternalFormatANDROID',
---     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory.VkExternalMemoryImageCreateInfo',
---     'Graphics.Vulkan.Extensions.VK_NV_external_memory.VkExternalMemoryImageCreateInfoNV',
---     'Graphics.Vulkan.Extensions.VK_KHR_image_format_list.VkImageFormatListCreateInfoKHR',
---     or
---     'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkImageSwapchainCreateInfoKHR'
---
--- -   Each @sType@ member in the @pNext@ chain /must/ be unique
+-- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
+--     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory.VkExternalMemoryImageCreateInfo'
 --
 -- -   @flags@ /must/ be a valid combination of
 --     'Graphics.Vulkan.Core10.DeviceInitialization.VkImageCreateFlagBits'

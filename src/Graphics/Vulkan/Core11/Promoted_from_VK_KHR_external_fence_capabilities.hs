@@ -126,12 +126,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
 --
 -- = See Also
 --
--- 'VkExternalFenceHandleTypeFlags',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_fence_fd.VkFenceGetFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_fence_win32.VkFenceGetWin32HandleInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_fence_fd.VkImportFenceFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_fence_win32.VkImportFenceWin32HandleInfoKHR',
--- 'VkPhysicalDeviceExternalFenceInfo'
+-- 'VkExternalFenceHandleTypeFlags', 'VkPhysicalDeviceExternalFenceInfo'
 newtype VkExternalFenceHandleTypeFlagBits = VkExternalFenceHandleTypeFlagBits VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -278,8 +273,7 @@ foreign import ccall
 --
 -- 'VkExternalFenceHandleTypeFlagBits',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceExternalFenceProperties',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_fence_capabilities.vkGetPhysicalDeviceExternalFencePropertiesKHR'
+-- 'vkGetPhysicalDeviceExternalFenceProperties'
 data VkPhysicalDeviceExternalFenceInfo = VkPhysicalDeviceExternalFenceInfo
   { -- | @sType@ is the type of this structure
   vkSType :: VkStructureType
@@ -319,8 +313,7 @@ instance Storable VkPhysicalDeviceExternalFenceInfo where
 --
 -- 'VkExternalFenceFeatureFlags', 'VkExternalFenceHandleTypeFlags',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceExternalFenceProperties',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_fence_capabilities.vkGetPhysicalDeviceExternalFencePropertiesKHR'
+-- 'vkGetPhysicalDeviceExternalFenceProperties'
 data VkExternalFenceProperties = VkExternalFenceProperties
   { -- No documentation found for Nested "VkExternalFenceProperties" "sType"
   vkSType :: VkStructureType

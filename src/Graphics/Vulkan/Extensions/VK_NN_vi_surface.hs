@@ -62,7 +62,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkInstance
   )
 import Graphics.Vulkan.Extensions.VK_KHR_surface
-  ( VkSurfaceKHR
+  ( VkSurfaceKHR(..)
   )
 
 
@@ -113,8 +113,9 @@ pattern VK_NN_VI_SURFACE_EXTENSION_NAME = "VK_NN_vi_surface"
 --     (see [Memory
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)).
 --
--- -   @pSurface@ points to a @VkSurfaceKHR@ handle in which the created
---     surface object is returned.
+-- -   @pSurface@ points to a
+--     'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceKHR' handle in
+--     which the created surface object is returned.
 --
 -- = Description
 --
@@ -126,39 +127,15 @@ pattern VK_NN_VI_SURFACE_EXTENSION_NAME = "VK_NN_vi_surface"
 --
 -- The @currentExtent@ of a VI surface is always undefined. Applications
 -- are expected to choose an appropriate size for the swapchain’s
--- @imageExtent@ (e.g., by matching the the result of a call to
+-- @imageExtent@ (e.g., by matching the result of a call to
 -- @nn@::@vi@::@GetDisplayResolution@).
 --
--- == Valid Usage (Implicit)
---
--- -   @instance@ /must/ be a valid @VkInstance@ handle
---
--- -   @pCreateInfo@ /must/ be a valid pointer to a valid
---     @VkViSurfaceCreateInfoNN@ structure
---
--- -   If @pAllocator@ is not @NULL@, @pAllocator@ /must/ be a valid
---     pointer to a valid @VkAllocationCallbacks@ structure
---
--- -   @pSurface@ /must/ be a valid pointer to a @VkSurfaceKHR@ handle
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_NATIVE_WINDOW_IN_USE_KHR@
+-- Unresolved directive in vkCreateViSurfaceNN.txt -
+-- include::..\/validity\/protos\/vkCreateViSurfaceNN.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkAllocationCallbacks',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkInstance',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceKHR',
--- 'VkViSurfaceCreateInfoNN'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -171,18 +148,12 @@ foreign import ccall
 --
 -- -   @window@ /must/ be a valid @nn@::@vi@::@NativeWindowHandle@
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_VI_SURFACE_CREATE_INFO_NN@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @flags@ /must/ be @0@
+-- Unresolved directive in VkViSurfaceCreateInfoNN.txt -
+-- include::..\/validity\/structs\/VkViSurfaceCreateInfoNN.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'VkViSurfaceCreateFlagsNN', 'vkCreateViSurfaceNN'
+-- No cross-references are available
 data VkViSurfaceCreateInfoNN = VkViSurfaceCreateInfoNN
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

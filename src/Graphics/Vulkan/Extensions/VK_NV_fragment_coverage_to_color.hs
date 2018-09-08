@@ -67,7 +67,7 @@ import Graphics.Vulkan.Core10.Core
 --
 -- = See Also
 --
--- 'VkPipelineCoverageToColorStateCreateInfoNV'
+-- No cross-references are available
 newtype VkPipelineCoverageToColorStateCreateFlagsNV = VkPipelineCoverageToColorStateCreateFlagsNV VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -139,17 +139,12 @@ pattern VK_NV_FRAGMENT_COVERAGE_TO_COLOR_EXTENSION_NAME = "VK_NV_fragment_covera
 --     @VK_FORMAT_R8_SINT@, @VK_FORMAT_R16_UINT@, @VK_FORMAT_R16_SINT@,
 --     @VK_FORMAT_R32_UINT@, or @VK_FORMAT_R32_SINT@
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV@
---
--- -   @flags@ /must/ be @0@
+-- Unresolved directive in VkPipelineCoverageToColorStateCreateInfoNV.txt -
+-- include::..\/validity\/structs\/VkPipelineCoverageToColorStateCreateInfoNV.txt[]
 --
 -- = See Also
 --
--- @VkBool32@, 'VkPipelineCoverageToColorStateCreateFlagsNV',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPipelineCoverageToColorStateCreateInfoNV = VkPipelineCoverageToColorStateCreateInfoNV
   { -- | @sType@ is the type of this structure
   vkSType :: VkStructureType

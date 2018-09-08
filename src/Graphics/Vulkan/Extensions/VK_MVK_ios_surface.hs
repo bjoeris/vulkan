@@ -62,7 +62,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkInstance
   )
 import Graphics.Vulkan.Extensions.VK_KHR_surface
-  ( VkSurfaceKHR
+  ( VkSurfaceKHR(..)
   )
 
 
@@ -111,39 +111,18 @@ pattern VK_MVK_IOS_SURFACE_EXTENSION_NAME = "VK_MVK_ios_surface"
 --     (see [Memory
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)).
 --
--- -   @pSurface@ points to a @VkSurfaceKHR@ handle in which the created
---     surface object is returned.
+-- -   @pSurface@ points to a
+--     'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceKHR' handle in
+--     which the created surface object is returned.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @instance@ /must/ be a valid @VkInstance@ handle
---
--- -   @pCreateInfo@ /must/ be a valid pointer to a valid
---     @VkIOSSurfaceCreateInfoMVK@ structure
---
--- -   If @pAllocator@ is not @NULL@, @pAllocator@ /must/ be a valid
---     pointer to a valid @VkAllocationCallbacks@ structure
---
--- -   @pSurface@ /must/ be a valid pointer to a @VkSurfaceKHR@ handle
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_NATIVE_WINDOW_IN_USE_KHR@
+-- Unresolved directive in vkCreateIOSSurfaceMVK.txt -
+-- include::..\/validity\/protos\/vkCreateIOSSurfaceMVK.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkAllocationCallbacks',
--- 'VkIOSSurfaceCreateInfoMVK',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkInstance',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -157,18 +136,12 @@ foreign import ccall
 -- -   @pView@ /must/ be a valid @UIView@ and /must/ be backed by a
 --     @CALayer@ instance of type @CAMetalLayer@.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_IOS_SURFACE_CREATE_INFO_MVK@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @flags@ /must/ be @0@
+-- Unresolved directive in VkIOSSurfaceCreateInfoMVK.txt -
+-- include::..\/validity\/structs\/VkIOSSurfaceCreateInfoMVK.txt[]
 --
 -- = See Also
 --
--- 'VkIOSSurfaceCreateFlagsMVK',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'vkCreateIOSSurfaceMVK'
+-- No cross-references are available
 data VkIOSSurfaceCreateInfoMVK = VkIOSSurfaceCreateInfoMVK
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

@@ -181,14 +181,12 @@ instance Storable VkPhysicalDeviceMaintenance3Properties where
 --
 -- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT@
 --
--- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
---     'Graphics.Vulkan.Extensions.VK_EXT_descriptor_indexing.VkDescriptorSetVariableDescriptorCountLayoutSupportEXT'
+-- -   @pNext@ /must/ be @NULL@
 --
 -- = See Also
 --
 -- @VkBool32@, 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetDescriptorSetLayoutSupport',
--- 'Graphics.Vulkan.Extensions.VK_KHR_maintenance3.vkGetDescriptorSetLayoutSupportKHR'
+-- 'vkGetDescriptorSetLayoutSupport'
 data VkDescriptorSetLayoutSupport = VkDescriptorSetLayoutSupport
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

@@ -59,7 +59,7 @@ import Graphics.Vulkan.Core10.Core
 --
 -- = See Also
 --
--- 'VkPipelineRasterizationStateRasterizationOrderAMD'
+-- No cross-references are available
 newtype VkRasterizationOrderAMD = VkRasterizationOrderAMD Int32
   deriving (Eq, Ord, Storable)
 
@@ -102,13 +102,11 @@ pattern VK_AMD_RASTERIZATION_ORDER_EXTENSION_NAME = "VK_AMD_rasterization_order"
 -- | VkPipelineRasterizationStateRasterizationOrderAMD - Structure defining
 -- rasterization order for a graphics pipeline
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD@
---
--- -   @rasterizationOrder@ /must/ be a valid 'VkRasterizationOrderAMD'
---     value
+-- Unresolved directive in
+-- VkPipelineRasterizationStateRasterizationOrderAMD.txt -
+-- include::..\/validity\/structs\/VkPipelineRasterizationStateRasterizationOrderAMD.txt[]
 --
 -- If the @{html_spec_relative}#VK_AMD_rasterization_order@ device
 -- extension is not enabled or the application does not request a
@@ -119,7 +117,7 @@ pattern VK_AMD_RASTERIZATION_ORDER_EXTENSION_NAME = "VK_AMD_rasterization_order"
 --
 -- = See Also
 --
--- 'VkRasterizationOrderAMD', 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPipelineRasterizationStateRasterizationOrderAMD = VkPipelineRasterizationStateRasterizationOrderAMD
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

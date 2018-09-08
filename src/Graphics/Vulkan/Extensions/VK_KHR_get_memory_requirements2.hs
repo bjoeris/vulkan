@@ -49,9 +49,9 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkDevice
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkMemoryRequirements(..)
-  , VkBuffer
-  , VkImage
+  ( VkBuffer(..)
+  , VkImage(..)
+  , VkMemoryRequirements(..)
   )
 import Graphics.Vulkan.Core10.SparseResourceMemoryManagement
   ( VkSparseImageMemoryRequirements(..)

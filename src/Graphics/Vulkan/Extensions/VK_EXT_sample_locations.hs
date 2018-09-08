@@ -133,42 +133,12 @@ pattern VK_EXT_SAMPLE_LOCATIONS_EXTENSION_NAME = "VK_EXT_sample_locations"
 --     @sampleLocationsInfo@ member of that element /must/ match the sample
 --     locations state pointed to by @pSampleLocationsInfo@
 --
--- == Valid Usage (Implicit)
---
--- -   @commandBuffer@ /must/ be a valid @VkCommandBuffer@ handle
---
--- -   @pSampleLocationsInfo@ /must/ be a valid pointer to a valid
---     @VkSampleLocationsInfoEXT@ structure
---
--- -   @commandBuffer@ /must/ be in the [recording
---     state](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#commandbuffers-lifecycle)
---
--- -   The @VkCommandPool@ that @commandBuffer@ was allocated from /must/
---     support graphics operations
---
--- == Host Synchronization
---
--- -   Host access to @commandBuffer@ /must/ be externally synchronized
---
--- -   Host access to the @VkCommandPool@ that @commandBuffer@ was
---     allocated from /must/ be externally synchronized
---
--- == Command Properties
---
--- \'
---
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
--- | [Command Buffer                                                                                             | [Render Pass                                                                                               | [Supported Queue                                                                                      | [Pipeline                                                                                                                  |
--- | Levels](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkCommandBufferLevel) | Scope](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#vkCmdBeginRenderPass) | Types](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkQueueFlagBits) | Type](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#synchronization-pipeline-stages-types) |
--- +=============================================================================================================+============================================================================================================+=======================================================================================================+============================================================================================================================+
--- | Primary                                                                                                     | Both                                                                                                       | Graphics                                                                                              |                                                                                                                            |
--- | Secondary                                                                                                   |                                                                                                            |                                                                                                       |                                                                                                                            |
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+-- Unresolved directive in vkCmdSetSampleLocationsEXT.txt -
+-- include::..\/validity\/protos\/vkCmdSetSampleLocationsEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Queue.VkCommandBuffer',
--- 'VkSampleLocationsInfoEXT'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -189,22 +159,15 @@ foreign import ccall
 --     additional multisampling capabilities specific to the sample count
 --     is returned.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @physicalDevice@ /must/ be a valid @VkPhysicalDevice@ handle
---
--- -   @samples@ /must/ be a valid
---     'Graphics.Vulkan.Core10.DeviceInitialization.VkSampleCountFlagBits'
---     value
---
--- -   @pMultisampleProperties@ /must/ be a valid pointer to a
---     @VkMultisamplePropertiesEXT@ structure
+-- Unresolved directive in vkGetPhysicalDeviceMultisamplePropertiesEXT.txt
+-- -
+-- include::..\/validity\/protos\/vkGetPhysicalDeviceMultisamplePropertiesEXT.txt[]
 --
 -- = See Also
 --
--- 'VkMultisamplePropertiesEXT',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDevice',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkSampleCountFlagBits'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -226,9 +189,12 @@ foreign import ccall
 -- chain of
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_get_physical_device_properties2.VkPhysicalDeviceProperties2'.
 --
+-- Unresolved directive in VkSampleLocationEXT.txt -
+-- include::..\/validity\/structs\/VkSampleLocationEXT.txt[]
+--
 -- = See Also
 --
--- 'VkSampleLocationsInfoEXT'
+-- No cross-references are available
 data VkSampleLocationEXT = VkSampleLocationEXT
   { -- | @x@ is the horizontal coordinate of the sample’s location.
   vkX :: CFloat
@@ -270,27 +236,12 @@ instance Storable VkSampleLocationEXT where
 -- -   @sampleLocationsCount@ /must/ equal @sampleLocationsPerPixel@ ×
 --     @sampleLocationGridSize.width@ × @sampleLocationGridSize.height@
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_SAMPLE_LOCATIONS_INFO_EXT@
---
--- -   @sampleLocationsPerPixel@ /must/ be a valid
---     'Graphics.Vulkan.Core10.DeviceInitialization.VkSampleCountFlagBits'
---     value
---
--- -   @pSampleLocations@ /must/ be a valid pointer to an array of
---     @sampleLocationsCount@ @VkSampleLocationEXT@ structures
---
--- -   @sampleLocationsCount@ /must/ be greater than @0@
+-- Unresolved directive in VkSampleLocationsInfoEXT.txt -
+-- include::..\/validity\/structs\/VkSampleLocationsInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'VkAttachmentSampleLocationsEXT',
--- 'Graphics.Vulkan.Core10.Pipeline.VkExtent2D',
--- 'VkPipelineSampleLocationsStateCreateInfoEXT',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkSampleCountFlagBits',
--- 'VkSampleLocationEXT', 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'VkSubpassSampleLocationsEXT', 'vkCmdSetSampleLocationsEXT'
+-- No cross-references are available
 data VkSampleLocationsInfoEXT = VkSampleLocationsInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -345,14 +296,12 @@ instance Storable VkSampleLocationsInfoEXT where
 --     'Graphics.Vulkan.Core10.CommandBufferBuilding.VkRenderPassBeginInfo'::@renderPass@
 --     was created with
 --
--- == Valid Usage (Implicit)
---
--- -   @sampleLocationsInfo@ /must/ be a valid @VkSampleLocationsInfoEXT@
---     structure
+-- Unresolved directive in VkAttachmentSampleLocationsEXT.txt -
+-- include::..\/validity\/structs\/VkAttachmentSampleLocationsEXT.txt[]
 --
 -- = See Also
 --
--- 'VkRenderPassSampleLocationsBeginInfoEXT', 'VkSampleLocationsInfoEXT'
+-- No cross-references are available
 data VkAttachmentSampleLocationsEXT = VkAttachmentSampleLocationsEXT
   { -- | @attachmentIndex@ is the index of the attachment for which the sample
   -- locations state is provided.
@@ -394,14 +343,12 @@ instance Storable VkAttachmentSampleLocationsEXT where
 --     'Graphics.Vulkan.Core10.CommandBufferBuilding.VkRenderPassBeginInfo'::@renderPass@
 --     was created with
 --
--- == Valid Usage (Implicit)
---
--- -   @sampleLocationsInfo@ /must/ be a valid @VkSampleLocationsInfoEXT@
---     structure
+-- Unresolved directive in VkSubpassSampleLocationsEXT.txt -
+-- include::..\/validity\/structs\/VkSubpassSampleLocationsEXT.txt[]
 --
 -- = See Also
 --
--- 'VkRenderPassSampleLocationsBeginInfoEXT', 'VkSampleLocationsInfoEXT'
+-- No cross-references are available
 data VkSubpassSampleLocationsEXT = VkSubpassSampleLocationsEXT
   { -- | @subpassIndex@ is the index of the subpass for which the sample
   -- locations state is provided.
@@ -425,26 +372,14 @@ instance Storable VkSubpassSampleLocationsEXT where
 -- locations to use for the layout transition of custom sample locations
 -- compatible depth\/stencil attachments
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT@
---
--- -   If @attachmentInitialSampleLocationsCount@ is not @0@,
---     @pAttachmentInitialSampleLocations@ /must/ be a valid pointer to an
---     array of @attachmentInitialSampleLocationsCount@ valid
---     @VkAttachmentSampleLocationsEXT@ structures
---
--- -   If @postSubpassSampleLocationsCount@ is not @0@,
---     @pPostSubpassSampleLocations@ /must/ be a valid pointer to an array
---     of @postSubpassSampleLocationsCount@ valid
---     @VkSubpassSampleLocationsEXT@ structures
+-- Unresolved directive in VkRenderPassSampleLocationsBeginInfoEXT.txt -
+-- include::..\/validity\/structs\/VkRenderPassSampleLocationsBeginInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'VkAttachmentSampleLocationsEXT',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'VkSubpassSampleLocationsEXT'
+-- No cross-references are available
 data VkRenderPassSampleLocationsBeginInfoEXT = VkRenderPassSampleLocationsBeginInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -504,18 +439,15 @@ instance Storable VkRenderPassSampleLocationsBeginInfoEXT where
 -- | VkPipelineSampleLocationsStateCreateInfoEXT - Structure specifying
 -- sample locations for a pipeline
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT@
---
--- -   @sampleLocationsInfo@ /must/ be a valid @VkSampleLocationsInfoEXT@
---     structure
+-- Unresolved directive in VkPipelineSampleLocationsStateCreateInfoEXT.txt
+-- -
+-- include::..\/validity\/structs\/VkPipelineSampleLocationsStateCreateInfoEXT.txt[]
 --
 -- = See Also
 --
--- @VkBool32@, 'VkSampleLocationsInfoEXT',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPipelineSampleLocationsStateCreateInfoEXT = VkPipelineSampleLocationsStateCreateInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -528,7 +460,7 @@ data VkPipelineSampleLocationsStateCreateInfoEXT = VkPipelineSampleLocationsStat
   vkSampleLocationsEnable :: VkBool32
   , -- | @sampleLocationsInfo@ is the sample locations to use during
   -- rasterization if @sampleLocationsEnable@ is @VK_TRUE@ and the graphics
-  -- pipeline isn’t created with @VK_DYNAMIC_STATE_SAMPLE_LOCATIONS_EXT@.
+  -- pipeline is not created with @VK_DYNAMIC_STATE_SAMPLE_LOCATIONS_EXT@.
   vkSampleLocationsInfo :: VkSampleLocationsInfoEXT
   }
   deriving (Eq, Show)
@@ -575,10 +507,9 @@ instance Storable VkPipelineSampleLocationsStateCreateInfoEXT where
 --     @VK_FALSE@, then the sample locations /must/ stay constant in each
 --     subpass.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT@
+-- Unresolved directive in VkPhysicalDeviceSampleLocationsPropertiesEXT.txt
+-- -
+-- include::..\/validity\/structs\/VkPhysicalDeviceSampleLocationsPropertiesEXT.txt[]
 --
 -- If the @VkPhysicalDeviceSampleLocationsPropertiesEXT@ structure is
 -- included in the @pNext@ chain of
@@ -587,9 +518,7 @@ instance Storable VkPipelineSampleLocationsStateCreateInfoEXT where
 --
 -- = See Also
 --
--- @VkBool32@, 'Graphics.Vulkan.Core10.Pipeline.VkExtent2D',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkSampleCountFlags',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPhysicalDeviceSampleLocationsPropertiesEXT = VkPhysicalDeviceSampleLocationsPropertiesEXT
   { -- No documentation found for Nested "VkPhysicalDeviceSampleLocationsPropertiesEXT" "sType"
   vkSType :: VkStructureType
@@ -628,17 +557,14 @@ instance Storable VkPhysicalDeviceSampleLocationsPropertiesEXT where
 -- | VkMultisamplePropertiesEXT - Structure returning information about
 -- sample count specific additional multisampling capabilities
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_MULTISAMPLE_PROPERTIES_EXT@
---
--- -   @pNext@ /must/ be @NULL@
+-- Unresolved directive in VkMultisamplePropertiesEXT.txt -
+-- include::..\/validity\/structs\/VkMultisamplePropertiesEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Pipeline.VkExtent2D',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceMultisamplePropertiesEXT'
+-- No cross-references are available
 data VkMultisamplePropertiesEXT = VkMultisamplePropertiesEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

@@ -44,9 +44,9 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkDevice
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkMemoryRequirements(..)
-  , VkBuffer
-  , VkImage
+  ( VkBuffer(..)
+  , VkImage(..)
+  , VkMemoryRequirements(..)
   )
 import Graphics.Vulkan.Core10.SparseResourceMemoryManagement
   ( VkSparseImageMemoryRequirements(..)
@@ -196,8 +196,7 @@ foreign import ccall
 --
 -- 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetBufferMemoryRequirements2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_memory_requirements2.vkGetBufferMemoryRequirements2KHR'
+-- 'vkGetBufferMemoryRequirements2'
 data VkBufferMemoryRequirementsInfo2 = VkBufferMemoryRequirementsInfo2
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -240,7 +239,7 @@ instance Storable VkBufferMemoryRequirementsInfo2 where
 --     structure
 --
 -- -   If @image@ was created with the
---     VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID
+--     @VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID@
 --     external memory handle type, then @image@ /must/ be bound to memory.
 --
 -- == Valid Usage (Implicit)
@@ -257,8 +256,7 @@ instance Storable VkBufferMemoryRequirementsInfo2 where
 --
 -- 'Graphics.Vulkan.Core10.MemoryManagement.VkImage',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetImageMemoryRequirements2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_memory_requirements2.vkGetImageMemoryRequirements2KHR'
+-- 'vkGetImageMemoryRequirements2'
 data VkImageMemoryRequirementsInfo2 = VkImageMemoryRequirementsInfo2
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -293,8 +291,7 @@ instance Storable VkImageMemoryRequirementsInfo2 where
 --
 -- 'Graphics.Vulkan.Core10.MemoryManagement.VkImage',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetImageSparseMemoryRequirements2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_memory_requirements2.vkGetImageSparseMemoryRequirements2KHR'
+-- 'vkGetImageSparseMemoryRequirements2'
 data VkImageSparseMemoryRequirementsInfo2 = VkImageSparseMemoryRequirementsInfo2
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -327,10 +324,7 @@ instance Storable VkImageSparseMemoryRequirementsInfo2 where
 --
 -- 'Graphics.Vulkan.Core10.MemoryManagement.VkMemoryRequirements',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetBufferMemoryRequirements2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_memory_requirements2.vkGetBufferMemoryRequirements2KHR',
--- 'vkGetImageMemoryRequirements2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_memory_requirements2.vkGetImageMemoryRequirements2KHR'
+-- 'vkGetBufferMemoryRequirements2', 'vkGetImageMemoryRequirements2'
 data VkMemoryRequirements2 = VkMemoryRequirements2
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -365,8 +359,7 @@ instance Storable VkMemoryRequirements2 where
 --
 -- 'Graphics.Vulkan.Core10.SparseResourceMemoryManagement.VkSparseImageMemoryRequirements',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetImageSparseMemoryRequirements2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_memory_requirements2.vkGetImageSparseMemoryRequirements2KHR'
+-- 'vkGetImageSparseMemoryRequirements2'
 data VkSparseImageMemoryRequirements2 = VkSparseImageMemoryRequirements2
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

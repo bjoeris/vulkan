@@ -32,8 +32,8 @@ import Graphics.Vulkan.Core10.Core
   , VkStructureType(..)
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkBuffer
-  , VkImage
+  ( VkBuffer(..)
+  , VkImage(..)
   )
 import Graphics.Vulkan.Core11.Promoted_from_VK_KHR_dedicated_allocation
   ( VkMemoryDedicatedAllocateInfo(..)

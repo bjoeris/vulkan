@@ -182,7 +182,7 @@ foreign import ccall
   unsafe
 #endif
   "vkEnumerateDeviceExtensionProperties" vkEnumerateDeviceExtensionProperties :: ("physicalDevice" ::: VkPhysicalDevice) -> ("pLayerName" ::: Ptr CChar) -> ("pPropertyCount" ::: Ptr Word32) -> ("pProperties" ::: Ptr VkExtensionProperties) -> IO VkResult
--- | VkExtensionProperties - Structure specifying a extension properties
+-- | VkExtensionProperties - Structure specifying an extension properties
 --
 -- = See Also
 --

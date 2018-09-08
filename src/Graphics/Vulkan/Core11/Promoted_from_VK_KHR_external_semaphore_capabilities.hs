@@ -146,11 +146,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
 -- = See Also
 --
 -- 'VkExternalSemaphoreHandleTypeFlags',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_fd.VkImportSemaphoreFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_win32.VkImportSemaphoreWin32HandleInfoKHR',
--- 'VkPhysicalDeviceExternalSemaphoreInfo',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_fd.VkSemaphoreGetFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_win32.VkSemaphoreGetWin32HandleInfoKHR'
+-- 'VkPhysicalDeviceExternalSemaphoreInfo'
 newtype VkExternalSemaphoreHandleTypeFlagBits = VkExternalSemaphoreHandleTypeFlagBits VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -291,8 +287,7 @@ foreign import ccall
 --
 -- 'VkExternalSemaphoreHandleTypeFlagBits',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceExternalSemaphoreProperties',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_capabilities.vkGetPhysicalDeviceExternalSemaphorePropertiesKHR'
+-- 'vkGetPhysicalDeviceExternalSemaphoreProperties'
 data VkPhysicalDeviceExternalSemaphoreInfo = VkPhysicalDeviceExternalSemaphoreInfo
   { -- | @sType@ is the type of this structure
   vkSType :: VkStructureType
@@ -333,8 +328,7 @@ instance Storable VkPhysicalDeviceExternalSemaphoreInfo where
 --
 -- 'VkExternalSemaphoreFeatureFlags', 'VkExternalSemaphoreHandleTypeFlags',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceExternalSemaphoreProperties',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_semaphore_capabilities.vkGetPhysicalDeviceExternalSemaphorePropertiesKHR'
+-- 'vkGetPhysicalDeviceExternalSemaphoreProperties'
 data VkExternalSemaphoreProperties = VkExternalSemaphoreProperties
   { -- No documentation found for Nested "VkExternalSemaphoreProperties" "sType"
   vkSType :: VkStructureType

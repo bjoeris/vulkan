@@ -5,11 +5,11 @@
 {-# language DataKinds #-}
 {-# language TypeOperators #-}
 
-module Graphics.Vulkan.Extensions.VK_AMD_draw_indirect_count
-  ( pattern VK_AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION
-  , pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME
-  , vkCmdDrawIndirectCountAMD
-  , vkCmdDrawIndexedIndirectCountAMD
+module Graphics.Vulkan.Extensions.VK_KHR_draw_indirect_count
+  ( pattern VK_KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION
+  , pattern VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME
+  , vkCmdDrawIndirectCountKHR
+  , vkCmdDrawIndexedIndirectCountKHR
   ) where
 
 import Data.String
@@ -34,13 +34,13 @@ import Graphics.Vulkan.Core10.Queue
   )
 
 
--- No documentation found for TopLevel "VK_AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION"
-pattern VK_AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION :: Integral a => a
-pattern VK_AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION = 1
--- No documentation found for TopLevel "VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME"
-pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME :: (Eq a ,IsString a) => a
-pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME = "VK_AMD_draw_indirect_count"
--- | vkCmdDrawIndirectCountAMD - Perform an indirect draw with the draw count
+-- No documentation found for TopLevel "VK_KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION"
+pattern VK_KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION :: Integral a => a
+pattern VK_KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION = 1
+-- No documentation found for TopLevel "VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME"
+pattern VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME :: (Eq a ,IsString a) => a
+pattern VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME = "VK_KHR_draw_indirect_count"
+-- | vkCmdDrawIndirectCountKHR - Perform an indirect draw with the draw count
 -- sourced from a buffer
 --
 -- = Parameters
@@ -66,7 +66,7 @@ pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME = "VK_AMD_draw_indirect_count"
 --
 -- = Description
 --
--- @vkCmdDrawIndirectCountAMD@ behaves similarly to
+-- @vkCmdDrawIndirectCountKHR@ behaves similarly to
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdDrawIndirect' except
 -- that the draw count is read by the device from a buffer during
 -- execution. The command will read an unsigned 32-bit integer from
@@ -92,10 +92,10 @@ pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME = "VK_AMD_draw_indirect_count"
 -- -   @countBufferOffset@ /must/ be a multiple of @4@
 --
 -- -   @stride@ /must/ be a multiple of @4@ and /must/ be greater than or
---     equal to @sizeof@(@VkDrawIndirectCommand@)
+--     equal to sizeof(@VkDrawIndirectCommand@)
 --
 -- -   If @maxDrawCount@ is greater than or equal to @1@, (@stride@ ×
---     (@maxDrawCount@ - 1) + @offset@ + @sizeof@(@VkDrawIndirectCommand@))
+--     (@maxDrawCount@ - 1) + @offset@ + sizeof(@VkDrawIndirectCommand@))
 --     /must/ be less than or equal to the size of @buffer@
 --
 -- -   If the
@@ -148,11 +148,11 @@ pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME = "VK_AMD_draw_indirect_count"
 --     state /must/ have been set on the current command buffer
 --
 -- -   If the count stored in @countBuffer@ is equal to @1@, (@offset@ +
---     @sizeof@(@VkDrawIndirectCommand@)) /must/ be less than or equal to
---     the size of @buffer@
+--     sizeof(@VkDrawIndirectCommand@)) /must/ be less than or equal to the
+--     size of @buffer@
 --
 -- -   If the count stored in @countBuffer@ is greater than @1@, (@stride@
---     × (@drawCount@ - 1) + @offset@ + @sizeof@(@VkDrawIndirectCommand@))
+--     × (@drawCount@ - 1) + @offset@ + sizeof(@VkDrawIndirectCommand@))
 --     /must/ be less than or equal to the size of @buffer@
 --
 -- -   The count stored in @countBuffer@ /must/ be less than or equal to
@@ -204,6 +204,18 @@ pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME = "VK_AMD_draw_indirect_count"
 --     /must/ not be accessed in any way other than as an attachment by
 --     this command.
 --
+-- -   If a @VkImageView@ is sampled with @VK_FILTER_CUBIC_IMG@ as a result
+--     of this command, then the image view’s [format
+--     features](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#resources-image-view-format-features)
+--     /must/ contain
+--     @VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG@.
+--
+-- -   Any 'Graphics.Vulkan.Core10.ImageView.VkImageView' being sampled
+--     with @VK_FILTER_CUBIC_IMG@ as a result of this command /must/ not
+--     have a 'Graphics.Vulkan.Core10.ImageView.VkImageViewType' of
+--     @VK_IMAGE_VIEW_TYPE_3D@, @VK_IMAGE_VIEW_TYPE_CUBE@, or
+--     @VK_IMAGE_VIEW_TYPE_CUBE_ARRAY@
+--
 -- -   If the draw is recorded in a render pass instance with multiview
 --     enabled, the maximum instance index /must/ be less than or equal to
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_multiview.VkPhysicalDeviceMultiviewProperties'::@maxMultiviewInstanceIndex@.
@@ -214,8 +226,8 @@ pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME = "VK_AMD_draw_indirect_count"
 --     attachment, then that attachment /must/ have been created with the
 --     @VK_IMAGE_CREATE_SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_BIT_EXT@ bit set
 --
--- Unresolved directive in vkCmdDrawIndirectCountAMD.txt -
--- include::..\/validity\/protos\/vkCmdDrawIndirectCountAMD.txt[]
+-- Unresolved directive in vkCmdDrawIndirectCountKHR.txt -
+-- include::..\/validity\/protos\/vkCmdDrawIndirectCountKHR.txt[]
 --
 -- = See Also
 --
@@ -224,8 +236,8 @@ foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
 #endif
-  "vkCmdDrawIndirectCountAMD" vkCmdDrawIndirectCountAMD :: ("commandBuffer" ::: VkCommandBuffer) -> ("buffer" ::: VkBuffer) -> ("offset" ::: VkDeviceSize) -> ("countBuffer" ::: VkBuffer) -> ("countBufferOffset" ::: VkDeviceSize) -> ("maxDrawCount" ::: Word32) -> ("stride" ::: Word32) -> IO ()
--- | vkCmdDrawIndexedIndirectCountAMD - Perform an indexed indirect draw with
+  "vkCmdDrawIndirectCountKHR" vkCmdDrawIndirectCountKHR :: ("commandBuffer" ::: VkCommandBuffer) -> ("buffer" ::: VkBuffer) -> ("offset" ::: VkDeviceSize) -> ("countBuffer" ::: VkBuffer) -> ("countBufferOffset" ::: VkDeviceSize) -> ("maxDrawCount" ::: Word32) -> ("stride" ::: Word32) -> IO ()
+-- | vkCmdDrawIndexedIndirectCountKHR - Perform an indexed indirect draw with
 -- the draw count sourced from a buffer
 --
 -- = Parameters
@@ -251,7 +263,7 @@ foreign import ccall
 --
 -- = Description
 --
--- @vkCmdDrawIndexedIndirectCountAMD@ behaves similarly to
+-- @vkCmdDrawIndexedIndirectCountKHR@ behaves similarly to
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdDrawIndexedIndirect'
 -- except that the draw count is read by the device from a buffer during
 -- execution. The command will read an unsigned 32-bit integer from
@@ -277,12 +289,12 @@ foreign import ccall
 -- -   @countBufferOffset@ /must/ be a multiple of @4@
 --
 -- -   @stride@ /must/ be a multiple of @4@ and /must/ be greater than or
---     equal to @sizeof@(@VkDrawIndexedIndirectCommand@)
+--     equal to sizeof(@VkDrawIndexedIndirectCommand@)
 --
 -- -   If @maxDrawCount@ is greater than or equal to @1@, (@stride@ ×
 --     (@maxDrawCount@ - 1) + @offset@ +
---     @sizeof@(@VkDrawIndexedIndirectCommand@)) /must/ be less than or
---     equal to the size of @buffer@
+--     sizeof(@VkDrawIndexedIndirectCommand@)) /must/ be less than or equal
+--     to the size of @buffer@
 --
 -- -   If the
 --     [drawIndirectFirstInstance](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#features-features-drawIndirectFirstInstance)
@@ -334,13 +346,13 @@ foreign import ccall
 --     state /must/ have been set on the current command buffer
 --
 -- -   If count stored in @countBuffer@ is equal to @1@, (@offset@ +
---     @sizeof@(@VkDrawIndexedIndirectCommand@)) /must/ be less than or
---     equal to the size of @buffer@
+--     sizeof(@VkDrawIndexedIndirectCommand@)) /must/ be less than or equal
+--     to the size of @buffer@
 --
 -- -   If count stored in @countBuffer@ is greater than @1@, (@stride@ ×
 --     (@drawCount@ - 1) + @offset@ +
---     @sizeof@(@VkDrawIndexedIndirectCommand@)) /must/ be less than or
---     equal to the size of @buffer@
+--     sizeof(@VkDrawIndexedIndirectCommand@)) /must/ be less than or equal
+--     to the size of @buffer@
 --
 -- -   @drawCount@ /must/ be less than or equal to
 --     @VkPhysicalDeviceLimits@::@maxDrawIndirectCount@
@@ -391,6 +403,18 @@ foreign import ccall
 --     /must/ not be accessed in any way other than as an attachment by
 --     this command.
 --
+-- -   If a @VkImageView@ is sampled with @VK_FILTER_CUBIC_IMG@ as a result
+--     of this command, then the image view’s [format
+--     features](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#resources-image-view-format-features)
+--     /must/ contain
+--     @VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG@.
+--
+-- -   Any 'Graphics.Vulkan.Core10.ImageView.VkImageView' being sampled
+--     with @VK_FILTER_CUBIC_IMG@ as a result of this command /must/ not
+--     have a 'Graphics.Vulkan.Core10.ImageView.VkImageViewType' of
+--     @VK_IMAGE_VIEW_TYPE_3D@, @VK_IMAGE_VIEW_TYPE_CUBE@, or
+--     @VK_IMAGE_VIEW_TYPE_CUBE_ARRAY@
+--
 -- -   If the draw is recorded in a render pass instance with multiview
 --     enabled, the maximum instance index /must/ be less than or equal to
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_multiview.VkPhysicalDeviceMultiviewProperties'::@maxMultiviewInstanceIndex@.
@@ -401,8 +425,8 @@ foreign import ccall
 --     attachment, then that attachment /must/ have been created with the
 --     @VK_IMAGE_CREATE_SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_BIT_EXT@ bit set
 --
--- Unresolved directive in vkCmdDrawIndexedIndirectCountAMD.txt -
--- include::..\/validity\/protos\/vkCmdDrawIndexedIndirectCountAMD.txt[]
+-- Unresolved directive in vkCmdDrawIndexedIndirectCountKHR.txt -
+-- include::..\/validity\/protos\/vkCmdDrawIndexedIndirectCountKHR.txt[]
 --
 -- = See Also
 --
@@ -411,4 +435,4 @@ foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
 #endif
-  "vkCmdDrawIndexedIndirectCountAMD" vkCmdDrawIndexedIndirectCountAMD :: ("commandBuffer" ::: VkCommandBuffer) -> ("buffer" ::: VkBuffer) -> ("offset" ::: VkDeviceSize) -> ("countBuffer" ::: VkBuffer) -> ("countBufferOffset" ::: VkDeviceSize) -> ("maxDrawCount" ::: Word32) -> ("stride" ::: Word32) -> IO ()
+  "vkCmdDrawIndexedIndirectCountKHR" vkCmdDrawIndexedIndirectCountKHR :: ("commandBuffer" ::: VkCommandBuffer) -> ("buffer" ::: VkBuffer) -> ("offset" ::: VkDeviceSize) -> ("countBuffer" ::: VkBuffer) -> ("countBufferOffset" ::: VkDeviceSize) -> ("maxDrawCount" ::: Word32) -> ("stride" ::: Word32) -> IO ()

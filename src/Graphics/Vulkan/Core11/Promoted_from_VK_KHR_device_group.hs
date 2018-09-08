@@ -264,8 +264,6 @@ pattern VK_DEPENDENCY_DEVICE_GROUP_BIT = VkDependencyFlagBits 0x00000004
 -- -   @pPeerMemoryFeatures@ /must/ be a valid pointer to a
 --     'VkPeerMemoryFeatureFlags' value
 --
--- -   @pPeerMemoryFeatures@ /must/ not be @0@
---
 -- = See Also
 --
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
@@ -375,7 +373,7 @@ foreign import ccall
 -- groupCount) in each component.
 -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.vkCmdDispatch' is
 -- equivalent to
--- vkCmdDispatchBase(0,0,0,groupCountX,groupCountY,groupCountZ).
+-- @vkCmdDispatchBase(0,0,0,groupCountX,groupCountY,groupCountZ)@.
 --
 -- == Valid Usage
 --
@@ -803,8 +801,7 @@ instance Storable VkDeviceGroupBindSparseInfo where
 --
 -- = See Also
 --
--- 'VkPeerMemoryFeatureFlagBits', 'vkGetDeviceGroupPeerMemoryFeatures',
--- 'Graphics.Vulkan.Extensions.VK_KHR_device_group.vkGetDeviceGroupPeerMemoryFeaturesKHR'
+-- 'VkPeerMemoryFeatureFlagBits', 'vkGetDeviceGroupPeerMemoryFeatures'
 type VkPeerMemoryFeatureFlags = VkPeerMemoryFeatureFlagBits
 -- | VkMemoryAllocateFlags - Bitmask of VkMemoryAllocateFlagBits
 --

@@ -70,8 +70,8 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkDevice
   )
 import Graphics.Vulkan.Core10.Pipeline
-  ( VkShaderStageFlagBits(..)
-  , VkPipeline
+  ( VkPipeline(..)
+  , VkShaderStageFlagBits(..)
   )
 import Graphics.Vulkan.Core10.PipelineLayout
   ( VkShaderStageFlags
@@ -172,43 +172,12 @@ pattern VK_AMD_SHADER_INFO_EXTENSION_NAME = "VK_AMD_shader_info"
 -- @VK_SHADER_INFO_TYPE_BINARY_AMD@, are left to the vendor and are not
 -- further specified by this extension.
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @pipeline@ /must/ be a valid @VkPipeline@ handle
---
--- -   @shaderStage@ /must/ be a valid
---     'Graphics.Vulkan.Core10.Pipeline.VkShaderStageFlagBits' value
---
--- -   @infoType@ /must/ be a valid 'VkShaderInfoTypeAMD' value
---
--- -   @pInfoSize@ /must/ be a valid pointer to a @size_t@ value
---
--- -   If the value referenced by @pInfoSize@ is not @0@, and @pInfo@ is
---     not @NULL@, @pInfo@ /must/ be a valid pointer to an array of
---     @pInfoSize@ bytes
---
--- -   @pipeline@ /must/ have been created, allocated, or retrieved from
---     @device@
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
---     -   @VK_INCOMPLETE@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_FEATURE_NOT_PRESENT@
---
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
+-- Unresolved directive in vkGetShaderInfoAMD.txt -
+-- include::..\/validity\/protos\/vkGetShaderInfoAMD.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'Graphics.Vulkan.Core10.Pipeline.VkPipeline', 'VkShaderInfoTypeAMD',
--- 'Graphics.Vulkan.Core10.Pipeline.VkShaderStageFlagBits'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -217,9 +186,14 @@ foreign import ccall
 -- | VkShaderResourceUsageAMD - Resource usage information about a particular
 -- shader within a pipeline
 --
+-- = Description
+--
+-- Unresolved directive in VkShaderResourceUsageAMD.txt -
+-- include::..\/validity\/structs\/VkShaderResourceUsageAMD.txt[]
+--
 -- = See Also
 --
--- 'VkShaderStatisticsInfoAMD'
+-- No cross-references are available
 data VkShaderResourceUsageAMD = VkShaderResourceUsageAMD
   { -- | @numUsedVgprs@ is the number of vector instruction general-purpose
   -- registers used by this shader.
@@ -270,10 +244,12 @@ instance Storable VkShaderResourceUsageAMD where
 -- assignment. These values /may/ further be limited by implementations due
 -- to performance optimizations where register pressure is a bottleneck.
 --
+-- Unresolved directive in VkShaderStatisticsInfoAMD.txt -
+-- include::..\/validity\/structs\/VkShaderStatisticsInfoAMD.txt[]
+--
 -- = See Also
 --
--- 'VkShaderResourceUsageAMD',
--- 'Graphics.Vulkan.Core10.PipelineLayout.VkShaderStageFlags'
+-- No cross-references are available
 data VkShaderStatisticsInfoAMD = VkShaderStatisticsInfoAMD
   { -- | @shaderStageMask@ are the combination of logical shader stages contained
   -- within this shader.

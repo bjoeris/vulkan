@@ -47,14 +47,14 @@ import Graphics.Vulkan.Core10.Pass
   ( VkPipelineBindPoint(..)
   )
 import Graphics.Vulkan.Core10.Pipeline
-  ( VkPipelineLayout
+  ( VkPipelineLayout(..)
   )
 import Graphics.Vulkan.Core10.Queue
   ( VkCommandBuffer
   )
 import Graphics.Vulkan.Core11.Promoted_from_VK_KHR_descriptor_update_template
-  ( VkDescriptorUpdateTemplateType(..)
-  , VkDescriptorUpdateTemplate
+  ( VkDescriptorUpdateTemplate(..)
+  , VkDescriptorUpdateTemplateType(..)
   )
 
 
@@ -92,8 +92,8 @@ pattern VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME = "VK_KHR_push_descriptor"
 --     each of graphics and compute, so binding one does not disturb the
 --     other.
 --
--- -   @layout@ is a @VkPipelineLayout@ object used to program the
---     bindings.
+-- -   @layout@ is a 'Graphics.Vulkan.Core10.Pipeline.VkPipelineLayout'
+--     object used to program the bindings.
 --
 -- -   @set@ is the set number of the descriptor set in the pipeline layout
 --     that will be updated.
@@ -164,54 +164,12 @@ pattern VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME = "VK_KHR_push_descriptor"
 --     uses a descriptor set layout that was created with
 --     @VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR@
 --
--- == Valid Usage (Implicit)
---
--- -   @commandBuffer@ /must/ be a valid @VkCommandBuffer@ handle
---
--- -   @pipelineBindPoint@ /must/ be a valid
---     'Graphics.Vulkan.Core10.Pass.VkPipelineBindPoint' value
---
--- -   @layout@ /must/ be a valid @VkPipelineLayout@ handle
---
--- -   @pDescriptorWrites@ /must/ be a valid pointer to an array of
---     @descriptorWriteCount@ valid @VkWriteDescriptorSet@ structures
---
--- -   @commandBuffer@ /must/ be in the [recording
---     state](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#commandbuffers-lifecycle)
---
--- -   The @VkCommandPool@ that @commandBuffer@ was allocated from /must/
---     support graphics, or compute operations
---
--- -   @descriptorWriteCount@ /must/ be greater than @0@
---
--- -   Both of @commandBuffer@, and @layout@ /must/ have been created,
---     allocated, or retrieved from the same @VkDevice@
---
--- == Host Synchronization
---
--- -   Host access to @commandBuffer@ /must/ be externally synchronized
---
--- -   Host access to the @VkCommandPool@ that @commandBuffer@ was
---     allocated from /must/ be externally synchronized
---
--- == Command Properties
---
--- \'
---
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
--- | [Command Buffer                                                                                             | [Render Pass                                                                                               | [Supported Queue                                                                                      | [Pipeline                                                                                                                  |
--- | Levels](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkCommandBufferLevel) | Scope](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#vkCmdBeginRenderPass) | Types](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkQueueFlagBits) | Type](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#synchronization-pipeline-stages-types) |
--- +=============================================================================================================+============================================================================================================+=======================================================================================================+============================================================================================================================+
--- | Primary                                                                                                     | Both                                                                                                       | Graphics                                                                                              |                                                                                                                            |
--- | Secondary                                                                                                   |                                                                                                            | Compute                                                                                               |                                                                                                                            |
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+-- Unresolved directive in vkCmdPushDescriptorSetKHR.txt -
+-- include::..\/validity\/protos\/vkCmdPushDescriptorSetKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Queue.VkCommandBuffer',
--- 'Graphics.Vulkan.Core10.Pass.VkPipelineBindPoint',
--- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineLayout',
--- 'Graphics.Vulkan.Core10.DescriptorSet.VkWriteDescriptorSet'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -228,9 +186,9 @@ foreign import ccall
 -- -   @descriptorUpdateTemplate@ A descriptor update template which
 --     defines how to interpret the descriptor information in pData.
 --
--- -   @layout@ is a @VkPipelineLayout@ object used to program the
---     bindings. It /must/ be compatible with the layout used to create the
---     @descriptorUpdateTemplate@ handle.
+-- -   @layout@ is a 'Graphics.Vulkan.Core10.Pipeline.VkPipelineLayout'
+--     object used to program the bindings. It /must/ be compatible with
+--     the layout used to create the @descriptorUpdateTemplate@ handle.
 --
 -- -   @set@ is the set number of the descriptor set in the pipeline layout
 --     that will be updated. This /must/ be the same number used to create
@@ -253,43 +211,8 @@ foreign import ccall
 --     by @descriptorUpdateTemplate@ when it was created with
 --     'Graphics.Vulkan.Extensions.VK_KHR_descriptor_update_template.vkCreateDescriptorUpdateTemplateKHR'
 --
--- == Valid Usage (Implicit)
---
--- -   @commandBuffer@ /must/ be a valid @VkCommandBuffer@ handle
---
--- -   @descriptorUpdateTemplate@ /must/ be a valid
---     @VkDescriptorUpdateTemplate@ handle
---
--- -   @layout@ /must/ be a valid @VkPipelineLayout@ handle
---
--- -   @commandBuffer@ /must/ be in the [recording
---     state](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#commandbuffers-lifecycle)
---
--- -   The @VkCommandPool@ that @commandBuffer@ was allocated from /must/
---     support graphics, or compute operations
---
--- -   Each of @commandBuffer@, @descriptorUpdateTemplate@, and @layout@
---     /must/ have been created, allocated, or retrieved from the same
---     @VkDevice@
---
--- == Host Synchronization
---
--- -   Host access to @commandBuffer@ /must/ be externally synchronized
---
--- -   Host access to the @VkCommandPool@ that @commandBuffer@ was
---     allocated from /must/ be externally synchronized
---
--- == Command Properties
---
--- \'
---
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
--- | [Command Buffer                                                                                             | [Render Pass                                                                                               | [Supported Queue                                                                                      | [Pipeline                                                                                                                  |
--- | Levels](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkCommandBufferLevel) | Scope](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#vkCmdBeginRenderPass) | Types](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkQueueFlagBits) | Type](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#synchronization-pipeline-stages-types) |
--- +=============================================================================================================+============================================================================================================+=======================================================================================================+============================================================================================================================+
--- | Primary                                                                                                     | Both                                                                                                       | Graphics                                                                                              |                                                                                                                            |
--- | Secondary                                                                                                   |                                                                                                            | Compute                                                                                               |                                                                                                                            |
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+-- Unresolved directive in vkCmdPushDescriptorSetWithTemplateKHR.txt -
+-- include::..\/validity\/protos\/vkCmdPushDescriptorSetWithTemplateKHR.txt[]
 --
 -- __API example.__
 --
@@ -318,7 +241,7 @@ foreign import ccall
 -- >
 -- > };
 -- >
--- > // create an descriptor update template for descriptor set updates
+-- > // create a descriptor update template for descriptor set updates
 -- > const VkDescriptorUpdateTemplateCreateInfo createInfo =
 -- > {
 -- >     VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO,  // sType
@@ -347,9 +270,7 @@ foreign import ccall
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Queue.VkCommandBuffer',
--- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_descriptor_update_template.VkDescriptorUpdateTemplate',
--- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineLayout'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -369,14 +290,13 @@ foreign import ccall
 --     be used in a descriptor set created with
 --     @VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR@ set.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR@
+-- Unresolved directive in VkPhysicalDevicePushDescriptorPropertiesKHR.txt
+-- -
+-- include::..\/validity\/structs\/VkPhysicalDevicePushDescriptorPropertiesKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPhysicalDevicePushDescriptorPropertiesKHR = VkPhysicalDevicePushDescriptorPropertiesKHR
   { -- No documentation found for Nested "VkPhysicalDevicePushDescriptorPropertiesKHR" "sType"
   vkSType :: VkStructureType

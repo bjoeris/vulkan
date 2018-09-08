@@ -42,7 +42,7 @@ pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTI
 -- shaders compiled for this subpass write the attributes for all views in
 -- a single invocation of each vertex processing stage. All pipelines
 -- compiled against a subpass that includes this bit /must/ write per-view
--- attributes to the code:*PerViewNV[] shader outputs, in addition to the
+-- attributes to the @*PerViewNV[]@ shader outputs, in addition to the
 -- non-per-view (e.g. @Position@) outputs.
 pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_ATTRIBUTES_BIT_NVX :: VkSubpassDescriptionFlagBits
 pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_ATTRIBUTES_BIT_NVX = VkSubpassDescriptionFlagBits 0x00000001
@@ -73,10 +73,9 @@ pattern VK_NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_EXTENSION_NAME = "VK_NVX_multiview_
 --     supports per-view position values that differ in components other
 --     than the X component.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX@
+-- Unresolved directive in
+-- VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX.txt -
+-- include::..\/validity\/structs\/VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX.txt[]
 --
 -- If the @VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX@
 -- structure is included in the @pNext@ chain of
@@ -85,7 +84,7 @@ pattern VK_NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_EXTENSION_NAME = "VK_NVX_multiview_
 --
 -- = See Also
 --
--- @VkBool32@, 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX = VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
   { -- No documentation found for Nested "VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX" "sType"
   vkSType :: VkStructureType

@@ -48,7 +48,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
 import Graphics.Vulkan.Extensions.VK_KHR_surface
   ( VkSurfaceCapabilitiesKHR(..)
   , VkSurfaceFormatKHR(..)
-  , VkSurfaceKHR
+  , VkSurfaceKHR(..)
   )
 
 
@@ -93,32 +93,12 @@ pattern VK_KHR_GET_SURFACE_CAPABILITIES_2_EXTENSION_NAME = "VK_KHR_get_surface_c
 -- structures, and to return extended information via chained output
 -- structures.
 --
--- == Valid Usage (Implicit)
---
--- -   @physicalDevice@ /must/ be a valid @VkPhysicalDevice@ handle
---
--- -   @pSurfaceInfo@ /must/ be a valid pointer to a valid
---     @VkPhysicalDeviceSurfaceInfo2KHR@ structure
---
--- -   @pSurfaceCapabilities@ /must/ be a valid pointer to a
---     @VkSurfaceCapabilities2KHR@ structure
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_SURFACE_LOST_KHR@
+-- Unresolved directive in vkGetPhysicalDeviceSurfaceCapabilities2KHR.txt -
+-- include::..\/validity\/protos\/vkGetPhysicalDeviceSurfaceCapabilities2KHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDevice',
--- 'VkPhysicalDeviceSurfaceInfo2KHR', 'VkSurfaceCapabilities2KHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -160,39 +140,12 @@ foreign import ccall
 -- @VK_INCOMPLETE@ will be returned instead of @VK_SUCCESS@ to indicate
 -- that not all the available values were returned.
 --
--- == Valid Usage (Implicit)
---
--- -   @physicalDevice@ /must/ be a valid @VkPhysicalDevice@ handle
---
--- -   @pSurfaceInfo@ /must/ be a valid pointer to a valid
---     @VkPhysicalDeviceSurfaceInfo2KHR@ structure
---
--- -   @pSurfaceFormatCount@ /must/ be a valid pointer to a @uint32_t@
---     value
---
--- -   If the value referenced by @pSurfaceFormatCount@ is not @0@, and
---     @pSurfaceFormats@ is not @NULL@, @pSurfaceFormats@ /must/ be a valid
---     pointer to an array of @pSurfaceFormatCount@ @VkSurfaceFormat2KHR@
---     structures
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
---     -   @VK_INCOMPLETE@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_SURFACE_LOST_KHR@
+-- Unresolved directive in vkGetPhysicalDeviceSurfaceFormats2KHR.txt -
+-- include::..\/validity\/protos\/vkGetPhysicalDeviceSurfaceFormats2KHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDevice',
--- 'VkPhysicalDeviceSurfaceInfo2KHR', 'VkSurfaceFormat2KHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -208,21 +161,12 @@ foreign import ccall
 -- 'Graphics.Vulkan.Extensions.VK_KHR_surface.vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
 -- with @sType@ and @pNext@ added for extensibility.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SURFACE_INFO_2_KHR@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @surface@ /must/ be a valid @VkSurfaceKHR@ handle
+-- Unresolved directive in VkPhysicalDeviceSurfaceInfo2KHR.txt -
+-- include::..\/validity\/structs\/VkPhysicalDeviceSurfaceInfo2KHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceKHR',
--- 'vkGetPhysicalDeviceSurfaceCapabilities2KHR',
--- 'vkGetPhysicalDeviceSurfaceFormats2KHR'
+-- No cross-references are available
 data VkPhysicalDeviceSurfaceInfo2KHR = VkPhysicalDeviceSurfaceInfo2KHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -245,18 +189,14 @@ instance Storable VkPhysicalDeviceSurfaceInfo2KHR where
 -- | VkSurfaceCapabilities2KHR - Structure describing capabilities of a
 -- surface
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_KHR@
---
--- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
---     'Graphics.Vulkan.Extensions.VK_KHR_shared_presentable_image.VkSharedPresentSurfaceCapabilitiesKHR'
+-- Unresolved directive in VkSurfaceCapabilities2KHR.txt -
+-- include::..\/validity\/structs\/VkSurfaceCapabilities2KHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceCapabilitiesKHR',
--- 'vkGetPhysicalDeviceSurfaceCapabilities2KHR'
+-- No cross-references are available
 data VkSurfaceCapabilities2KHR = VkSurfaceCapabilities2KHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -281,17 +221,14 @@ instance Storable VkSurfaceCapabilities2KHR where
 -- | VkSurfaceFormat2KHR - Structure describing a supported swapchain format
 -- tuple
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_SURFACE_FORMAT_2_KHR@
---
--- -   @pNext@ /must/ be @NULL@
+-- Unresolved directive in VkSurfaceFormat2KHR.txt -
+-- include::..\/validity\/structs\/VkSurfaceFormat2KHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'Graphics.Vulkan.Extensions.VK_KHR_surface.VkSurfaceFormatKHR',
--- 'vkGetPhysicalDeviceSurfaceFormats2KHR'
+-- No cross-references are available
 data VkSurfaceFormat2KHR = VkSurfaceFormat2KHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

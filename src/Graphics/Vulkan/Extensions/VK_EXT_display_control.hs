@@ -79,17 +79,17 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkDevice
   )
 import Graphics.Vulkan.Core10.Queue
-  ( VkFence
+  ( VkFence(..)
   )
 import Graphics.Vulkan.Extensions.VK_EXT_display_surface_counter
   ( VkSurfaceCounterFlagBitsEXT(..)
   , VkSurfaceCounterFlagsEXT
   )
 import Graphics.Vulkan.Extensions.VK_KHR_display
-  ( VkDisplayKHR
+  ( VkDisplayKHR(..)
   )
 import Graphics.Vulkan.Extensions.VK_KHR_swapchain
-  ( VkSwapchainKHR
+  ( VkSwapchainKHR(..)
   )
 
 
@@ -99,7 +99,7 @@ import Graphics.Vulkan.Extensions.VK_KHR_swapchain
 --
 -- = See Also
 --
--- 'VkDisplayPowerInfoEXT'
+-- No cross-references are available
 newtype VkDisplayPowerStateEXT = VkDisplayPowerStateEXT Int32
   deriving (Eq, Ord, Storable)
 
@@ -144,7 +144,7 @@ pattern VK_DISPLAY_POWER_STATE_ON_EXT = VkDisplayPowerStateEXT 2
 --
 -- = See Also
 --
--- 'VkDeviceEventInfoEXT'
+-- No cross-references are available
 newtype VkDeviceEventTypeEXT = VkDeviceEventTypeEXT Int32
   deriving (Eq, Ord, Storable)
 
@@ -174,7 +174,7 @@ pattern VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT = VkDeviceEventTypeEXT 0
 --
 -- = See Also
 --
--- 'VkDisplayEventInfoEXT'
+-- No cross-references are available
 newtype VkDisplayEventTypeEXT = VkDisplayEventTypeEXT Int32
   deriving (Eq, Ord, Storable)
 
@@ -226,25 +226,14 @@ pattern VK_EXT_DISPLAY_CONTROL_EXTENSION_NAME = "VK_EXT_display_control"
 -- -   @pDisplayPowerInfo@ is an instance of 'VkDisplayPowerInfoEXT'
 --     specifying the new power state of @display@.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @display@ /must/ be a valid @VkDisplayKHR@ handle
---
--- -   @pDisplayPowerInfo@ /must/ be a valid pointer to a valid
---     @VkDisplayPowerInfoEXT@ structure
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
+-- Unresolved directive in vkDisplayPowerControlEXT.txt -
+-- include::..\/validity\/protos\/vkDisplayPowerControlEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'Graphics.Vulkan.Extensions.VK_KHR_display.VkDisplayKHR',
--- 'VkDisplayPowerInfoEXT'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -268,28 +257,14 @@ foreign import ccall
 -- -   @pFence@ points to a handle in which the resulting fence object is
 --     returned.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @pDeviceEventInfo@ /must/ be a valid pointer to a valid
---     @VkDeviceEventInfoEXT@ structure
---
--- -   If @pAllocator@ is not @NULL@, @pAllocator@ /must/ be a valid
---     pointer to a valid @VkAllocationCallbacks@ structure
---
--- -   @pFence@ /must/ be a valid pointer to a @VkFence@ handle
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
+-- Unresolved directive in vkRegisterDeviceEventEXT.txt -
+-- include::..\/validity\/protos\/vkRegisterDeviceEventEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkAllocationCallbacks',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkDeviceEventInfoEXT', 'Graphics.Vulkan.Core10.Queue.VkFence'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -315,32 +290,14 @@ foreign import ccall
 -- -   @pFence@ points to a handle in which the resulting fence object is
 --     returned.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @display@ /must/ be a valid @VkDisplayKHR@ handle
---
--- -   @pDisplayEventInfo@ /must/ be a valid pointer to a valid
---     @VkDisplayEventInfoEXT@ structure
---
--- -   If @pAllocator@ is not @NULL@, @pAllocator@ /must/ be a valid
---     pointer to a valid @VkAllocationCallbacks@ structure
---
--- -   @pFence@ /must/ be a valid pointer to a @VkFence@ handle
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
+-- Unresolved directive in vkRegisterDisplayEventEXT.txt -
+-- include::..\/validity\/protos\/vkRegisterDisplayEventEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkAllocationCallbacks',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkDisplayEventInfoEXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_display.VkDisplayKHR',
--- 'Graphics.Vulkan.Core10.Queue.VkFence'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -350,7 +307,9 @@ foreign import ccall
 --
 -- = Parameters
 --
--- -   @device@ is the @VkDevice@ associated with @swapchain@.
+-- -   @device@ is the
+--     'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice' associated
+--     with @swapchain@.
 --
 -- -   @swapchain@ is the swapchain from which to query the counter value.
 --
@@ -368,36 +327,12 @@ foreign import ccall
 -- -   One or more present commands on @swapchain@ /must/ have been
 --     processed by the presentation engine.
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @swapchain@ /must/ be a valid @VkSwapchainKHR@ handle
---
--- -   @counter@ /must/ be a valid
---     'Graphics.Vulkan.Extensions.VK_EXT_display_surface_counter.VkSurfaceCounterFlagBitsEXT'
---     value
---
--- -   @pCounterValue@ /must/ be a valid pointer to a @uint64_t@ value
---
--- -   Both of @device@, and @swapchain@ /must/ have been created,
---     allocated, or retrieved from the same @VkInstance@
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_DEVICE_LOST@
---
---     -   @VK_ERROR_OUT_OF_DATE_KHR@
+-- Unresolved directive in vkGetSwapchainCounterEXT.txt -
+-- include::..\/validity\/protos\/vkGetSwapchainCounterEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'Graphics.Vulkan.Extensions.VK_EXT_display_surface_counter.VkSurfaceCounterFlagBitsEXT',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkSwapchainKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -405,18 +340,14 @@ foreign import ccall
   "vkGetSwapchainCounterEXT" vkGetSwapchainCounterEXT :: ("device" ::: VkDevice) -> ("swapchain" ::: VkSwapchainKHR) -> ("counter" ::: VkSurfaceCounterFlagBitsEXT) -> ("pCounterValue" ::: Ptr Word64) -> IO VkResult
 -- | VkDisplayPowerInfoEXT - Describe the power state of a display
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_DISPLAY_POWER_INFO_EXT@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @powerState@ /must/ be a valid 'VkDisplayPowerStateEXT' value
+-- Unresolved directive in VkDisplayPowerInfoEXT.txt -
+-- include::..\/validity\/structs\/VkDisplayPowerInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'VkDisplayPowerStateEXT', 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkDisplayPowerControlEXT'
+-- No cross-references are available
 data VkDisplayPowerInfoEXT = VkDisplayPowerInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -439,18 +370,14 @@ instance Storable VkDisplayPowerInfoEXT where
                 *> poke (ptr `plusPtr` 16) (vkPowerState (poked :: VkDisplayPowerInfoEXT))
 -- | VkDeviceEventInfoEXT - Describe a device event to create
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_DEVICE_EVENT_INFO_EXT@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @deviceEvent@ /must/ be a valid 'VkDeviceEventTypeEXT' value
+-- Unresolved directive in VkDeviceEventInfoEXT.txt -
+-- include::..\/validity\/structs\/VkDeviceEventInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'VkDeviceEventTypeEXT', 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkRegisterDeviceEventEXT'
+-- No cross-references are available
 data VkDeviceEventInfoEXT = VkDeviceEventInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -472,18 +399,14 @@ instance Storable VkDeviceEventInfoEXT where
                 *> poke (ptr `plusPtr` 16) (vkDeviceEvent (poked :: VkDeviceEventInfoEXT))
 -- | VkDisplayEventInfoEXT - Describe a display event to create
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_DISPLAY_EVENT_INFO_EXT@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @displayEvent@ /must/ be a valid 'VkDisplayEventTypeEXT' value
+-- Unresolved directive in VkDisplayEventInfoEXT.txt -
+-- include::..\/validity\/structs\/VkDisplayEventInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'VkDisplayEventTypeEXT', 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkRegisterDisplayEventEXT'
+-- No cross-references are available
 data VkDisplayEventInfoEXT = VkDisplayEventInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -513,19 +436,12 @@ instance Storable VkDisplayEventInfoEXT where
 --     as reported by
 --     'Graphics.Vulkan.Extensions.VK_EXT_display_surface_counter.vkGetPhysicalDeviceSurfaceCapabilities2EXT'.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_SWAPCHAIN_COUNTER_CREATE_INFO_EXT@
---
--- -   @surfaceCounters@ /must/ be a valid combination of
---     'Graphics.Vulkan.Extensions.VK_EXT_display_surface_counter.VkSurfaceCounterFlagBitsEXT'
---     values
+-- Unresolved directive in VkSwapchainCounterCreateInfoEXT.txt -
+-- include::..\/validity\/structs\/VkSwapchainCounterCreateInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'Graphics.Vulkan.Extensions.VK_EXT_display_surface_counter.VkSurfaceCounterFlagsEXT'
+-- No cross-references are available
 data VkSwapchainCounterCreateInfoEXT = VkSwapchainCounterCreateInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

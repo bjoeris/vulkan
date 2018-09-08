@@ -48,7 +48,7 @@ import Graphics.Vulkan.Extensions.VK_KHR_surface
   ( VkPresentModeKHR(..)
   )
 import Graphics.Vulkan.Extensions.VK_KHR_swapchain
-  ( VkSwapchainKHR
+  ( VkSwapchainKHR(..)
   )
 
 
@@ -78,41 +78,14 @@ pattern VK_KHR_SHARED_PRESENTABLE_IMAGE_EXTENSION_NAME = "VK_KHR_shared_presenta
 --
 -- -   @swapchain@ is the swapchain to query.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @swapchain@ /must/ be a valid @VkSwapchainKHR@ handle
---
--- -   Both of @device@, and @swapchain@ /must/ have been created,
---     allocated, or retrieved from the same @VkInstance@
---
--- == Host Synchronization
---
--- -   Host access to @swapchain@ /must/ be externally synchronized
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
---     -   @VK_SUBOPTIMAL_KHR@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
---
---     -   @VK_ERROR_DEVICE_LOST@
---
---     -   @VK_ERROR_OUT_OF_DATE_KHR@
---
---     -   @VK_ERROR_SURFACE_LOST_KHR@
+-- Unresolved directive in vkGetSwapchainStatusKHR.txt -
+-- include::..\/validity\/protos\/vkGetSwapchainStatusKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'Graphics.Vulkan.Extensions.VK_KHR_swapchain.VkSwapchainKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -121,15 +94,14 @@ foreign import ccall
 -- | VkSharedPresentSurfaceCapabilitiesKHR - structure describing
 -- capabilities of a surface for shared presentation
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_SHARED_PRESENT_SURFACE_CAPABILITIES_KHR@
+-- Unresolved directive in VkSharedPresentSurfaceCapabilitiesKHR.txt -
+-- include::..\/validity\/structs\/VkSharedPresentSurfaceCapabilitiesKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkImageUsageFlags',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkSharedPresentSurfaceCapabilitiesKHR = VkSharedPresentSurfaceCapabilitiesKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

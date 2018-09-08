@@ -56,18 +56,12 @@ pattern VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME = "VK_KHR_incremental_present"
 --     @VkPresentInfoKHR@::@swapchainCount@, where @VkPresentInfoKHR@ is in
 --     the pNext-chain of this @VkPresentRegionsKHR@ structure.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_PRESENT_REGIONS_KHR@
---
--- -   If @pRegions@ is not @NULL@, @pRegions@ /must/ be a valid pointer to
---     an array of @swapchainCount@ valid @VkPresentRegionKHR@ structures
---
--- -   @swapchainCount@ /must/ be greater than @0@
+-- Unresolved directive in VkPresentRegionsKHR.txt -
+-- include::..\/validity\/structs\/VkPresentRegionsKHR.txt[]
 --
 -- = See Also
 --
--- 'VkPresentRegionKHR', 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPresentRegionsKHR = VkPresentRegionsKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -99,15 +93,14 @@ instance Storable VkPresentRegionsKHR where
 -- | VkPresentRegionKHR - Structure containing rectangular region changed by
 -- vkQueuePresentKHR for a given VkImage
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   If @rectangleCount@ is not @0@, and @pRectangles@ is not @NULL@,
---     @pRectangles@ /must/ be a valid pointer to an array of
---     @rectangleCount@ @VkRectLayerKHR@ structures
+-- Unresolved directive in VkPresentRegionKHR.txt -
+-- include::..\/validity\/structs\/VkPresentRegionKHR.txt[]
 --
 -- = See Also
 --
--- 'VkPresentRegionsKHR', 'VkRectLayerKHR'
+-- No cross-references are available
 data VkPresentRegionKHR = VkPresentRegionKHR
   { -- | @rectangleCount@ is the number of rectangles in @pRectangles@, or zero
   -- if the entire image has changed and should be presented.
@@ -143,6 +136,9 @@ instance Storable VkPresentRegionKHR where
 --     @VkSwapchainCreateInfoKHR@ structure given to
 --     'Graphics.Vulkan.Extensions.VK_KHR_swapchain.vkCreateSwapchainKHR'.
 --
+-- Unresolved directive in VkRectLayerKHR.txt -
+-- include::..\/validity\/structs\/VkRectLayerKHR.txt[]
+--
 -- Some platforms allow the size of a surface to change, and then scale the
 -- pixels of the image to fit the surface. @VkRectLayerKHR@ specifies
 -- pixels of the swapchain’s image(s), which will be constant for the life
@@ -150,8 +146,7 @@ instance Storable VkPresentRegionKHR where
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Pipeline.VkExtent2D',
--- 'Graphics.Vulkan.Core10.Pipeline.VkOffset2D', 'VkPresentRegionKHR'
+-- No cross-references are available
 data VkRectLayerKHR = VkRectLayerKHR
   { -- | @offset@ is the origin of the rectangle, in pixels.
   vkOffset :: VkOffset2D

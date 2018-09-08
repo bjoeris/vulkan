@@ -43,7 +43,7 @@ pattern VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT ::
 pattern VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT = VkStructureType 1000190001
 -- No documentation found for TopLevel "VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION"
 pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION :: Integral a => a
-pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION = 1
+pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION = 2
 -- No documentation found for TopLevel "VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME"
 pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME :: (Eq a ,IsString a) => a
 pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME = "VK_EXT_vertex_attribute_divisor"
@@ -60,7 +60,7 @@ pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME = "VK_EXT_vertex_attribut
 -- -   @binding@ /must/ be less than
 --     @VkPhysicalDeviceLimits@::@maxVertexInputBindings@
 --
--- -   @divisor@ /must/ be a value between @0@ and
+-- -   @divisor@ /must/ be a value between @1@ and
 --     @VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT@::@maxVertexAttribDivisor@,
 --     inclusive.
 --
@@ -68,19 +68,21 @@ pattern VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_EXTENSION_NAME = "VK_EXT_vertex_attribut
 --     /must/ be of type @VK_VERTEX_INPUT_RATE_INSTANCE@ for this
 --     @binding@.
 --
+-- Unresolved directive in VkVertexInputBindingDivisorDescriptionEXT.txt -
+-- include::..\/validity\/structs\/VkVertexInputBindingDivisorDescriptionEXT.txt[]
+--
 -- = See Also
 --
--- 'VkPipelineVertexInputDivisorStateCreateInfoEXT'
+-- No cross-references are available
 data VkVertexInputBindingDivisorDescriptionEXT = VkVertexInputBindingDivisorDescriptionEXT
   { -- | @binding@ is the binding number for which the divisor is specified.
   vkBinding :: Word32
-  , -- | @divisor@ is the the number of successive instances that will use the
-  -- same value of the vertex attribute when instanced rendering is enabled.
-  -- For example, if the divisor is N, the same vertex attribute will applied
-  -- to N successive instances before moving on to the next vertex attribute.
-  -- If a value of 0 is used for the divisor, then the first vertex attribute
-  -- will be applied to all instances. The maximum value of divisor is
-  -- implementation dependent and can be queried using
+  , -- | @divisor@ is the number of successive instances that will use the same
+  -- value of the vertex attribute when instanced rendering is enabled. For
+  -- example, if the divisor is N, the same vertex attribute will applied to
+  -- N successive instances before moving on to the next vertex attribute.
+  -- The maximum value of divisor is implementation dependent and can be
+  -- queried using
   -- @VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT@::@maxVertexAttribDivisor@.
   vkDivisor :: Word32
   }
@@ -96,21 +98,15 @@ instance Storable VkVertexInputBindingDivisorDescriptionEXT where
 -- | VkPipelineVertexInputDivisorStateCreateInfoEXT - Structure specifying
 -- vertex attributes assignment during instanced rendering
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT@
---
--- -   @pVertexBindingDivisors@ /must/ be a valid pointer to an array of
---     @vertexBindingDivisorCount@
---     @VkVertexInputBindingDivisorDescriptionEXT@ structures
---
--- -   @vertexBindingDivisorCount@ /must/ be greater than @0@
+-- Unresolved directive in
+-- VkPipelineVertexInputDivisorStateCreateInfoEXT.txt -
+-- include::..\/validity\/structs\/VkPipelineVertexInputDivisorStateCreateInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'VkVertexInputBindingDivisorDescriptionEXT'
+-- No cross-references are available
 data VkPipelineVertexInputDivisorStateCreateInfoEXT = VkPipelineVertexInputDivisorStateCreateInfoEXT
   { -- | @sType@ is the type of this structure
   vkSType :: VkStructureType
@@ -152,14 +148,13 @@ instance Storable VkPipelineVertexInputDivisorStateCreateInfoEXT where
 --     instances that will repeat the value of vertex attribute data when
 --     instanced rendering is enabled.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT@
+-- Unresolved directive in
+-- VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT.txt -
+-- include::..\/validity\/structs\/VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT = VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT
   { -- No documentation found for Nested "VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT" "sType"
   vkSType :: VkStructureType

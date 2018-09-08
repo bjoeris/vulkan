@@ -58,7 +58,7 @@ pattern VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME = "VK_KHR_image_format_list"
 --     @pViewFormats@ array /must/ be compatible with the format specified
 --     in the @format@ field of @VkImageCreateInfo@, as described in the
 --     [compatibility
---     table](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#resources-image-views-compatibility).
+--     table](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#features-formats-compatibility).
 --
 -- -   If @VkImageCreateInfo@::@flags@ does not contain
 --     @VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT@, @viewFormatCount@ /must/ be
@@ -67,19 +67,12 @@ pattern VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME = "VK_KHR_image_format_list"
 -- -   If @viewFormatCount@ is not @0@, @VkImageCreateInfo@::@format@
 --     /must/ be in @pViewFormats@.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO_KHR@
---
--- -   If @viewFormatCount@ is not @0@, @pViewFormats@ /must/ be a valid
---     pointer to an array of @viewFormatCount@ valid
---     'Graphics.Vulkan.Core10.Core.VkFormat' values
+-- Unresolved directive in VkImageFormatListCreateInfoKHR.txt -
+-- include::..\/validity\/structs\/VkImageFormatListCreateInfoKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkFormat',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkImageFormatListCreateInfoKHR = VkImageFormatListCreateInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

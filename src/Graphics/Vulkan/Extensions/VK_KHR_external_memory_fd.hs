@@ -49,7 +49,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkDevice
   )
 import Graphics.Vulkan.Core10.Memory
-  ( VkDeviceMemory
+  ( VkDeviceMemory(..)
   )
 import Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities
   ( VkExternalMemoryHandleTypeFlagBits(..)
@@ -95,29 +95,12 @@ pattern VK_KHR_EXTERNAL_MEMORY_FD_EXTENSION_NAME = "VK_KHR_external_memory_fd"
 -- the implementation /must/ set the file descriptor to be closed
 -- automatically when an @execve@ system call is made.
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @pGetFdInfo@ /must/ be a valid pointer to a valid
---     @VkMemoryGetFdInfoKHR@ structure
---
--- -   @pFd@ /must/ be a valid pointer to a @int@ value
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_TOO_MANY_OBJECTS@
---
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
+-- Unresolved directive in vkGetMemoryFdKHR.txt -
+-- include::..\/validity\/protos\/vkGetMemoryFdKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkMemoryGetFdInfoKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -144,30 +127,12 @@ foreign import ccall
 -- -   @handleType@ /must/ not be
 --     @VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR@.
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @handleType@ /must/ be a valid
---     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalMemoryHandleTypeFlagBits'
---     value
---
--- -   @pMemoryFdProperties@ /must/ be a valid pointer to a
---     @VkMemoryFdPropertiesKHR@ structure
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_INVALID_EXTERNAL_HANDLE@
+-- Unresolved directive in vkGetMemoryFdPropertiesKHR.txt -
+-- include::..\/validity\/protos\/vkGetMemoryFdPropertiesKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalMemoryHandleTypeFlagBits',
--- 'VkMemoryFdPropertiesKHR'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -214,18 +179,12 @@ foreign import ccall
 --     [external memory handle types
 --     compatibility](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#external-memory-handle-types-compatibility).
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_IMPORT_MEMORY_FD_INFO_KHR@
---
--- -   If @handleType@ is not @0@, @handleType@ /must/ be a valid
---     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalMemoryHandleTypeFlagBits'
---     value
+-- Unresolved directive in VkImportMemoryFdInfoKHR.txt -
+-- include::..\/validity\/structs\/VkImportMemoryFdInfoKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalMemoryHandleTypeFlagBits',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkImportMemoryFdInfoKHR = VkImportMemoryFdInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -253,8 +212,7 @@ instance Storable VkImportMemoryFdInfoKHR where
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetMemoryFdPropertiesKHR'
+-- No cross-references are available
 data VkMemoryFdPropertiesKHR = VkMemoryFdPropertiesKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -302,23 +260,12 @@ instance Storable VkMemoryFdPropertiesKHR where
 --
 -- -   @handleType@ /must/ be defined as a POSIX file descriptor handle.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_MEMORY_GET_FD_INFO_KHR@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @memory@ /must/ be a valid @VkDeviceMemory@ handle
---
--- -   @handleType@ /must/ be a valid
---     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalMemoryHandleTypeFlagBits'
---     value
+-- Unresolved directive in VkMemoryGetFdInfoKHR.txt -
+-- include::..\/validity\/structs\/VkMemoryGetFdInfoKHR.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory',
--- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalMemoryHandleTypeFlagBits',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'vkGetMemoryFdKHR'
+-- No cross-references are available
 data VkMemoryGetFdInfoKHR = VkMemoryGetFdInfoKHR
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

@@ -66,7 +66,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkDevice
   )
 import Graphics.Vulkan.Core10.Queue
-  ( VkFence
+  ( VkFence(..)
   )
 
 
@@ -432,14 +432,8 @@ foreign import ccall
 --
 -- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_FENCE_CREATE_INFO@
 --
--- -   Each @pNext@ member of any structure (including this one) in the
---     @pNext@ chain /must/ be either @NULL@ or a pointer to a valid
---     instance of
+-- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_fence.VkExportFenceCreateInfo'
---     or
---     'Graphics.Vulkan.Extensions.VK_KHR_external_fence_win32.VkExportFenceWin32HandleInfoKHR'
---
--- -   Each @sType@ member in the @pNext@ chain /must/ be unique
 --
 -- -   @flags@ /must/ be a valid combination of 'VkFenceCreateFlagBits'
 --     values

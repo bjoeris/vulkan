@@ -43,7 +43,7 @@ import Text.Read.Lex
 
 
 import Graphics.Vulkan.Core10.CommandPool
-  ( VkCommandPool
+  ( VkCommandPool(..)
   )
 import Graphics.Vulkan.Core10.Core
   ( VkResult(..)
@@ -67,8 +67,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
 --
 -- = See Also
 --
--- 'vkTrimCommandPool',
--- 'Graphics.Vulkan.Extensions.VK_KHR_maintenance1.vkTrimCommandPoolKHR'
+-- 'vkTrimCommandPool'
 newtype VkCommandPoolTrimFlags = VkCommandPoolTrimFlags VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 

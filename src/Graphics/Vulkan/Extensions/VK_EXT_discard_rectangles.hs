@@ -83,7 +83,7 @@ import Graphics.Vulkan.Core10.Queue
 --
 -- = See Also
 --
--- 'VkPipelineDiscardRectangleStateCreateInfoEXT'
+-- No cross-references are available
 newtype VkDiscardRectangleModeEXT = VkDiscardRectangleModeEXT Int32
   deriving (Eq, Ord, Storable)
 
@@ -123,7 +123,7 @@ pattern VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT = VkDiscardRectangleModeEXT 1
 --
 -- = See Also
 --
--- 'VkPipelineDiscardRectangleStateCreateInfoEXT'
+-- No cross-references are available
 newtype VkPipelineDiscardRectangleStateCreateFlagsEXT = VkPipelineDiscardRectangleStateCreateFlagsEXT VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -203,44 +203,12 @@ pattern VK_EXT_DISCARD_RECTANGLES_EXTENSION_NAME = "VK_EXT_discard_rectangles"
 --     @pDiscardRectangles@ /must/ not cause a signed integer addition
 --     overflow
 --
--- == Valid Usage (Implicit)
---
--- -   @commandBuffer@ /must/ be a valid @VkCommandBuffer@ handle
---
--- -   @pDiscardRectangles@ /must/ be a valid pointer to an array of
---     @discardRectangleCount@ @VkRect2D@ structures
---
--- -   @commandBuffer@ /must/ be in the [recording
---     state](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#commandbuffers-lifecycle)
---
--- -   The @VkCommandPool@ that @commandBuffer@ was allocated from /must/
---     support graphics operations
---
--- -   @discardRectangleCount@ /must/ be greater than @0@
---
--- == Host Synchronization
---
--- -   Host access to @commandBuffer@ /must/ be externally synchronized
---
--- -   Host access to the @VkCommandPool@ that @commandBuffer@ was
---     allocated from /must/ be externally synchronized
---
--- == Command Properties
---
--- \'
---
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
--- | [Command Buffer                                                                                             | [Render Pass                                                                                               | [Supported Queue                                                                                      | [Pipeline                                                                                                                  |
--- | Levels](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkCommandBufferLevel) | Scope](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#vkCmdBeginRenderPass) | Types](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkQueueFlagBits) | Type](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#synchronization-pipeline-stages-types) |
--- +=============================================================================================================+============================================================================================================+=======================================================================================================+============================================================================================================================+
--- | Primary                                                                                                     | Both                                                                                                       | Graphics                                                                                              |                                                                                                                            |
--- | Secondary                                                                                                   |                                                                                                            |                                                                                                       |                                                                                                                            |
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+-- Unresolved directive in vkCmdSetDiscardRectangleEXT.txt -
+-- include::..\/validity\/protos\/vkCmdSetDiscardRectangleEXT.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Queue.VkCommandBuffer',
--- 'Graphics.Vulkan.Core10.Pipeline.VkRect2D'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -259,10 +227,9 @@ foreign import ccall
 -- -   @maxDiscardRectangles@ is the maximum number of discard rectangles
 --     that /can/ be specified.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT@
+-- Unresolved directive in
+-- VkPhysicalDeviceDiscardRectanglePropertiesEXT.txt -
+-- include::..\/validity\/structs\/VkPhysicalDeviceDiscardRectanglePropertiesEXT.txt[]
 --
 -- If the @VkPhysicalDeviceDiscardRectanglePropertiesEXT@ structure is
 -- included in the @pNext@ chain of
@@ -271,7 +238,7 @@ foreign import ccall
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPhysicalDeviceDiscardRectanglePropertiesEXT = VkPhysicalDeviceDiscardRectanglePropertiesEXT
   { -- No documentation found for Nested "VkPhysicalDeviceDiscardRectanglePropertiesEXT" "sType"
   vkSType :: VkStructureType
@@ -300,22 +267,13 @@ instance Storable VkPhysicalDeviceDiscardRectanglePropertiesEXT where
 --     @VkPhysicalDeviceDiscardRectanglePropertiesEXT@::@maxDiscardRectangles@,
 --     inclusive
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT@
---
--- -   @flags@ /must/ be @0@
---
--- -   @discardRectangleMode@ /must/ be a valid 'VkDiscardRectangleModeEXT'
---     value
+-- Unresolved directive in VkPipelineDiscardRectangleStateCreateInfoEXT.txt
+-- -
+-- include::..\/validity\/structs\/VkPipelineDiscardRectangleStateCreateInfoEXT.txt[]
 --
 -- = See Also
 --
--- 'VkDiscardRectangleModeEXT',
--- 'VkPipelineDiscardRectangleStateCreateFlagsEXT',
--- 'Graphics.Vulkan.Core10.Pipeline.VkRect2D',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkPipelineDiscardRectangleStateCreateInfoEXT = VkPipelineDiscardRectangleStateCreateInfoEXT
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

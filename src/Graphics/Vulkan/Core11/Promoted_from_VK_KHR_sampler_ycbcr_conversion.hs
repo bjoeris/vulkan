@@ -71,7 +71,7 @@ module Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion
   , pattern VK_IMAGE_ASPECT_PLANE_0_BIT
   , pattern VK_IMAGE_ASPECT_PLANE_1_BIT
   , pattern VK_IMAGE_ASPECT_PLANE_2_BIT
-  , VkSamplerYcbcrConversion
+  , VkSamplerYcbcrConversion(..)
   , vkCreateSamplerYcbcrConversion
   , vkDestroySamplerYcbcrConversion
   , VkSamplerYcbcrConversionInfo(..)
@@ -87,9 +87,11 @@ import Data.Int
   )
 import Data.Word
   ( Word32
+  , Word64
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -205,7 +207,6 @@ import Graphics.Vulkan.Core10.SparseResourceMemoryManagement
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkAndroidHardwareBufferFormatPropertiesANDROID',
 -- 'VkSamplerYcbcrConversionCreateInfo'
 newtype VkSamplerYcbcrModelConversion = VkSamplerYcbcrModelConversion Int32
   deriving (Eq, Ord, Storable)
@@ -279,7 +280,6 @@ pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020 = VkSamplerYcbcrModelConver
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkAndroidHardwareBufferFormatPropertiesANDROID',
 -- 'VkSamplerYcbcrConversionCreateInfo'
 newtype VkSamplerYcbcrRange = VkSamplerYcbcrRange Int32
   deriving (Eq, Ord, Storable)
@@ -313,7 +313,6 @@ pattern VK_SAMPLER_YCBCR_RANGE_ITU_NARROW = VkSamplerYcbcrRange 1
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkAndroidHardwareBufferFormatPropertiesANDROID',
 -- 'VkSamplerYcbcrConversionCreateInfo'
 newtype VkChromaLocation = VkChromaLocation Int32
   deriving (Eq, Ord, Storable)
@@ -372,7 +371,7 @@ pattern VK_FORMAT_G8B8G8R8_422_UNORM = VkFormat 1000156000
 -- compressed texel block.
 pattern VK_FORMAT_B8G8R8G8_422_UNORM :: VkFormat
 pattern VK_FORMAT_B8G8R8G8_422_UNORM = VkFormat 1000156001
--- | @VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM@ specifies a unsigned normalized
+-- | @VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM@ specifies an unsigned normalized
 -- /multi-planar format/ that has an 8-bit G component in plane 0, an 8-bit
 -- B component in plane 1, and an 8-bit R component in plane 2. The
 -- horizontal and vertical dimensions of the R and B planes are halved
@@ -388,7 +387,7 @@ pattern VK_FORMAT_B8G8R8G8_422_UNORM = VkFormat 1000156001
 -- /must/ be defined with a width and height that is a multiple of two.
 pattern VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM :: VkFormat
 pattern VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM = VkFormat 1000156002
--- | @VK_FORMAT_G8_B8R8_2PLANE_420_UNORM@ specifies a unsigned normalized
+-- | @VK_FORMAT_G8_B8R8_2PLANE_420_UNORM@ specifies an unsigned normalized
 -- /multi-planar format/ that has an 8-bit G component in plane 0, and a
 -- two-component, 16-bit BR plane 1 consisting of an 8-bit B component in
 -- byte 0 and an 8-bit R component in byte 1. The horizontal and vertical
@@ -404,7 +403,7 @@ pattern VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM = VkFormat 1000156002
 -- /must/ be defined with a width and height that is a multiple of two.
 pattern VK_FORMAT_G8_B8R8_2PLANE_420_UNORM :: VkFormat
 pattern VK_FORMAT_G8_B8R8_2PLANE_420_UNORM = VkFormat 1000156003
--- | @VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM@ specifies a unsigned normalized
+-- | @VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM@ specifies an unsigned normalized
 -- /multi-planar format/ that has an 8-bit G component in plane 0, an 8-bit
 -- B component in plane 1, and an 8-bit R component in plane 2. The
 -- horizontal dimension of the R and B plane is halved relative to the
@@ -418,7 +417,7 @@ pattern VK_FORMAT_G8_B8R8_2PLANE_420_UNORM = VkFormat 1000156003
 -- /must/ be defined with a width that is a multiple of two.
 pattern VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM :: VkFormat
 pattern VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM = VkFormat 1000156004
--- | @VK_FORMAT_G8_B8R8_2PLANE_422_UNORM@ specifies a unsigned normalized
+-- | @VK_FORMAT_G8_B8R8_2PLANE_422_UNORM@ specifies an unsigned normalized
 -- /multi-planar format/ that has an 8-bit G component in plane 0, and a
 -- two-component, 16-bit BR plane 1 consisting of an 8-bit B component in
 -- byte 0 and an 8-bit R component in byte 1. The horizontal dimensions of
@@ -432,7 +431,7 @@ pattern VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM = VkFormat 1000156004
 -- /must/ be defined with a width that is a multiple of two.
 pattern VK_FORMAT_G8_B8R8_2PLANE_422_UNORM :: VkFormat
 pattern VK_FORMAT_G8_B8R8_2PLANE_422_UNORM = VkFormat 1000156005
--- | @VK_FORMAT_G8_B8_R8_3PLANE_444_UNORM@ specifies a unsigned normalized
+-- | @VK_FORMAT_G8_B8_R8_3PLANE_444_UNORM@ specifies an unsigned normalized
 -- /multi-planar format/ that has an 8-bit G component in plane 0, an 8-bit
 -- B component in plane 1, and an 8-bit R component in plane 2. Each plane
 -- has the same dimensions and each R, G and B component contributes to a
@@ -499,7 +498,7 @@ pattern VK_FORMAT_G10X6B10X6G10X6R10X6_422_UNORM_4PACK16 = VkFormat 1000156010
 -- compressed texel block.
 pattern VK_FORMAT_B10X6G10X6R10X6G10X6_422_UNORM_4PACK16 :: VkFormat
 pattern VK_FORMAT_B10X6G10X6R10X6G10X6_422_UNORM_4PACK16 = VkFormat 1000156011
--- | @VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16@ specifies a
+-- | @VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16@ specifies an
 -- unsigned normalized /multi-planar format/ that has a 10-bit G component
 -- in the top 10 bits of each 16-bit word of plane 0, a 10-bit B component
 -- in the top 10 bits of each 16-bit word of plane 1, and a 10-bit R
@@ -518,7 +517,7 @@ pattern VK_FORMAT_B10X6G10X6R10X6G10X6_422_UNORM_4PACK16 = VkFormat 1000156011
 -- /must/ be defined with a width and height that is a multiple of two.
 pattern VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16 :: VkFormat
 pattern VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16 = VkFormat 1000156012
--- | @VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16@ specifies a
+-- | @VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16@ specifies an
 -- unsigned normalized /multi-planar format/ that has a 10-bit G component
 -- in the top 10 bits of each 16-bit word of plane 0, and a two-component,
 -- 32-bit BR plane 1 consisting of a 10-bit B component in the top 10 bits
@@ -536,7 +535,7 @@ pattern VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16 = VkFormat 10001560
 -- /must/ be defined with a width and height that is a multiple of two.
 pattern VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 :: VkFormat
 pattern VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 = VkFormat 1000156013
--- | @VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16@ specifies a
+-- | @VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16@ specifies an
 -- unsigned normalized /multi-planar format/ that has a 10-bit G component
 -- in the top 10 bits of each 16-bit word of plane 0, a 10-bit B component
 -- in the top 10 bits of each 16-bit word of plane 1, and a 10-bit R
@@ -553,7 +552,7 @@ pattern VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 = VkFormat 100015601
 -- /must/ be defined with a width that is a multiple of two.
 pattern VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16 :: VkFormat
 pattern VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16 = VkFormat 1000156014
--- | @VK_FORMAT_G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16@ specifies a
+-- | @VK_FORMAT_G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16@ specifies an
 -- unsigned normalized /multi-planar format/ that has a 10-bit G component
 -- in the top 10 bits of each 16-bit word of plane 0, and a two-component,
 -- 32-bit BR plane 1 consisting of a 10-bit B component in the top 10 bits
@@ -569,7 +568,7 @@ pattern VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16 = VkFormat 10001560
 -- /must/ be defined with a width that is a multiple of two.
 pattern VK_FORMAT_G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16 :: VkFormat
 pattern VK_FORMAT_G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16 = VkFormat 1000156015
--- | @VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16@ specifies a
+-- | @VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16@ specifies an
 -- unsigned normalized /multi-planar format/ that has a 10-bit G component
 -- in the top 10 bits of each 16-bit word of plane 0, a 10-bit B component
 -- in the top 10 bits of each 16-bit word of plane 1, and a 10-bit R
@@ -639,7 +638,7 @@ pattern VK_FORMAT_G12X4B12X4G12X4R12X4_422_UNORM_4PACK16 = VkFormat 1000156020
 -- compressed texel block.
 pattern VK_FORMAT_B12X4G12X4R12X4G12X4_422_UNORM_4PACK16 :: VkFormat
 pattern VK_FORMAT_B12X4G12X4R12X4G12X4_422_UNORM_4PACK16 = VkFormat 1000156021
--- | @VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16@ specifies a
+-- | @VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16@ specifies an
 -- unsigned normalized /multi-planar format/ that has a 12-bit G component
 -- in the top 12 bits of each 16-bit word of plane 0, a 12-bit B component
 -- in the top 12 bits of each 16-bit word of plane 1, and a 12-bit R
@@ -658,7 +657,7 @@ pattern VK_FORMAT_B12X4G12X4R12X4G12X4_422_UNORM_4PACK16 = VkFormat 1000156021
 -- /must/ be defined with a width and height that is a multiple of two.
 pattern VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16 :: VkFormat
 pattern VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16 = VkFormat 1000156022
--- | @VK_FORMAT_G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16@ specifies a
+-- | @VK_FORMAT_G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16@ specifies an
 -- unsigned normalized /multi-planar format/ that has a 12-bit G component
 -- in the top 12 bits of each 16-bit word of plane 0, and a two-component,
 -- 32-bit BR plane 1 consisting of a 12-bit B component in the top 12 bits
@@ -676,7 +675,7 @@ pattern VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16 = VkFormat 10001560
 -- /must/ be defined with a width and height that is a multiple of two.
 pattern VK_FORMAT_G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16 :: VkFormat
 pattern VK_FORMAT_G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16 = VkFormat 1000156023
--- | @VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16@ specifies a
+-- | @VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16@ specifies an
 -- unsigned normalized /multi-planar format/ that has a 12-bit G component
 -- in the top 12 bits of each 16-bit word of plane 0, a 12-bit B component
 -- in the top 12 bits of each 16-bit word of plane 1, and a 12-bit R
@@ -693,7 +692,7 @@ pattern VK_FORMAT_G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16 = VkFormat 100015602
 -- /must/ be defined with a width that is a multiple of two.
 pattern VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16 :: VkFormat
 pattern VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16 = VkFormat 1000156024
--- | @VK_FORMAT_G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16@ specifies a
+-- | @VK_FORMAT_G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16@ specifies an
 -- unsigned normalized /multi-planar format/ that has a 12-bit G component
 -- in the top 12 bits of each 16-bit word of plane 0, and a two-component,
 -- 32-bit BR plane 1 consisting of a 12-bit B component in the top 12 bits
@@ -709,7 +708,7 @@ pattern VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16 = VkFormat 10001560
 -- /must/ be defined with a width that is a multiple of two.
 pattern VK_FORMAT_G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16 :: VkFormat
 pattern VK_FORMAT_G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16 = VkFormat 1000156025
--- | @VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16@ specifies a
+-- | @VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16@ specifies an
 -- unsigned normalized /multi-planar format/ that has a 12-bit G component
 -- in the top 12 bits of each 16-bit word of plane 0, a 12-bit B component
 -- in the top 12 bits of each 16-bit word of plane 1, and a 12-bit R
@@ -754,13 +753,13 @@ pattern VK_FORMAT_G16B16G16R16_422_UNORM = VkFormat 1000156027
 -- compressed texel block.
 pattern VK_FORMAT_B16G16R16G16_422_UNORM :: VkFormat
 pattern VK_FORMAT_B16G16R16G16_422_UNORM = VkFormat 1000156028
--- | @VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM@ specifies a unsigned normalized
--- /multi-planar format/ that has a 16-bit G component in each 16-bit word
--- of plane 0, a 16-bit B component in each 16-bit word of plane 1, and a
--- 16-bit R component in each 16-bit word of plane 2. The horizontal and
--- vertical dimensions of the R and B planes are halved relative to the
--- image dimensions, and each R and B component is shared with the G
--- components for which \(\lfloor i_G \times 0.5
+-- | @VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM@ specifies an unsigned
+-- normalized /multi-planar format/ that has a 16-bit G component in each
+-- 16-bit word of plane 0, a 16-bit B component in each 16-bit word of
+-- plane 1, and a 16-bit R component in each 16-bit word of plane 2. The
+-- horizontal and vertical dimensions of the R and B planes are halved
+-- relative to the image dimensions, and each R and B component is shared
+-- with the G components for which \(\lfloor i_G \times 0.5
 -- \rfloor = i_B = i_R\) and \(\lfloor j_G \times 0.5 \rfloor = j_B
 -- = j_R\). The location of each plane when this image is in linear layout
 -- can be determined via
@@ -771,7 +770,7 @@ pattern VK_FORMAT_B16G16R16G16_422_UNORM = VkFormat 1000156028
 -- /must/ be defined with a width and height that is a multiple of two.
 pattern VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM :: VkFormat
 pattern VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM = VkFormat 1000156029
--- | @VK_FORMAT_G16_B16R16_2PLANE_420_UNORM@ specifies a unsigned normalized
+-- | @VK_FORMAT_G16_B16R16_2PLANE_420_UNORM@ specifies an unsigned normalized
 -- /multi-planar format/ that has a 16-bit G component in each 16-bit word
 -- of plane 0, and a two-component, 32-bit BR plane 1 consisting of a
 -- 16-bit B component in the word in bytes 0..1, and a 16-bit R component
@@ -788,14 +787,14 @@ pattern VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM = VkFormat 1000156029
 -- /must/ be defined with a width and height that is a multiple of two.
 pattern VK_FORMAT_G16_B16R16_2PLANE_420_UNORM :: VkFormat
 pattern VK_FORMAT_G16_B16R16_2PLANE_420_UNORM = VkFormat 1000156030
--- | @VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM@ specifies a unsigned normalized
--- /multi-planar format/ that has a 16-bit G component in each 16-bit word
--- of plane 0, a 16-bit B component in each 16-bit word of plane 1, and a
--- 16-bit R component in each 16-bit word of plane 2. The horizontal
--- dimension of the R and B plane is halved relative to the image
--- dimensions, and each R and B value is shared with the G components for
--- which \(\lfloor i_G \times 0.5 \rfloor = i_B = i_R\). The location of
--- each plane when this image is in linear layout can be determined via
+-- | @VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM@ specifies an unsigned
+-- normalized /multi-planar format/ that has a 16-bit G component in each
+-- 16-bit word of plane 0, a 16-bit B component in each 16-bit word of
+-- plane 1, and a 16-bit R component in each 16-bit word of plane 2. The
+-- horizontal dimension of the R and B plane is halved relative to the
+-- image dimensions, and each R and B value is shared with the G components
+-- for which \(\lfloor i_G \times 0.5 \rfloor = i_B = i_R\). The location
+-- of each plane when this image is in linear layout can be determined via
 -- 'Graphics.Vulkan.Core10.Image.vkGetImageSubresourceLayout', using
 -- @VK_IMAGE_ASPECT_PLANE_0_BIT@ for the G plane,
 -- @VK_IMAGE_ASPECT_PLANE_1_BIT@ for the B plane, and
@@ -803,7 +802,7 @@ pattern VK_FORMAT_G16_B16R16_2PLANE_420_UNORM = VkFormat 1000156030
 -- /must/ be defined with a width that is a multiple of two.
 pattern VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM :: VkFormat
 pattern VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM = VkFormat 1000156031
--- | @VK_FORMAT_G16_B16R16_2PLANE_422_UNORM@ specifies a unsigned normalized
+-- | @VK_FORMAT_G16_B16R16_2PLANE_422_UNORM@ specifies an unsigned normalized
 -- /multi-planar format/ that has a 16-bit G component in each 16-bit word
 -- of plane 0, and a two-component, 32-bit BR plane 1 consisting of a
 -- 16-bit B component in the word in bytes 0..1, and a 16-bit R component
@@ -818,13 +817,13 @@ pattern VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM = VkFormat 1000156031
 -- /must/ be defined with a width that is a multiple of two.
 pattern VK_FORMAT_G16_B16R16_2PLANE_422_UNORM :: VkFormat
 pattern VK_FORMAT_G16_B16R16_2PLANE_422_UNORM = VkFormat 1000156032
--- | @VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM@ specifies a unsigned normalized
--- /multi-planar format/ that has a 16-bit G component in each 16-bit word
--- of plane 0, a 16-bit B component in each 16-bit word of plane 1, and a
--- 16-bit R component in each 16-bit word of plane 2. Each plane has the
--- same dimensions and each R, G and B component contributes to a single
--- texel. The location of each plane when this image is in linear layout
--- can be determined via
+-- | @VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM@ specifies an unsigned
+-- normalized /multi-planar format/ that has a 16-bit G component in each
+-- 16-bit word of plane 0, a 16-bit B component in each 16-bit word of
+-- plane 1, and a 16-bit R component in each 16-bit word of plane 2. Each
+-- plane has the same dimensions and each R, G and B component contributes
+-- to a single texel. The location of each plane when this image is in
+-- linear layout can be determined via
 -- 'Graphics.Vulkan.Core10.Image.vkGetImageSubresourceLayout', using
 -- @VK_IMAGE_ASPECT_PLANE_0_BIT@ for the G plane,
 -- @VK_IMAGE_ASPECT_PLANE_1_BIT@ for the B plane, and
@@ -885,17 +884,20 @@ pattern VK_IMAGE_ASPECT_PLANE_1_BIT = VkImageAspectFlagBits 0x00000020
 -- No documentation found for Nested "VkImageAspectFlagBits" "VK_IMAGE_ASPECT_PLANE_2_BIT"
 pattern VK_IMAGE_ASPECT_PLANE_2_BIT :: VkImageAspectFlagBits
 pattern VK_IMAGE_ASPECT_PLANE_2_BIT = VkImageAspectFlagBits 0x00000040
--- | Dummy data to tag the 'Ptr' with
-data VkSamplerYcbcrConversion_T
 -- | VkSamplerYcbcrConversion - NO SHORT DESCRIPTION PROVIDED
 --
 -- = See Also
 --
 -- 'VkSamplerYcbcrConversionInfo', 'vkCreateSamplerYcbcrConversion',
--- 'Graphics.Vulkan.Extensions.VK_KHR_sampler_ycbcr_conversion.vkCreateSamplerYcbcrConversionKHR',
--- 'vkDestroySamplerYcbcrConversion',
--- 'Graphics.Vulkan.Extensions.VK_KHR_sampler_ycbcr_conversion.vkDestroySamplerYcbcrConversionKHR'
-type VkSamplerYcbcrConversion = Ptr VkSamplerYcbcrConversion_T
+-- 'vkDestroySamplerYcbcrConversion'
+newtype VkSamplerYcbcrConversion = VkSamplerYcbcrConversion Word64
+  deriving (Eq, Show)
+
+instance Storable VkSamplerYcbcrConversion where
+  sizeOf (VkSamplerYcbcrConversion w) = sizeOf w
+  alignment (VkSamplerYcbcrConversion w) = alignment w
+  peek ptr = VkSamplerYcbcrConversion <$> peek (castPtr ptr)
+  poke ptr (VkSamplerYcbcrConversion w) = poke (castPtr ptr) w
 -- | vkCreateSamplerYcbcrConversion - Create a new Ycbcr conversion
 --
 -- = Parameters
@@ -1119,8 +1121,7 @@ instance Storable VkSamplerYcbcrConversionInfo where
 -- -   @sType@ /must/ be
 --     @VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_CREATE_INFO@
 --
--- -   @pNext@ /must/ be @NULL@ or a pointer to a valid instance of
---     'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkExternalFormatANDROID'
+-- -   @pNext@ /must/ be @NULL@
 --
 -- -   @format@ /must/ be a valid 'Graphics.Vulkan.Core10.Core.VkFormat'
 --     value
@@ -1155,8 +1156,7 @@ instance Storable VkSamplerYcbcrConversionInfo where
 -- 'Graphics.Vulkan.Core10.Sampler.VkFilter',
 -- 'Graphics.Vulkan.Core10.Core.VkFormat', 'VkSamplerYcbcrModelConversion',
 -- 'VkSamplerYcbcrRange', 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkCreateSamplerYcbcrConversion',
--- 'Graphics.Vulkan.Extensions.VK_KHR_sampler_ycbcr_conversion.vkCreateSamplerYcbcrConversionKHR'
+-- 'vkCreateSamplerYcbcrConversion'
 data VkSamplerYcbcrConversionCreateInfo = VkSamplerYcbcrConversionCreateInfo
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

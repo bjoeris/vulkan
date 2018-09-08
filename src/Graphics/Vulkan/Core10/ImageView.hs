@@ -24,7 +24,7 @@ module Graphics.Vulkan.Core10.ImageView
   , pattern VK_IMAGE_VIEW_TYPE_2D_ARRAY
   , pattern VK_IMAGE_VIEW_TYPE_CUBE_ARRAY
   , VkImageViewCreateFlags(..)
-  , VkImageView
+  , VkImageView(..)
   , vkCreateImageView
   , vkDestroyImageView
   , VkComponentMapping(..)
@@ -41,9 +41,11 @@ import Data.Int
   )
 import Data.Word
   ( Word32
+  , Word64
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -82,7 +84,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkDevice
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkImage
+  ( VkImage(..)
   )
 import Graphics.Vulkan.Core10.SparseResourceMemoryManagement
   ( VkImageAspectFlags
@@ -299,16 +301,21 @@ instance Read VkImageViewCreateFlags where
                     )
 
 
--- | Dummy data to tag the 'Ptr' with
-data VkImageView_T
--- | VkImageView - Opaque handle to a image view object
+-- | VkImageView - Opaque handle to an image view object
 --
 -- = See Also
 --
 -- 'Graphics.Vulkan.Core10.DescriptorSet.VkDescriptorImageInfo',
 -- 'Graphics.Vulkan.Core10.Pass.VkFramebufferCreateInfo',
 -- 'vkCreateImageView', 'vkDestroyImageView'
-type VkImageView = Ptr VkImageView_T
+newtype VkImageView = VkImageView Word64
+  deriving (Eq, Show)
+
+instance Storable VkImageView where
+  sizeOf (VkImageView w) = sizeOf w
+  alignment (VkImageView w) = alignment w
+  peek ptr = VkImageView <$> peek (castPtr ptr)
+  poke ptr (VkImageView w) = poke (castPtr ptr) w
 -- | vkCreateImageView - Create an image view from an existing image
 --
 -- = Parameters
@@ -324,7 +331,7 @@ type VkImageView = Ptr VkImageView_T
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pView@ points to a @VkImageView@ handle in which the resulting
+-- -   @pView@ points to a 'VkImageView' handle in which the resulting
 --     image view object is returned.
 --
 -- = Description
@@ -438,7 +445,6 @@ foreign import ccall
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkAndroidHardwareBufferFormatPropertiesANDROID',
 -- 'VkComponentSwizzle', 'VkImageViewCreateInfo',
 -- 'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkSamplerYcbcrConversionCreateInfo'
 data VkComponentMapping = VkComponentMapping
@@ -468,7 +474,8 @@ instance Storable VkComponentMapping where
                 *> poke (ptr `plusPtr` 4) (vkG (poked :: VkComponentMapping))
                 *> poke (ptr `plusPtr` 8) (vkB (poked :: VkComponentMapping))
                 *> poke (ptr `plusPtr` 12) (vkA (poked :: VkComponentMapping))
--- | VkImageSubresourceRange - Structure specifying a image subresource range
+-- | VkImageSubresourceRange - Structure specifying an image subresource
+-- range
 --
 -- = Description
 --
@@ -858,40 +865,45 @@ instance Storable VkImageSubresourceRange where
 --     @vkGetPhysicalDeviceFormatProperties@ with the same value of
 --     @format@
 --
--- -   If @image@ was created with @VK_IMAGE_TILING_OPTIMAL@, @format@
---     /must/ be format that has at least one supported feature bit present
---     in the value of @VkFormatProperties@::@optimalTilingFeatures@
---     returned by @vkGetPhysicalDeviceFormatProperties@ with the same
---     value of @format@
+-- -   If @image@ was created with @VK_IMAGE_TILING_OPTIMAL@ and @format@
+--     is not @VK_FORMAT_UNDEFINED@, @format@ /must/ be format that has at
+--     least one supported feature bit present in the value of
+--     @VkFormatProperties@::@optimalTilingFeatures@ returned by
+--     @vkGetPhysicalDeviceFormatProperties@ with the same value of
+--     @format@
 --
--- -   If @image@ was created with @VK_IMAGE_TILING_OPTIMAL@ and @usage@
---     contains @VK_IMAGE_USAGE_SAMPLED_BIT@, @format@ /must/ be supported
---     for sampled images, as specified by the
+-- -   If @image@ was created with @VK_IMAGE_TILING_OPTIMAL@, and @format@
+--     is not @VK_FORMAT_UNDEFINED@, and @usage@ contains
+--     @VK_IMAGE_USAGE_SAMPLED_BIT@, @format@ /must/ be supported for
+--     sampled images, as specified by the
 --     @VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT@ flag in
 --     @VkFormatProperties@::@optimalTilingFeatures@ returned by
 --     @vkGetPhysicalDeviceFormatProperties@ with the same value of
 --     @format@
 --
--- -   If @image@ was created with @VK_IMAGE_TILING_OPTIMAL@ and @usage@
---     contains @VK_IMAGE_USAGE_STORAGE_BIT@, @format@ /must/ be supported
---     for storage images, as specified by the
+-- -   If @image@ was created with @VK_IMAGE_TILING_OPTIMAL@, and @format@
+--     is not @VK_FORMAT_UNDEFINED@, and @usage@ contains
+--     @VK_IMAGE_USAGE_STORAGE_BIT@, @format@ /must/ be supported for
+--     storage images, as specified by the
 --     @VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT@ flag in
 --     @VkFormatProperties@::@optimalTilingFeatures@ returned by
 --     @vkGetPhysicalDeviceFormatProperties@ with the same value of
 --     @format@
 --
--- -   If @image@ was created with @VK_IMAGE_TILING_OPTIMAL@ and @usage@
---     contains @VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT@, @format@ /must/ be
---     supported for color attachments, as specified by the
+-- -   If @image@ was created with @VK_IMAGE_TILING_OPTIMAL@, and @format@
+--     is not @VK_FORMAT_UNDEFINED@, and @usage@ contains
+--     @VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT@, @format@ /must/ be supported
+--     for color attachments, as specified by the
 --     @VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT@ flag in
 --     @VkFormatProperties@::@optimalTilingFeatures@ returned by
 --     @vkGetPhysicalDeviceFormatProperties@ with the same value of
 --     @format@
 --
--- -   If @image@ was created with @VK_IMAGE_TILING_OPTIMAL@ and @usage@
---     contains @VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT@, @format@
---     /must/ be supported for depth\/stencil attachments, as specified by
---     the @VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT@ flag in
+-- -   If @image@ was created with @VK_IMAGE_TILING_OPTIMAL@, and @format@
+--     is not @VK_FORMAT_UNDEFINED@, and @usage@ contains
+--     @VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT@, @format@ /must/ be
+--     supported for depth\/stencil attachments, as specified by the
+--     @VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT@ flag in
 --     @VkFormatProperties@::@optimalTilingFeatures@ returned by
 --     @vkGetPhysicalDeviceFormatProperties@ with the same value of
 --     @format@
@@ -994,6 +1006,12 @@ instance Storable VkImageSubresourceRange where
 --     @VK_IMAGE_ASPECT_COLOR_BIT@, @format@ /must/ be identical to the
 --     @format@ used to create @image@
 --
+-- -   If the @pNext@ chain contains an instance of
+--     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkSamplerYcbcrConversionInfo'
+--     with a @conversion@ value other than @VK_NULL_HANDLE@, all members
+--     of @components@ /must/ have the value
+--     @VK_COMPONENT_SWIZZLE_IDENTITY@.
+--
 -- -   If @image@ is non-sparse then it /must/ be bound completely and
 --     contiguously to a single @VkDeviceMemory@ object
 --
@@ -1004,14 +1022,14 @@ instance Storable VkImageSubresourceRange where
 -- -   If @image@ has an [external
 --     format](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-external-android-hardware-buffer-external-formats):
 --
---     -   @format@ must be @VK_FORMAT_UNDEFINED@
+--     -   @format@ /must/ be @VK_FORMAT_UNDEFINED@
 --
---     -   The @pNext@ chain must contain an instance of
+--     -   The @pNext@ chain /must/ contain an instance of
 --         'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkSamplerYcbcrConversionInfo'
 --         with a @conversion@ object created with the same external format
 --         as @image@
 --
---     -   All members of @components@ must be
+--     -   All members of @components@ /must/ be
 --         @VK_COMPONENT_SWIZZLE_IDENTITY@
 --
 -- == Valid Usage (Implicit)
@@ -1054,10 +1072,11 @@ data VkImageViewCreateInfo = VkImageViewCreateInfo
   vkPNext :: Ptr ()
   , -- | @flags@ is reserved for future use.
   vkFlags :: VkImageViewCreateFlags
-  , -- | @image@ is a @VkImage@ on which the view will be created.
+  , -- | @image@ is a 'Graphics.Vulkan.Core10.MemoryManagement.VkImage' on which
+  -- the view will be created.
   vkImage :: VkImage
-  , -- | @viewType@ is an 'VkImageViewType' value specifying the type of the
-  -- image view.
+  , -- | @viewType@ is a 'VkImageViewType' value specifying the type of the image
+  -- view.
   vkViewType :: VkImageViewType
   , -- | @format@ is a 'Graphics.Vulkan.Core10.Core.VkFormat' describing the
   -- format and type used to interpret data elements in the image.

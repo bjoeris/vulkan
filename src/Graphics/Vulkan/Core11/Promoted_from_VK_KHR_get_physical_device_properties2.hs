@@ -432,8 +432,7 @@ foreign import ccall
 --
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDeviceFeatures',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceFeatures2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceFeatures2KHR'
+-- 'vkGetPhysicalDeviceFeatures2'
 data VkPhysicalDeviceFeatures2 = VkPhysicalDeviceFeatures2
   { -- No documentation found for Nested "VkPhysicalDeviceFeatures2" "sType"
   vkSType :: VkStructureType
@@ -468,23 +467,13 @@ instance Storable VkPhysicalDeviceFeatures2 where
 -- -   Each @pNext@ member of any structure (including this one) in the
 --     @pNext@ chain /must/ be either @NULL@ or a pointer to a valid
 --     instance of
---     'Graphics.Vulkan.Extensions.VK_EXT_blend_operation_advanced.VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT',
---     'Graphics.Vulkan.Extensions.VK_EXT_conservative_rasterization.VkPhysicalDeviceConservativeRasterizationPropertiesEXT',
---     'Graphics.Vulkan.Extensions.VK_EXT_discard_rectangles.VkPhysicalDeviceDiscardRectanglePropertiesEXT',
---     'Graphics.Vulkan.Extensions.VK_EXT_external_memory_host.VkPhysicalDeviceExternalMemoryHostPropertiesEXT',
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkPhysicalDeviceIDProperties',
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance3.VkPhysicalDeviceMaintenance3Properties',
---     'Graphics.Vulkan.Extensions.VK_NVX_multiview_per_view_attributes.VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX',
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_multiview.VkPhysicalDeviceMultiviewProperties',
 --     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_maintenance2.VkPhysicalDevicePointClippingProperties',
 --     'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_protected_memory.VkPhysicalDeviceProtectedMemoryProperties',
---     'Graphics.Vulkan.Extensions.VK_KHR_push_descriptor.VkPhysicalDevicePushDescriptorPropertiesKHR',
---     'Graphics.Vulkan.Extensions.VK_EXT_sample_locations.VkPhysicalDeviceSampleLocationsPropertiesEXT',
---     'Graphics.Vulkan.Extensions.VK_EXT_sampler_filter_minmax.VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT',
---     'Graphics.Vulkan.Extensions.VK_AMD_shader_core_properties.VkPhysicalDeviceShaderCorePropertiesAMD',
---     'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_subgroup.VkPhysicalDeviceSubgroupProperties',
 --     or
---     'Graphics.Vulkan.Extensions.VK_EXT_vertex_attribute_divisor.VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT'
+--     'Graphics.Vulkan.Core11.Promoted_From_VK_KHR_subgroup.VkPhysicalDeviceSubgroupProperties'
 --
 -- -   Each @sType@ member in the @pNext@ chain /must/ be unique
 --
@@ -492,8 +481,7 @@ instance Storable VkPhysicalDeviceFeatures2 where
 --
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDeviceProperties',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceProperties2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceProperties2KHR'
+-- 'vkGetPhysicalDeviceProperties2'
 data VkPhysicalDeviceProperties2 = VkPhysicalDeviceProperties2
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -529,8 +517,7 @@ instance Storable VkPhysicalDeviceProperties2 where
 --
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkFormatProperties',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceFormatProperties2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceFormatProperties2KHR'
+-- 'vkGetPhysicalDeviceFormatProperties2'
 data VkFormatProperties2 = VkFormatProperties2
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -552,7 +539,7 @@ instance Storable VkFormatProperties2 where
   poke ptr poked = poke (ptr `plusPtr` 0) (vkSType (poked :: VkFormatProperties2))
                 *> poke (ptr `plusPtr` 8) (vkPNext (poked :: VkFormatProperties2))
                 *> poke (ptr `plusPtr` 16) (vkFormatProperties (poked :: VkFormatProperties2))
--- | VkImageFormatProperties2 - Structure specifying a image format
+-- | VkImageFormatProperties2 - Structure specifying an image format
 -- properties
 --
 -- = Description
@@ -578,11 +565,9 @@ instance Storable VkFormatProperties2 where
 -- -   Each @pNext@ member of any structure (including this one) in the
 --     @pNext@ chain /must/ be either @NULL@ or a pointer to a valid
 --     instance of
---     'Graphics.Vulkan.Extensions.VK_ANDROID_external_memory_android_hardware_buffer.VkAndroidHardwareBufferUsageANDROID',
---     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalImageFormatProperties',
---     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkSamplerYcbcrConversionImageFormatProperties',
+--     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_external_memory_capabilities.VkExternalImageFormatProperties'
 --     or
---     'Graphics.Vulkan.Extensions.VK_AMD_texture_gather_bias_lod.VkTextureLODGatherFormatPropertiesAMD'
+--     'Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion.VkSamplerYcbcrConversionImageFormatProperties'
 --
 -- -   Each @sType@ member in the @pNext@ chain /must/ be unique
 --
@@ -590,8 +575,7 @@ instance Storable VkFormatProperties2 where
 --
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkImageFormatProperties',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceImageFormatProperties2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceImageFormatProperties2KHR'
+-- 'vkGetPhysicalDeviceImageFormatProperties2'
 data VkImageFormatProperties2 = VkImageFormatProperties2
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -661,8 +645,7 @@ instance Storable VkImageFormatProperties2 where
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkImageType',
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkImageUsageFlags',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceImageFormatProperties2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceImageFormatProperties2KHR'
+-- 'vkGetPhysicalDeviceImageFormatProperties2'
 data VkPhysicalDeviceImageFormatInfo2 = VkPhysicalDeviceImageFormatInfo2
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -727,8 +710,7 @@ instance Storable VkPhysicalDeviceImageFormatInfo2 where
 --
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkQueueFamilyProperties',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceQueueFamilyProperties2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceQueueFamilyProperties2KHR'
+-- 'vkGetPhysicalDeviceQueueFamilyProperties2'
 data VkQueueFamilyProperties2 = VkQueueFamilyProperties2
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -765,8 +747,7 @@ instance Storable VkQueueFamilyProperties2 where
 --
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDeviceMemoryProperties',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceMemoryProperties2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceMemoryProperties2KHR'
+-- 'vkGetPhysicalDeviceMemoryProperties2'
 data VkPhysicalDeviceMemoryProperties2 = VkPhysicalDeviceMemoryProperties2
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -803,8 +784,7 @@ instance Storable VkPhysicalDeviceMemoryProperties2 where
 --
 -- 'Graphics.Vulkan.Core10.SparseResourceMemoryManagement.VkSparseImageFormatProperties',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceSparseImageFormatProperties2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceSparseImageFormatProperties2KHR'
+-- 'vkGetPhysicalDeviceSparseImageFormatProperties2'
 data VkSparseImageFormatProperties2 = VkSparseImageFormatProperties2
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -873,8 +853,7 @@ instance Storable VkSparseImageFormatProperties2 where
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkImageUsageFlags',
 -- 'Graphics.Vulkan.Core10.DeviceInitialization.VkSampleCountFlagBits',
 -- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceSparseImageFormatProperties2',
--- 'Graphics.Vulkan.Extensions.VK_KHR_get_physical_device_properties2.vkGetPhysicalDeviceSparseImageFormatProperties2KHR'
+-- 'vkGetPhysicalDeviceSparseImageFormatProperties2'
 data VkPhysicalDeviceSparseImageFormatInfo2 = VkPhysicalDeviceSparseImageFormatInfo2
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType

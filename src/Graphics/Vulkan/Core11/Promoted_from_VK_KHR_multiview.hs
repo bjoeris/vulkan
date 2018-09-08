@@ -263,33 +263,21 @@ instance Storable VkPhysicalDeviceMultiviewProperties where
 -- values written to @Position@ and @ViewportMaskNV@ /must/ not depend on
 -- the values written to @PositionPerViewNV@ and @ViewportMaskPerViewNV@,
 -- or vice versa (to allow compilers to eliminate the unused outputs). All
--- attributes that do not have *PerViewNV counterparts /must/ not depend on
--- @ViewIndex@.
+-- attributes that do not have @*PerViewNV@ counterparts /must/ not depend
+-- on @ViewIndex@.
 --
 -- Per-view attributes are all-or-nothing for a subpass. That is, all
 -- pipelines compiled against a subpass that includes the
 -- @VK_SUBPASS_DESCRIPTION_PER_VIEW_ATTRIBUTES_BIT_NVX@ bit /must/ write
--- per-view attributes to the *PerViewNV[] shader outputs, in addition to
+-- per-view attributes to the @*PerViewNV[]@ shader outputs, in addition to
 -- the non-per-view (e.g. @Position@) outputs. Pipelines compiled against a
 -- subpass that does not include this bit /must/ not include the
--- *PerViewNV[] outputs in their interfaces.
+-- @*PerViewNV[]@ outputs in their interfaces.
 --
 -- == Valid Usage
 --
--- -   If @subpassCount@ is not zero, @subpassCount@ /must/ be equal to the
---     @subpassCount@ in the @VkRenderPassCreateInfo@ structure at the
---     start of the chain
---
--- -   If @dependencyCount@ is not zero, @dependencyCount@ /must/ be equal
---     to the @dependencyCount@ in the @VkRenderPassCreateInfo@ structure
---     at the start of the chain
---
 -- -   Each view index /must/ not be set in more than one element of
 --     @pCorrelationMasks@
---
--- -   If an element of @pViewOffsets@ is non-zero, the corresponding
---     'Graphics.Vulkan.Core10.Pass.VkSubpassDependency' structure /must/
---     have different values of @srcSubpass@ and @dstSubpass@.
 --
 -- == Valid Usage (Implicit)
 --

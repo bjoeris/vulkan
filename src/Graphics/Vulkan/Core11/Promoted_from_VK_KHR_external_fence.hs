@@ -138,7 +138,5 @@ instance Storable VkExportFenceCreateInfo where
 --
 -- = See Also
 --
--- 'VkFenceImportFlagBits',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_fence_fd.VkImportFenceFdInfoKHR',
--- 'Graphics.Vulkan.Extensions.VK_KHR_external_fence_win32.VkImportFenceWin32HandleInfoKHR'
+-- 'VkFenceImportFlagBits'
 type VkFenceImportFlags = VkFenceImportFlagBits

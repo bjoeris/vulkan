@@ -44,8 +44,8 @@ module Graphics.Vulkan.Extensions.VK_NVX_device_generated_commands
   , pattern VK_PIPELINE_STAGE_COMMAND_PROCESS_BIT_NVX
   , pattern VK_NVX_DEVICE_GENERATED_COMMANDS_SPEC_VERSION
   , pattern VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME
-  , VkObjectTableNVX
-  , VkIndirectCommandsLayoutNVX
+  , VkObjectTableNVX(..)
+  , VkIndirectCommandsLayoutNVX(..)
   , vkCmdProcessCommandsNVX
   , vkCmdReserveSpaceForCommandsNVX
   , vkCreateIndirectCommandsLayoutNVX
@@ -85,9 +85,11 @@ import Data.String
   )
 import Data.Word
   ( Word32
+  , Word64
   )
 import Foreign.Ptr
   ( Ptr
+  , castPtr
   , plusPtr
   )
 import Foreign.Storable
@@ -126,7 +128,7 @@ import Graphics.Vulkan.Core10.Core
   , VkFlags
   )
 import Graphics.Vulkan.Core10.DescriptorSet
-  ( VkDescriptorSet
+  ( VkDescriptorSet(..)
   )
 import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkAllocationCallbacks(..)
@@ -135,15 +137,15 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   , VkPhysicalDevice
   )
 import Graphics.Vulkan.Core10.MemoryManagement
-  ( VkBuffer
+  ( VkBuffer(..)
   )
 import Graphics.Vulkan.Core10.Pass
   ( VkAccessFlagBits(..)
   , VkPipelineBindPoint(..)
   )
 import Graphics.Vulkan.Core10.Pipeline
-  ( VkPipeline
-  , VkPipelineLayout
+  ( VkPipeline(..)
+  , VkPipelineLayout(..)
   )
 import Graphics.Vulkan.Core10.PipelineLayout
   ( VkShaderStageFlags
@@ -186,7 +188,7 @@ import Graphics.Vulkan.Core10.Queue
 --
 -- = See Also
 --
--- 'VkIndirectCommandsLayoutTokenNVX', 'VkIndirectCommandsTokenNVX'
+-- No cross-references are available
 newtype VkIndirectCommandsTokenTypeNVX = VkIndirectCommandsTokenTypeNVX Int32
   deriving (Eq, Ord, Storable)
 
@@ -255,10 +257,7 @@ pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX = VkIndirectCommandsTokenTy
 --
 -- = See Also
 --
--- 'VkObjectTableCreateInfoNVX', 'VkObjectTableDescriptorSetEntryNVX',
--- 'VkObjectTableEntryNVX', 'VkObjectTableIndexBufferEntryNVX',
--- 'VkObjectTablePipelineEntryNVX', 'VkObjectTablePushConstantEntryNVX',
--- 'VkObjectTableVertexBufferEntryNVX', 'vkUnregisterObjectsNVX'
+-- No cross-references are available
 newtype VkObjectEntryTypeNVX = VkObjectEntryTypeNVX Int32
   deriving (Eq, Ord, Storable)
 
@@ -312,11 +311,11 @@ pattern VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX = VkObjectEntryTypeNVX 4
 -- ** VkIndirectCommandsLayoutUsageFlagBitsNVX
 
 -- | VkIndirectCommandsLayoutUsageFlagBitsNVX - Bitmask specifying allowed
--- usage of a indirect commands layout
+-- usage of an indirect commands layout
 --
 -- = See Also
 --
--- 'VkIndirectCommandsLayoutUsageFlagsNVX'
+-- No cross-references are available
 newtype VkIndirectCommandsLayoutUsageFlagBitsNVX = VkIndirectCommandsLayoutUsageFlagBitsNVX VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -372,7 +371,7 @@ pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX = VkIndirect
 --
 -- = See Also
 --
--- 'VkObjectEntryUsageFlagsNVX'
+-- No cross-references are available
 newtype VkObjectEntryUsageFlagBitsNVX = VkObjectEntryUsageFlagBitsNVX VkFlags
   deriving (Eq, Ord, Storable, Bits, FiniteBits)
 
@@ -440,27 +439,33 @@ pattern VK_NVX_DEVICE_GENERATED_COMMANDS_SPEC_VERSION = 3
 -- No documentation found for TopLevel "VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME"
 pattern VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME :: (Eq a ,IsString a) => a
 pattern VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME = "VK_NVX_device_generated_commands"
--- | Dummy data to tag the 'Ptr' with
-data VkObjectTableNVX_T
 -- | VkObjectTableNVX - Opaque handle to an object table
 --
 -- = See Also
 --
--- 'VkCmdProcessCommandsInfoNVX', 'VkCmdReserveSpaceForCommandsInfoNVX',
--- 'vkCreateObjectTableNVX', 'vkDestroyObjectTableNVX',
--- 'vkRegisterObjectsNVX', 'vkUnregisterObjectsNVX'
-type VkObjectTableNVX = Ptr VkObjectTableNVX_T
--- | Dummy data to tag the 'Ptr' with
-data VkIndirectCommandsLayoutNVX_T
+-- No cross-references are available
+newtype VkObjectTableNVX = VkObjectTableNVX Word64
+  deriving (Eq, Show)
+
+instance Storable VkObjectTableNVX where
+  sizeOf (VkObjectTableNVX w) = sizeOf w
+  alignment (VkObjectTableNVX w) = alignment w
+  peek ptr = VkObjectTableNVX <$> peek (castPtr ptr)
+  poke ptr (VkObjectTableNVX w) = poke (castPtr ptr) w
 -- | VkIndirectCommandsLayoutNVX - Opaque handle to an indirect commands
 -- layout object
 --
 -- = See Also
 --
--- 'VkCmdProcessCommandsInfoNVX', 'VkCmdReserveSpaceForCommandsInfoNVX',
--- 'vkCreateIndirectCommandsLayoutNVX',
--- 'vkDestroyIndirectCommandsLayoutNVX'
-type VkIndirectCommandsLayoutNVX = Ptr VkIndirectCommandsLayoutNVX_T
+-- No cross-references are available
+newtype VkIndirectCommandsLayoutNVX = VkIndirectCommandsLayoutNVX Word64
+  deriving (Eq, Show)
+
+instance Storable VkIndirectCommandsLayoutNVX where
+  sizeOf (VkIndirectCommandsLayoutNVX w) = sizeOf w
+  alignment (VkIndirectCommandsLayoutNVX w) = alignment w
+  peek ptr = VkIndirectCommandsLayoutNVX <$> peek (castPtr ptr)
+  poke ptr (VkIndirectCommandsLayoutNVX w) = poke (castPtr ptr) w
 -- | vkCmdProcessCommandsNVX - Performs the generation of commands on the
 -- device
 --
@@ -473,44 +478,14 @@ type VkIndirectCommandsLayoutNVX = Ptr VkIndirectCommandsLayoutNVX_T
 --     'VkCmdProcessCommandsInfoNVX' structure containing parameters
 --     affecting the processing of commands.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @commandBuffer@ /must/ be a valid @VkCommandBuffer@ handle
---
--- -   @pProcessCommandsInfo@ /must/ be a valid pointer to a valid
---     @VkCmdProcessCommandsInfoNVX@ structure
---
--- -   @commandBuffer@ /must/ be in the [recording
---     state](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#commandbuffers-lifecycle)
---
--- -   The @VkCommandPool@ that @commandBuffer@ was allocated from /must/
---     support graphics, or compute operations
---
--- -   This command /must/ only be called inside of a render pass instance
---
--- == Host Synchronization
---
--- -   Host access to @commandBuffer@ /must/ be externally synchronized
---
--- -   Host access to the @VkCommandPool@ that @commandBuffer@ was
---     allocated from /must/ be externally synchronized
---
--- == Command Properties
---
--- \'
---
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
--- | [Command Buffer                                                                                             | [Render Pass                                                                                               | [Supported Queue                                                                                      | [Pipeline                                                                                                                  |
--- | Levels](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkCommandBufferLevel) | Scope](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#vkCmdBeginRenderPass) | Types](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkQueueFlagBits) | Type](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#synchronization-pipeline-stages-types) |
--- +=============================================================================================================+============================================================================================================+=======================================================================================================+============================================================================================================================+
--- | Primary                                                                                                     | Inside                                                                                                     | Graphics                                                                                              |                                                                                                                            |
--- | Secondary                                                                                                   |                                                                                                            | Compute                                                                                               |                                                                                                                            |
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+-- Unresolved directive in vkCmdProcessCommandsNVX.txt -
+-- include::..\/validity\/protos\/vkCmdProcessCommandsNVX.txt[]
 --
 -- = See Also
 --
--- 'VkCmdProcessCommandsInfoNVX',
--- 'Graphics.Vulkan.Core10.Queue.VkCommandBuffer'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -537,46 +512,12 @@ foreign import ccall
 --     commands within the sequence provided by the
 --     @indirectCommandsLayout@ member of @pProcessCommandsInfo@.
 --
--- == Valid Usage (Implicit)
---
--- -   @commandBuffer@ /must/ be a valid @VkCommandBuffer@ handle
---
--- -   @pReserveSpaceInfo@ /must/ be a valid pointer to a valid
---     @VkCmdReserveSpaceForCommandsInfoNVX@ structure
---
--- -   @commandBuffer@ /must/ be in the [recording
---     state](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#commandbuffers-lifecycle)
---
--- -   The @VkCommandPool@ that @commandBuffer@ was allocated from /must/
---     support graphics, or compute operations
---
--- -   This command /must/ only be called inside of a render pass instance
---
--- -   @commandBuffer@ /must/ be a secondary @VkCommandBuffer@
---
--- == Host Synchronization
---
--- -   Host access to @commandBuffer@ /must/ be externally synchronized
---
--- -   Host access to the @VkCommandPool@ that @commandBuffer@ was
---     allocated from /must/ be externally synchronized
---
--- == Command Properties
---
--- \'
---
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
--- | [Command Buffer                                                                                             | [Render Pass                                                                                               | [Supported Queue                                                                                      | [Pipeline                                                                                                                  |
--- | Levels](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkCommandBufferLevel) | Scope](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#vkCmdBeginRenderPass) | Types](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#VkQueueFlagBits) | Type](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#synchronization-pipeline-stages-types) |
--- +=============================================================================================================+============================================================================================================+=======================================================================================================+============================================================================================================================+
--- | Secondary                                                                                                   | Inside                                                                                                     | Graphics                                                                                              |                                                                                                                            |
--- |                                                                                                             |                                                                                                            | Compute                                                                                               |                                                                                                                            |
--- +-------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+-- Unresolved directive in vkCmdReserveSpaceForCommandsNVX.txt -
+-- include::..\/validity\/protos\/vkCmdReserveSpaceForCommandsNVX.txt[]
 --
 -- = See Also
 --
--- 'VkCmdReserveSpaceForCommandsInfoNVX',
--- 'Graphics.Vulkan.Core10.Queue.VkCommandBuffer'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -602,40 +543,20 @@ foreign import ccall
 -- -   @pIndirectCommandsLayout@ points to a @VkIndirectCommandsLayoutNVX@
 --     handle in which the resulting indirect command layout is returned.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @pCreateInfo@ /must/ be a valid pointer to a valid
---     @VkIndirectCommandsLayoutCreateInfoNVX@ structure
---
--- -   If @pAllocator@ is not @NULL@, @pAllocator@ /must/ be a valid
---     pointer to a valid @VkAllocationCallbacks@ structure
---
--- -   @pIndirectCommandsLayout@ /must/ be a valid pointer to a
---     @VkIndirectCommandsLayoutNVX@ handle
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
+-- Unresolved directive in vkCreateIndirectCommandsLayoutNVX.txt -
+-- include::..\/validity\/protos\/vkCreateIndirectCommandsLayoutNVX.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkAllocationCallbacks',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkIndirectCommandsLayoutCreateInfoNVX', 'VkIndirectCommandsLayoutNVX'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
 #endif
   "vkCreateIndirectCommandsLayoutNVX" vkCreateIndirectCommandsLayoutNVX :: ("device" ::: VkDevice) -> ("pCreateInfo" ::: Ptr VkIndirectCommandsLayoutCreateInfoNVX) -> ("pAllocator" ::: Ptr VkAllocationCallbacks) -> ("pIndirectCommandsLayout" ::: Ptr VkIndirectCommandsLayoutNVX) -> IO VkResult
--- | vkDestroyIndirectCommandsLayoutNVX - Destroy a object table
+-- | vkDestroyIndirectCommandsLayoutNVX - Destroy an object table
 --
 -- = Parameters
 --
@@ -659,24 +580,12 @@ foreign import ccall
 -- -   If no @VkAllocationCallbacks@ were provided when @objectTable@ was
 --     created, @pAllocator@ /must/ be @NULL@
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @indirectCommandsLayout@ /must/ be a valid
---     @VkIndirectCommandsLayoutNVX@ handle
---
--- -   If @pAllocator@ is not @NULL@, @pAllocator@ /must/ be a valid
---     pointer to a valid @VkAllocationCallbacks@ structure
---
--- -   @indirectCommandsLayout@ /must/ have been created, allocated, or
---     retrieved from @device@
+-- Unresolved directive in vkDestroyIndirectCommandsLayoutNVX.txt -
+-- include::..\/validity\/protos\/vkDestroyIndirectCommandsLayoutNVX.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkAllocationCallbacks',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkIndirectCommandsLayoutNVX'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -697,43 +606,23 @@ foreign import ccall
 --     Allocation](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#memory-allocation)
 --     chapter.
 --
--- -   @pObjectTable@ points to a @VkObjectTableNVX@ handle in which the
+-- -   @pObjectTable@ points to a 'VkObjectTableNVX' handle in which the
 --     resulting object table is returned.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @pCreateInfo@ /must/ be a valid pointer to a valid
---     @VkObjectTableCreateInfoNVX@ structure
---
--- -   If @pAllocator@ is not @NULL@, @pAllocator@ /must/ be a valid
---     pointer to a valid @VkAllocationCallbacks@ structure
---
--- -   @pObjectTable@ /must/ be a valid pointer to a @VkObjectTableNVX@
---     handle
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
+-- Unresolved directive in vkCreateObjectTableNVX.txt -
+-- include::..\/validity\/protos\/vkCreateObjectTableNVX.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkAllocationCallbacks',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkObjectTableCreateInfoNVX', 'VkObjectTableNVX'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
 #endif
   "vkCreateObjectTableNVX" vkCreateObjectTableNVX :: ("device" ::: VkDevice) -> ("pCreateInfo" ::: Ptr VkObjectTableCreateInfoNVX) -> ("pAllocator" ::: Ptr VkAllocationCallbacks) -> ("pObjectTable" ::: Ptr VkObjectTableNVX) -> IO VkResult
--- | vkDestroyObjectTableNVX - Destroy a object table
+-- | vkDestroyObjectTableNVX - Destroy an object table
 --
 -- = Parameters
 --
@@ -757,27 +646,12 @@ foreign import ccall
 -- -   If no @VkAllocationCallbacks@ were provided when @objectTable@ was
 --     created, @pAllocator@ /must/ be @NULL@.
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @objectTable@ /must/ be a valid @VkObjectTableNVX@ handle
---
--- -   If @pAllocator@ is not @NULL@, @pAllocator@ /must/ be a valid
---     pointer to a valid @VkAllocationCallbacks@ structure
---
--- -   @objectTable@ /must/ have been created, allocated, or retrieved from
---     @device@
---
--- == Host Synchronization
---
--- -   Host access to @objectTable@ /must/ be externally synchronized
+-- Unresolved directive in vkDestroyObjectTableNVX.txt -
+-- include::..\/validity\/protos\/vkDestroyObjectTableNVX.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkAllocationCallbacks',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkObjectTableNVX'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -816,41 +690,12 @@ foreign import ccall
 --     @VkObjectTableCreateInfoNVX@::@pObjectEntryCounts@ limits provided
 --     at @objectTable@ creation time.
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @objectTable@ /must/ be a valid @VkObjectTableNVX@ handle
---
--- -   @ppObjectTableEntries@ /must/ be a valid pointer to an array of
---     @objectCount@ valid @VkObjectTableEntryNVX@ structures
---
--- -   @pObjectIndices@ /must/ be a valid pointer to an array of
---     @objectCount@ @uint32_t@ values
---
--- -   @objectCount@ /must/ be greater than @0@
---
--- -   @objectTable@ /must/ have been created, allocated, or retrieved from
---     @device@
---
--- == Host Synchronization
---
--- -   Host access to @objectTable@ /must/ be externally synchronized
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
+-- Unresolved directive in vkRegisterObjectsNVX.txt -
+-- include::..\/validity\/protos\/vkRegisterObjectsNVX.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkObjectTableEntryNVX', 'VkObjectTableNVX'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -868,7 +713,7 @@ foreign import ccall
 -- -   @objectCount@ is the number of resources being removed from the
 --     object table.
 --
--- -   @pObjectEntryType@ provides an array of @VkObjectEntryTypeNVX@ for
+-- -   @pObjectEntryType@ provides an array of 'VkObjectEntryTypeNVX' for
 --     the resources being removed.
 --
 -- -   @pObjectIndices@ provides the array of object indices to be removed.
@@ -884,41 +729,12 @@ foreign import ccall
 -- -   All operations on the device using the registered resource /must/
 --     have been completed.
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @objectTable@ /must/ be a valid @VkObjectTableNVX@ handle
---
--- -   @pObjectEntryTypes@ /must/ be a valid pointer to an array of
---     @objectCount@ valid 'VkObjectEntryTypeNVX' values
---
--- -   @pObjectIndices@ /must/ be a valid pointer to an array of
---     @objectCount@ @uint32_t@ values
---
--- -   @objectCount@ /must/ be greater than @0@
---
--- -   @objectTable@ /must/ have been created, allocated, or retrieved from
---     @device@
---
--- == Host Synchronization
---
--- -   Host access to @objectTable@ /must/ be externally synchronized
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
---
---     -   @VK_ERROR_OUT_OF_DEVICE_MEMORY@
+-- Unresolved directive in vkUnregisterObjectsNVX.txt -
+-- include::..\/validity\/protos\/vkUnregisterObjectsNVX.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'VkObjectEntryTypeNVX', 'VkObjectTableNVX'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -940,21 +756,15 @@ foreign import ccall
 --     'VkDeviceGeneratedCommandsLimitsNVX' structure, that will be filled
 --     with returned information.
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @physicalDevice@ /must/ be a valid @VkPhysicalDevice@ handle
---
--- -   @pFeatures@ /must/ be a valid pointer to a
---     @VkDeviceGeneratedCommandsFeaturesNVX@ structure
---
--- -   @pLimits@ /must/ be a valid pointer to a
---     @VkDeviceGeneratedCommandsLimitsNVX@ structure
+-- Unresolved directive in
+-- vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX.txt -
+-- include::..\/validity\/protos\/vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX.txt[]
 --
 -- = See Also
 --
--- 'VkDeviceGeneratedCommandsFeaturesNVX',
--- 'VkDeviceGeneratedCommandsLimitsNVX',
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkPhysicalDevice'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -963,17 +773,14 @@ foreign import ccall
 -- | VkDeviceGeneratedCommandsFeaturesNVX - Structure specifying physical
 -- device support
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_DEVICE_GENERATED_COMMANDS_FEATURES_NVX@
---
--- -   @pNext@ /must/ be @NULL@
+-- Unresolved directive in VkDeviceGeneratedCommandsFeaturesNVX.txt -
+-- include::..\/validity\/structs\/VkDeviceGeneratedCommandsFeaturesNVX.txt[]
 --
 -- = See Also
 --
--- @VkBool32@, 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX'
+-- No cross-references are available
 data VkDeviceGeneratedCommandsFeaturesNVX = VkDeviceGeneratedCommandsFeaturesNVX
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -999,17 +806,14 @@ instance Storable VkDeviceGeneratedCommandsFeaturesNVX where
 -- | VkDeviceGeneratedCommandsLimitsNVX - Structure specifying physical
 -- device limits
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_DEVICE_GENERATED_COMMANDS_LIMITS_NVX@
---
--- -   @pNext@ /must/ be @NULL@
+-- Unresolved directive in VkDeviceGeneratedCommandsLimitsNVX.txt -
+-- include::..\/validity\/structs\/VkDeviceGeneratedCommandsLimitsNVX.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX'
+-- No cross-references are available
 data VkDeviceGeneratedCommandsLimitsNVX = VkDeviceGeneratedCommandsLimitsNVX
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -1061,22 +865,19 @@ instance Storable VkDeviceGeneratedCommandsLimitsNVX where
 -- -   The @offset@ /must/ be aligned to
 --     @VkDeviceGeneratedCommandsLimitsNVX@::@minCommandsTokenBufferOffsetAlignment@.
 --
--- == Valid Usage (Implicit)
---
--- -   @tokenType@ /must/ be a valid 'VkIndirectCommandsTokenTypeNVX' value
---
--- -   @buffer@ /must/ be a valid @VkBuffer@ handle
+-- Unresolved directive in VkIndirectCommandsTokenNVX.txt -
+-- include::..\/validity\/structs\/VkIndirectCommandsTokenNVX.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer',
--- 'VkCmdProcessCommandsInfoNVX', @VkDeviceSize@,
--- 'VkIndirectCommandsTokenTypeNVX'
+-- No cross-references are available
 data VkIndirectCommandsTokenNVX = VkIndirectCommandsTokenNVX
   { -- | @tokenType@ specifies the token command type.
   vkTokenType :: VkIndirectCommandsTokenTypeNVX
-  , -- | @buffer@ specifies the @VkBuffer@ storing the functional arguments for
-  -- each squence. These argumetns can be written by the device.
+  , -- | @buffer@ specifies the
+  -- 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer' storing the
+  -- functional arguments for each squence. These argumetns can be written by
+  -- the device.
   vkBuffer :: VkBuffer
   , -- | @offset@ specified an offset into @buffer@ where the arguments start.
   vkOffset :: VkDeviceSize
@@ -1105,14 +906,12 @@ instance Storable VkIndirectCommandsTokenNVX where
 --
 -- -   @divisor@ /must/ be greater than @0@ and a power of two.
 --
--- == Valid Usage (Implicit)
---
--- -   @tokenType@ /must/ be a valid 'VkIndirectCommandsTokenTypeNVX' value
+-- Unresolved directive in VkIndirectCommandsLayoutTokenNVX.txt -
+-- include::..\/validity\/structs\/VkIndirectCommandsLayoutTokenNVX.txt[]
 --
 -- = See Also
 --
--- 'VkIndirectCommandsLayoutCreateInfoNVX',
--- 'VkIndirectCommandsTokenTypeNVX'
+-- No cross-references are available
 data VkIndirectCommandsLayoutTokenNVX = VkIndirectCommandsLayoutTokenNVX
   { -- No documentation found for Nested "VkIndirectCommandsLayoutTokenNVX" "tokenType"
   vkTokenType :: VkIndirectCommandsTokenTypeNVX
@@ -1185,39 +984,19 @@ instance Storable VkIndirectCommandsLayoutTokenNVX where
 -- -   The content of @pTokens@ /must/ include one single work provoking
 --     token that is compatible with the @pipelineBindPoint@.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NVX@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @pipelineBindPoint@ /must/ be a valid
---     'Graphics.Vulkan.Core10.Pass.VkPipelineBindPoint' value
---
--- -   @flags@ /must/ be a valid combination of
---     'VkIndirectCommandsLayoutUsageFlagBitsNVX' values
---
--- -   @flags@ /must/ not be @0@
---
--- -   @pTokens@ /must/ be a valid pointer to an array of @tokenCount@
---     valid @VkIndirectCommandsLayoutTokenNVX@ structures
---
--- -   @tokenCount@ /must/ be greater than @0@
+-- Unresolved directive in VkIndirectCommandsLayoutCreateInfoNVX.txt -
+-- include::..\/validity\/structs\/VkIndirectCommandsLayoutCreateInfoNVX.txt[]
 --
 -- = See Also
 --
--- 'VkIndirectCommandsLayoutTokenNVX',
--- 'VkIndirectCommandsLayoutUsageFlagsNVX',
--- 'Graphics.Vulkan.Core10.Pass.VkPipelineBindPoint',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkCreateIndirectCommandsLayoutNVX'
+-- No cross-references are available
 data VkIndirectCommandsLayoutCreateInfoNVX = VkIndirectCommandsLayoutCreateInfoNVX
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
   , -- | @pNext@ is @NULL@ or a pointer to an extension-specific structure.
   vkPNext :: Ptr ()
-  , -- | @pipelineBindPoint@ is the @VkPipelineBindPoint@ that this layout
+  , -- | @pipelineBindPoint@ is the
+  -- 'Graphics.Vulkan.Core10.Pass.VkPipelineBindPoint' that this layout
   -- targets.
   vkPipelineBindPoint :: VkPipelineBindPoint
   , -- | @flags@ is a bitmask of 'VkIndirectCommandsLayoutUsageFlagBitsNVX'
@@ -1289,64 +1068,23 @@ instance Storable VkIndirectCommandsLayoutCreateInfoNVX where
 --     aligned to
 --     @VkDeviceGeneratedCommandsLimitsNVX@::@minSequenceIndexBufferOffsetAlignment@.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_CMD_PROCESS_COMMANDS_INFO_NVX@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @objectTable@ /must/ be a valid @VkObjectTableNVX@ handle
---
--- -   @indirectCommandsLayout@ /must/ be a valid
---     @VkIndirectCommandsLayoutNVX@ handle
---
--- -   @pIndirectCommandsTokens@ /must/ be a valid pointer to an array of
---     @indirectCommandsTokenCount@ valid @VkIndirectCommandsTokenNVX@
---     structures
---
--- -   If @targetCommandBuffer@ is not @NULL@, @targetCommandBuffer@ /must/
---     be a valid @VkCommandBuffer@ handle
---
--- -   If @sequencesCountBuffer@ is not
---     'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE',
---     @sequencesCountBuffer@ /must/ be a valid @VkBuffer@ handle
---
--- -   If @sequencesIndexBuffer@ is not
---     'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE',
---     @sequencesIndexBuffer@ /must/ be a valid @VkBuffer@ handle
---
--- -   @indirectCommandsTokenCount@ /must/ be greater than @0@
---
--- -   Each of @indirectCommandsLayout@, @objectTable@,
---     @sequencesCountBuffer@, @sequencesIndexBuffer@, and
---     @targetCommandBuffer@ that are valid handles /must/ have been
---     created, allocated, or retrieved from the same @VkDevice@
---
--- == Host Synchronization
---
--- -   Host access to @objectTable@ /must/ be externally synchronized
---
--- -   Host access to @targetCommandBuffer@ /must/ be externally
---     synchronized
+-- Unresolved directive in VkCmdProcessCommandsInfoNVX.txt -
+-- include::..\/validity\/structs\/VkCmdProcessCommandsInfoNVX.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer',
--- 'Graphics.Vulkan.Core10.Queue.VkCommandBuffer', @VkDeviceSize@,
--- 'VkIndirectCommandsLayoutNVX', 'VkIndirectCommandsTokenNVX',
--- 'VkObjectTableNVX', 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkCmdProcessCommandsNVX'
+-- No cross-references are available
 data VkCmdProcessCommandsInfoNVX = VkCmdProcessCommandsInfoNVX
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
   , -- | @pNext@ is @NULL@ or a pointer to an extension-specific structure.
   vkPNext :: Ptr ()
-  , -- | @objectTable@ is the @VkObjectTableNVX@ to be used for the generation
+  , -- | @objectTable@ is the 'VkObjectTableNVX' to be used for the generation
   -- process. Only registered objects at the time
   -- 'vkCmdReserveSpaceForCommandsNVX' is called, will be taken into account
   -- for the reservation.
   vkObjectTable :: VkObjectTableNVX
-  , -- | @indirectCommandsLayout@ is the @VkIndirectCommandsLayoutNVX@ that
+  , -- | @indirectCommandsLayout@ is the 'VkIndirectCommandsLayoutNVX' that
   -- provides the command sequence to generate.
   vkIndirectCommandsLayout :: VkIndirectCommandsLayoutNVX
   , -- | @indirectCommandsTokenCount@ defines the number of input tokens used.
@@ -1360,13 +1098,15 @@ data VkCmdProcessCommandsInfoNVX = VkCmdProcessCommandsInfoNVX
   -- 'Graphics.Vulkan.Core10.Constants.VK_NULL_HANDLE', this is also the
   -- actual number of sequences generated.
   vkMaxSequencesCount :: Word32
-  , -- | @targetCommandBuffer@ /can/ be the secondary @VkCommandBuffer@ in which
-  -- the commands should be recorded. If @targetCommandBuffer@ is @NULL@ an
-  -- implicit reservation as well as execution takes place on the processing
+  , -- | @targetCommandBuffer@ /can/ be the secondary
+  -- 'Graphics.Vulkan.Core10.Queue.VkCommandBuffer' in which the commands
+  -- should be recorded. If @targetCommandBuffer@ is @NULL@ an implicit
+  -- reservation as well as execution takes place on the processing
   -- @VkCommandBuffer@.
   vkTargetCommandBuffer :: VkCommandBuffer
-  , -- | @sequencesCountBuffer@ /can/ be @VkBuffer@ from which the actual amount
-  -- of sequences is sourced from as @uint32_t@ value.
+  , -- | @sequencesCountBuffer@ /can/ be
+  -- 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer' from which the actual
+  -- amount of sequences is sourced from as @uint32_t@ value.
   vkSequencesCountBuffer :: VkBuffer
   , -- | @sequencesCountOffset@ is the byte offset into @sequencesCountBuffer@
   -- where the count value is stored.
@@ -1412,41 +1152,25 @@ instance Storable VkCmdProcessCommandsInfoNVX where
 -- | VkCmdReserveSpaceForCommandsInfoNVX - Structure specifying parameters
 -- for the reservation of command buffer space
 --
--- == Valid Usage (Implicit)
+-- = Description
 --
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_CMD_RESERVE_SPACE_FOR_COMMANDS_INFO_NVX@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @objectTable@ /must/ be a valid @VkObjectTableNVX@ handle
---
--- -   @indirectCommandsLayout@ /must/ be a valid
---     @VkIndirectCommandsLayoutNVX@ handle
---
--- -   Both of @indirectCommandsLayout@, and @objectTable@ /must/ have been
---     created, allocated, or retrieved from the same @VkDevice@
---
--- == Host Synchronization
---
--- -   Host access to @objectTable@ /must/ be externally synchronized
+-- Unresolved directive in VkCmdReserveSpaceForCommandsInfoNVX.txt -
+-- include::..\/validity\/structs\/VkCmdReserveSpaceForCommandsInfoNVX.txt[]
 --
 -- = See Also
 --
--- 'VkIndirectCommandsLayoutNVX', 'VkObjectTableNVX',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType',
--- 'vkCmdReserveSpaceForCommandsNVX'
+-- No cross-references are available
 data VkCmdReserveSpaceForCommandsInfoNVX = VkCmdReserveSpaceForCommandsInfoNVX
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
   , -- | @pNext@ is @NULL@ or a pointer to an extension-specific structure.
   vkPNext :: Ptr ()
-  , -- | @objectTable@ is the @VkObjectTableNVX@ to be used for the generation
+  , -- | @objectTable@ is the 'VkObjectTableNVX' to be used for the generation
   -- process. Only registered objects at the time
   -- 'vkCmdReserveSpaceForCommandsNVX' is called, will be taken into account
   -- for the reservation.
   vkObjectTable :: VkObjectTableNVX
-  , -- | @indirectCommandsLayout@ is the @VkIndirectCommandsLayoutNVX@ that
+  , -- | @indirectCommandsLayout@ is the 'VkIndirectCommandsLayoutNVX' that
   -- /must/ also be used at generation time.
   vkIndirectCommandsLayout :: VkIndirectCommandsLayoutNVX
   , -- | @maxSequencesCount@ is the maximum number of sequences for which command
@@ -1493,30 +1217,12 @@ instance Storable VkCmdReserveSpaceForCommandsInfoNVX where
 -- -   @maxSampledImagesPerDescriptor@ /must/ be within the limits
 --     supported by the device.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be @VK_STRUCTURE_TYPE_OBJECT_TABLE_CREATE_INFO_NVX@
---
--- -   @pNext@ /must/ be @NULL@
---
--- -   @pObjectEntryTypes@ /must/ be a valid pointer to an array of
---     @objectCount@ valid 'VkObjectEntryTypeNVX' values
---
--- -   @pObjectEntryCounts@ /must/ be a valid pointer to an array of
---     @objectCount@ @uint32_t@ values
---
--- -   @pObjectEntryUsageFlags@ /must/ be a valid pointer to an array of
---     @objectCount@ valid combinations of 'VkObjectEntryUsageFlagBitsNVX'
---     values
---
--- -   Each element of @pObjectEntryUsageFlags@ /must/ not be @0@
---
--- -   @objectCount@ /must/ be greater than @0@
+-- Unresolved directive in VkObjectTableCreateInfoNVX.txt -
+-- include::..\/validity\/structs\/VkObjectTableCreateInfoNVX.txt[]
 --
 -- = See Also
 --
--- 'VkObjectEntryTypeNVX', 'VkObjectEntryUsageFlagsNVX',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType', 'vkCreateObjectTableNVX'
+-- No cross-references are available
 data VkObjectTableCreateInfoNVX = VkObjectTableCreateInfoNVX
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -1598,24 +1304,18 @@ instance Storable VkObjectTableCreateInfoNVX where
 --     feature is not enabled, @flags@ /must/ not contain
 --     @VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX@
 --
--- == Valid Usage (Implicit)
---
--- -   @type@ /must/ be a valid 'VkObjectEntryTypeNVX' value
---
--- -   @flags@ /must/ be a valid combination of
---     'VkObjectEntryUsageFlagBitsNVX' values
---
--- -   @flags@ /must/ not be @0@
+-- Unresolved directive in VkObjectTableEntryNVX.txt -
+-- include::..\/validity\/structs\/VkObjectTableEntryNVX.txt[]
 --
 -- = See Also
 --
--- 'VkObjectEntryTypeNVX', 'VkObjectEntryUsageFlagsNVX',
--- 'vkRegisterObjectsNVX'
+-- No cross-references are available
 data VkObjectTableEntryNVX = VkObjectTableEntryNVX
   { -- | @type@ defines the entry type
   vkType :: VkObjectEntryTypeNVX
-  , -- | @flags@ defines which @VkPipelineBindPoint@ the resource can be used
-  -- with. Some entry types allow only a single flag to be set.
+  , -- | @flags@ defines which 'Graphics.Vulkan.Core10.Pass.VkPipelineBindPoint'
+  -- the resource can be used with. Some entry types allow only a single flag
+  -- to be set.
   vkFlags :: VkObjectEntryUsageFlagsNVX
   }
   deriving (Eq, Show)
@@ -1634,28 +1334,19 @@ instance Storable VkObjectTableEntryNVX where
 --
 -- -   @type@ /must/ be @VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX@
 --
--- == Valid Usage (Implicit)
---
--- -   @type@ /must/ be a valid 'VkObjectEntryTypeNVX' value
---
--- -   @flags@ /must/ be a valid combination of
---     'VkObjectEntryUsageFlagBitsNVX' values
---
--- -   @flags@ /must/ not be @0@
---
--- -   @pipeline@ /must/ be a valid @VkPipeline@ handle
+-- Unresolved directive in VkObjectTablePipelineEntryNVX.txt -
+-- include::..\/validity\/structs\/VkObjectTablePipelineEntryNVX.txt[]
 --
 -- = See Also
 --
--- 'VkObjectEntryTypeNVX', 'VkObjectEntryUsageFlagsNVX',
--- 'Graphics.Vulkan.Core10.Pipeline.VkPipeline'
+-- No cross-references are available
 data VkObjectTablePipelineEntryNVX = VkObjectTablePipelineEntryNVX
   { -- No documentation found for Nested "VkObjectTablePipelineEntryNVX" "type"
   vkType :: VkObjectEntryTypeNVX
   , -- No documentation found for Nested "VkObjectTablePipelineEntryNVX" "flags"
   vkFlags :: VkObjectEntryUsageFlagsNVX
-  , -- | @pipeline@ specifies the @VkPipeline@ that this resource entry
-  -- references.
+  , -- | @pipeline@ specifies the 'Graphics.Vulkan.Core10.Pipeline.VkPipeline'
+  -- that this resource entry references.
   vkPipeline :: VkPipeline
   }
   deriving (Eq, Show)
@@ -1676,37 +1367,24 @@ instance Storable VkObjectTablePipelineEntryNVX where
 --
 -- -   @type@ /must/ be @VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX@
 --
--- == Valid Usage (Implicit)
---
--- -   @type@ /must/ be a valid 'VkObjectEntryTypeNVX' value
---
--- -   @flags@ /must/ be a valid combination of
---     'VkObjectEntryUsageFlagBitsNVX' values
---
--- -   @flags@ /must/ not be @0@
---
--- -   @pipelineLayout@ /must/ be a valid @VkPipelineLayout@ handle
---
--- -   @descriptorSet@ /must/ be a valid @VkDescriptorSet@ handle
---
--- -   Both of @descriptorSet@, and @pipelineLayout@ /must/ have been
---     created, allocated, or retrieved from the same @VkDevice@
+-- Unresolved directive in VkObjectTableDescriptorSetEntryNVX.txt -
+-- include::..\/validity\/structs\/VkObjectTableDescriptorSetEntryNVX.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DescriptorSet.VkDescriptorSet',
--- 'VkObjectEntryTypeNVX', 'VkObjectEntryUsageFlagsNVX',
--- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineLayout'
+-- No cross-references are available
 data VkObjectTableDescriptorSetEntryNVX = VkObjectTableDescriptorSetEntryNVX
   { -- No documentation found for Nested "VkObjectTableDescriptorSetEntryNVX" "type"
   vkType :: VkObjectEntryTypeNVX
   , -- No documentation found for Nested "VkObjectTableDescriptorSetEntryNVX" "flags"
   vkFlags :: VkObjectEntryUsageFlagsNVX
-  , -- | @pipelineLayout@ specifies the @VkPipelineLayout@ that the
+  , -- | @pipelineLayout@ specifies the
+  -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineLayout' that the
   -- @descriptorSet@ is used with.
   vkPipelineLayout :: VkPipelineLayout
-  , -- | @descriptorSet@ specifies the @VkDescriptorSet@ that can be bound with
-  -- this entry.
+  , -- | @descriptorSet@ specifies the
+  -- 'Graphics.Vulkan.Core10.DescriptorSet.VkDescriptorSet' that can be bound
+  -- with this entry.
   vkDescriptorSet :: VkDescriptorSet
   }
   deriving (Eq, Show)
@@ -1729,27 +1407,20 @@ instance Storable VkObjectTableDescriptorSetEntryNVX where
 --
 -- -   @type@ /must/ be @VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX@
 --
--- == Valid Usage (Implicit)
---
--- -   @type@ /must/ be a valid 'VkObjectEntryTypeNVX' value
---
--- -   @flags@ /must/ be a valid combination of
---     'VkObjectEntryUsageFlagBitsNVX' values
---
--- -   @flags@ /must/ not be @0@
---
--- -   @buffer@ /must/ be a valid @VkBuffer@ handle
+-- Unresolved directive in VkObjectTableVertexBufferEntryNVX.txt -
+-- include::..\/validity\/structs\/VkObjectTableVertexBufferEntryNVX.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer',
--- 'VkObjectEntryTypeNVX', 'VkObjectEntryUsageFlagsNVX'
+-- No cross-references are available
 data VkObjectTableVertexBufferEntryNVX = VkObjectTableVertexBufferEntryNVX
   { -- No documentation found for Nested "VkObjectTableVertexBufferEntryNVX" "type"
   vkType :: VkObjectEntryTypeNVX
   , -- No documentation found for Nested "VkObjectTableVertexBufferEntryNVX" "flags"
   vkFlags :: VkObjectEntryUsageFlagsNVX
-  , -- | @buffer@ specifies the @VkBuffer@ that can be bound as vertex bufer
+  , -- | @buffer@ specifies the
+  -- 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer' that can be bound as
+  -- vertex bufer
   vkBuffer :: VkBuffer
   }
   deriving (Eq, Show)
@@ -1770,33 +1441,24 @@ instance Storable VkObjectTableVertexBufferEntryNVX where
 --
 -- -   @type@ /must/ be @VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX@
 --
--- == Valid Usage (Implicit)
---
--- -   @type@ /must/ be a valid 'VkObjectEntryTypeNVX' value
---
--- -   @flags@ /must/ be a valid combination of
---     'VkObjectEntryUsageFlagBitsNVX' values
---
--- -   @flags@ /must/ not be @0@
---
--- -   @buffer@ /must/ be a valid @VkBuffer@ handle
---
--- -   @indexType@ /must/ be a valid
---     'Graphics.Vulkan.Core10.CommandBufferBuilding.VkIndexType' value
+-- Unresolved directive in VkObjectTableIndexBufferEntryNVX.txt -
+-- include::..\/validity\/structs\/VkObjectTableIndexBufferEntryNVX.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer',
--- 'Graphics.Vulkan.Core10.CommandBufferBuilding.VkIndexType',
--- 'VkObjectEntryTypeNVX', 'VkObjectEntryUsageFlagsNVX'
+-- No cross-references are available
 data VkObjectTableIndexBufferEntryNVX = VkObjectTableIndexBufferEntryNVX
   { -- No documentation found for Nested "VkObjectTableIndexBufferEntryNVX" "type"
   vkType :: VkObjectEntryTypeNVX
   , -- No documentation found for Nested "VkObjectTableIndexBufferEntryNVX" "flags"
   vkFlags :: VkObjectEntryUsageFlagsNVX
-  , -- | @buffer@ specifies the @VkBuffer@ that can be bound as index buffer
+  , -- | @buffer@ specifies the
+  -- 'Graphics.Vulkan.Core10.MemoryManagement.VkBuffer' that can be bound as
+  -- index buffer
   vkBuffer :: VkBuffer
-  , -- | @indexType@ specifies the @VkIndexType@ used with this index buffer
+  , -- | @indexType@ specifies the
+  -- 'Graphics.Vulkan.Core10.CommandBufferBuilding.VkIndexType' used with
+  -- this index buffer
   vkIndexType :: VkIndexType
   }
   deriving (Eq, Show)
@@ -1819,37 +1481,24 @@ instance Storable VkObjectTableIndexBufferEntryNVX where
 --
 -- -   @type@ /must/ be @VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX@
 --
--- == Valid Usage (Implicit)
---
--- -   @type@ /must/ be a valid 'VkObjectEntryTypeNVX' value
---
--- -   @flags@ /must/ be a valid combination of
---     'VkObjectEntryUsageFlagBitsNVX' values
---
--- -   @flags@ /must/ not be @0@
---
--- -   @pipelineLayout@ /must/ be a valid @VkPipelineLayout@ handle
---
--- -   @stageFlags@ /must/ be a valid combination of
---     'Graphics.Vulkan.Core10.Pipeline.VkShaderStageFlagBits' values
---
--- -   @stageFlags@ /must/ not be @0@
+-- Unresolved directive in VkObjectTablePushConstantEntryNVX.txt -
+-- include::..\/validity\/structs\/VkObjectTablePushConstantEntryNVX.txt[]
 --
 -- = See Also
 --
--- 'VkObjectEntryTypeNVX', 'VkObjectEntryUsageFlagsNVX',
--- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineLayout',
--- 'Graphics.Vulkan.Core10.PipelineLayout.VkShaderStageFlags'
+-- No cross-references are available
 data VkObjectTablePushConstantEntryNVX = VkObjectTablePushConstantEntryNVX
   { -- No documentation found for Nested "VkObjectTablePushConstantEntryNVX" "type"
   vkType :: VkObjectEntryTypeNVX
   , -- No documentation found for Nested "VkObjectTablePushConstantEntryNVX" "flags"
   vkFlags :: VkObjectEntryUsageFlagsNVX
-  , -- | @pipelineLayout@ specifies the @VkPipelineLayout@ that the pushconstants
-  -- are used with
+  , -- | @pipelineLayout@ specifies the
+  -- 'Graphics.Vulkan.Core10.Pipeline.VkPipelineLayout' that the
+  -- pushconstants are used with
   vkPipelineLayout :: VkPipelineLayout
-  , -- | @stageFlags@ specifies the @VkShaderStageFlags@ that the pushconstants
-  -- are used with
+  , -- | @stageFlags@ specifies the
+  -- 'Graphics.Vulkan.Core10.PipelineLayout.VkShaderStageFlags' that the
+  -- pushconstants are used with
   vkStageFlags :: VkShaderStageFlags
   }
   deriving (Eq, Show)
@@ -1875,8 +1524,7 @@ instance Storable VkObjectTablePushConstantEntryNVX where
 --
 -- = See Also
 --
--- 'VkIndirectCommandsLayoutCreateInfoNVX',
--- 'VkIndirectCommandsLayoutUsageFlagBitsNVX'
+-- No cross-references are available
 type VkIndirectCommandsLayoutUsageFlagsNVX = VkIndirectCommandsLayoutUsageFlagBitsNVX
 -- | VkObjectEntryUsageFlagsNVX - Bitmask of VkObjectEntryUsageFlagBitsNVX
 --
@@ -1887,8 +1535,5 @@ type VkIndirectCommandsLayoutUsageFlagsNVX = VkIndirectCommandsLayoutUsageFlagBi
 --
 -- = See Also
 --
--- 'VkObjectEntryUsageFlagBitsNVX', 'VkObjectTableCreateInfoNVX',
--- 'VkObjectTableDescriptorSetEntryNVX', 'VkObjectTableEntryNVX',
--- 'VkObjectTableIndexBufferEntryNVX', 'VkObjectTablePipelineEntryNVX',
--- 'VkObjectTablePushConstantEntryNVX', 'VkObjectTableVertexBufferEntryNVX'
+-- No cross-references are available
 type VkObjectEntryUsageFlagsNVX = VkObjectEntryUsageFlagBitsNVX

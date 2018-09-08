@@ -131,12 +131,12 @@ import Graphics.Vulkan.Core11.Promoted_from_VK_KHR_sampler_ycbcr_conversion
   , VkChromaLocation(..)
   , VkImagePlaneMemoryRequirementsInfo(..)
   , VkPhysicalDeviceSamplerYcbcrConversionFeatures(..)
+  , VkSamplerYcbcrConversion(..)
   , VkSamplerYcbcrConversionCreateInfo(..)
   , VkSamplerYcbcrConversionImageFormatProperties(..)
   , VkSamplerYcbcrConversionInfo(..)
   , VkSamplerYcbcrModelConversion(..)
   , VkSamplerYcbcrRange(..)
-  , VkSamplerYcbcrConversion
   , vkCreateSamplerYcbcrConversion
   , vkDestroySamplerYcbcrConversion
   , pattern VK_CHROMA_LOCATION_COSITED_EVEN

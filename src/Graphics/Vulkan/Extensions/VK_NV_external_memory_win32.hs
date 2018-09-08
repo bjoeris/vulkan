@@ -46,7 +46,7 @@ import Graphics.Vulkan.Core10.DeviceInitialization
   ( VkDevice
   )
 import Graphics.Vulkan.Core10.Memory
-  ( VkDeviceMemory
+  ( VkDeviceMemory(..)
   )
 import Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities
   ( VkExternalMemoryHandleTypeFlagBitsNV(..)
@@ -79,7 +79,8 @@ pattern VK_NV_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME = "VK_NV_external_memory_win3
 --
 -- -   @device@ is the logical device that owns the memory.
 --
--- -   @memory@ is the @VkDeviceMemory@ object.
+-- -   @memory@ is the 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory'
+--     object.
 --
 -- -   @handleType@ is a bitmask of
 --     'Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities.VkExternalMemoryHandleTypeFlagBitsNV'
@@ -94,38 +95,12 @@ pattern VK_NV_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME = "VK_NV_external_memory_win3
 --     'Graphics.Vulkan.Extensions.VK_NV_external_memory.VkExportMemoryAllocateInfoNV'::@handleTypes@
 --     when allocating @memory@
 --
--- == Valid Usage (Implicit)
---
--- -   @device@ /must/ be a valid @VkDevice@ handle
---
--- -   @memory@ /must/ be a valid @VkDeviceMemory@ handle
---
--- -   @handleType@ /must/ be a valid combination of
---     'Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities.VkExternalMemoryHandleTypeFlagBitsNV'
---     values
---
--- -   @handleType@ /must/ not be @0@
---
--- -   @pHandle@ /must/ be a valid pointer to a @HANDLE@ value
---
--- -   @memory@ /must/ have been created, allocated, or retrieved from
---     @device@
---
--- == Return Codes
---
--- [[Success](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-successcodes)]
---     -   @VK_SUCCESS@
---
--- [[Failure](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html#fundamentals-errorcodes)]
---     -   @VK_ERROR_TOO_MANY_OBJECTS@
---
---     -   @VK_ERROR_OUT_OF_HOST_MEMORY@
+-- Unresolved directive in vkGetMemoryWin32HandleNV.txt -
+-- include::..\/validity\/protos\/vkGetMemoryWin32HandleNV.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.DeviceInitialization.VkDevice',
--- 'Graphics.Vulkan.Core10.Memory.VkDeviceMemory',
--- 'Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities.VkExternalMemoryHandleTypeFlagsNV'
+-- No cross-references are available
 foreign import ccall
 #if !defined(SAFE_FOREIGN_CALLS)
   unsafe
@@ -147,19 +122,12 @@ foreign import ccall
 -- -   @handle@ /must/ be a valid handle to memory, obtained as specified
 --     by @handleType@.
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_IMPORT_MEMORY_WIN32_HANDLE_INFO_NV@
---
--- -   @handleType@ /must/ be a valid combination of
---     'Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities.VkExternalMemoryHandleTypeFlagBitsNV'
---     values
+-- Unresolved directive in VkImportMemoryWin32HandleInfoNV.txt -
+-- include::..\/validity\/structs\/VkImportMemoryWin32HandleInfoNV.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Extensions.VK_NV_external_memory_capabilities.VkExternalMemoryHandleTypeFlagsNV',
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkImportMemoryWin32HandleInfoNV = VkImportMemoryWin32HandleInfoNV
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
@@ -202,17 +170,12 @@ instance Storable VkImportMemoryWin32HandleInfoNV where
 -- [1]
 -- <https://msdn.microsoft.com/en-us/library/windows/desktop/ms686670.aspx>
 --
--- == Valid Usage (Implicit)
---
--- -   @sType@ /must/ be
---     @VK_STRUCTURE_TYPE_EXPORT_MEMORY_WIN32_HANDLE_INFO_NV@
---
--- -   If @pAttributes@ is not @NULL@, @pAttributes@ /must/ be a valid
---     pointer to a valid @SECURITY_ATTRIBUTES@ value
+-- Unresolved directive in VkExportMemoryWin32HandleInfoNV.txt -
+-- include::..\/validity\/structs\/VkExportMemoryWin32HandleInfoNV.txt[]
 --
 -- = See Also
 --
--- 'Graphics.Vulkan.Core10.Core.VkStructureType'
+-- No cross-references are available
 data VkExportMemoryWin32HandleInfoNV = VkExportMemoryWin32HandleInfoNV
   { -- | @sType@ is the type of this structure.
   vkSType :: VkStructureType
