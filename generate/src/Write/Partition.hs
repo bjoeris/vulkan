@@ -127,6 +127,28 @@ ignoredUnexportedNames =
   , TypeName "VkNativeBufferANDROID"
   , TermName "VkNativeBufferANDROID"
   , PatternName "VK_STRUCTURE_TYPE_NATIVE_BUFFER_ANDROID"
+  , PatternName "VK_ACCESS_RESERVED_21_BIT_NV"
+  , PatternName "VK_ACCESS_RESERVED_22_BIT_NV"
+  , PatternName "VK_ACCESS_RESERVED_23_BIT_NV"
+  , PatternName "VK_SHADER_STAGE_RESERVED_8_BIT_NV"
+  , PatternName "VK_SHADER_STAGE_RESERVED_9_BIT_NV"
+  , PatternName "VK_SHADER_STAGE_RESERVED_10_BIT_NV"
+  , PatternName "VK_SHADER_STAGE_RESERVED_11_BIT_NV"
+  , PatternName "VK_SHADER_STAGE_RESERVED_12_BIT_NV"
+  , PatternName "VK_SHADER_STAGE_RESERVED_13_BIT_NV"
+  , PatternName "VK_SHADER_STAGE_RESERVED_6_BIT_NV"
+  , PatternName "VK_SHADER_STAGE_RESERVED_7_BIT_NV"
+  , PatternName "VK_IMAGE_USAGE_RESERVED_8_BIT_NV"
+  , PatternName "VK_IMAGE_CREATE_RESERVED_13_BIT_NV"
+  , PatternName "VK_PIPELINE_CREATE_RESERVED_5_BIT_NV"
+  , PatternName "VK_PIPELINE_STAGE_RESERVED_21_BIT_NV"
+  , PatternName "VK_PIPELINE_STAGE_RESERVED_19_BIT_NV"
+  , PatternName "VK_PIPELINE_STAGE_RESERVED_20_BIT_NV"
+  , PatternName "VK_BUFFER_USAGE_RESERVED_10_BIT_NV"
+  , TypeName "VkBaseOutStructure"
+  , TermName "VkBaseOutStructure"
+  , TypeName "VkBaseInStructure"
+  , TermName "VkBaseInStructure"
   ]
 
 explicitlyPlacedNames :: [(Text, HaskellName)]
@@ -139,6 +161,9 @@ explicitlyPlacedNames =
     )
   , ( "Graphics.Vulkan.Core10.CommandBufferBuilding"
     , TypeName "VkDispatchIndirectCommand"
+    )
+  , ( "Graphics.Vulkan.Core10.DeviceInitialization"
+    , TypeName "VkVendorId"
     )
   ]
 
