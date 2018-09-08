@@ -132,7 +132,7 @@ handle = proc t -> do
   inCategory "handle" -< t
   htParents <- commaSepListAttrT "parent" -< t
   htName <- getChildTextT "name" -< t
-  htMacro <- getChildTextT "type" -< t
+  htMacro <- required "textToHandleMacro" textToHandleMacro <<< getChildTextT "type" -< t
   htType <- getAllTextT -< t
   returnA -< HandleType{..}
 

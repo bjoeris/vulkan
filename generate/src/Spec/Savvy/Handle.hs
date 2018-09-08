@@ -19,10 +19,11 @@ import qualified Spec.Spec              as P
 import qualified Spec.Type              as P
 
 data Handle = Handle
-  { hName    :: Text
-  , hType    :: Type
-  , hAliases :: [Text]
-  , hParents :: [Text]
+  { hName         :: Text
+  , hType         :: Type
+  , hAliases      :: [Text]
+  , hParents      :: [Text]
+  , hDispatchable :: Bool
   }
   deriving (Show)
 
@@ -56,6 +57,9 @@ specHandles preprocess pc P.Spec {..} =
           <$> (stringToTypeExpected pc' htName =<< preprocess htType)
           <*> pure (getAliases htName)
           <*> pure htParents
+          <*> pure (case htMacro of
+                      P.DispatchableHandle -> True
+                      P.NonDispatchableHandle -> False)
         | P.HandleType {..} <- parsedHandles
         ]
 

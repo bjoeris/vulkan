@@ -54,9 +54,14 @@ data BitmaskType = BitmaskType { bmtName     :: Text
 
 data HandleType = HandleType { htName    :: Text
                              , htParents :: [Text]
-                             , htMacro   :: Text
+                             , htMacro   :: HandleMacro
                              , htType    :: Text
                              }
+  deriving (Show, Eq)
+
+data HandleMacro
+  = DispatchableHandle
+  | NonDispatchableHandle
   deriving (Show, Eq)
 
 newtype EnumType = EnumType { etName :: Text
@@ -125,3 +130,11 @@ typeDeclTypeName = \case
   (AUnionType ut)        -> Just $ utName ut
   (ASectionComment _)    -> Nothing
   (AnAlias ta)           -> Just $ taName ta
+
+textToHandleMacro :: Text -> Maybe HandleMacro
+textToHandleMacro s =
+  if s == "VK_DEFINE_HANDLE"
+  then Just DispatchableHandle
+  else if s == "VK_DEFINE_NON_DISPATCHABLE_HANDLE"
+  then Just NonDispatchableHandle
+  else Nothing

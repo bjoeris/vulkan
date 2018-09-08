@@ -18,8 +18,14 @@ import           Write.Element                            hiding (TypeName)
 import           Write.Util
 
 writeHandle :: Handle -> Either [SpecError] WriteElement
-writeHandle h@Handle {..} = do
-  weDoc <- hDoc h
+writeHandle h@Handle {..} =
+  if hDispatchable
+  then writeDispatchableHandle h
+  else writeNonDispatchableHandle h
+
+writeDispatchableHandle :: Handle -> Either [SpecError] WriteElement
+writeDispatchableHandle h@Handle {..} = do
+  weDoc <- hDocDispatchable h
   let weName       = "Handle: " <> hName
       weExtensions = []
       weImports    = [Import "Foreign.Ptr" ["Ptr"]]
@@ -27,8 +33,8 @@ writeHandle h@Handle {..} = do
       weDepends    = []
   pure WriteElement {..}
 
-hDoc :: Handle -> Either [SpecError] (DocMap -> Doc ())
-hDoc Handle{..} = do
+hDocDispatchable :: Handle -> Either [SpecError] (DocMap -> Doc ())
+hDocDispatchable Handle{..} = do
   p <- case hType of
     Ptr (TypeName p) -> pure p
     _                -> Left [HandleToNonPointerType hName]
@@ -37,4 +43,28 @@ hDoc Handle{..} = do
     data {p}
     {document getDoc (TopLevel hName)}
     type {hName} = Ptr {p}
-|])
+  |])
+
+writeNonDispatchableHandle :: Handle -> Either [SpecError] WriteElement
+writeNonDispatchableHandle h@Handle {..} = do
+  weDoc <- hDocNonDispatchable h
+  let weName       = "Handle: " <> hName
+      weExtensions = []
+      weImports    = [Import "Data.Word" ["Word64"], Import "Foreign.Ptr" ["castPtr"]]
+      weProvides   = [Unguarded $ TypeConstructor hName]
+      weDepends    = []
+  pure WriteElement {..}
+
+hDocNonDispatchable :: Handle -> Either [SpecError] (DocMap -> Doc ())
+hDocNonDispatchable Handle{..} =
+  pure (\getDoc -> [qci|
+    {document getDoc (TopLevel hName)}
+    newtype {hName} = {hName} Word64
+      deriving (Eq, Show)
+
+    instance Storable {hName} where
+      sizeOf ({hName} w) = sizeOf w
+      alignment ({hName} w) = alignment w
+      peek ptr = {hName} <$> peek (castPtr ptr)
+      poke ptr ({hName} w) = poke (castPtr ptr) w
+  |])
