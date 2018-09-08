@@ -23,6 +23,7 @@ parseEnum = hasName "enums" >>> hasAttrValue "type" (== "enum") >>>
             (allChildren (enumElemFail eName) [
               AComment ^<< enumComment
             , AnUnusedStart ^<< enumUnusedStart
+            , AnEnumElement ^<< enumAlias
             , AnEnumElement ^<< enumElem
             ], e)
           let eElements = [e' | AnEnumElement e' <- es]
@@ -47,8 +48,17 @@ enumElemFail n = proc t -> do
 
 enumElem :: IOStateArrow s XmlTree EnumElement
 enumElem = proc e -> do
+  hasAttr "value" -< e
   eeName    <- requiredAttrValueT "name" -< e
-  eeValue   <- requiredRead <<< requiredAttrValue "value" -< e
+  eeValue   <- Left ^<< requiredRead <<< requiredAttrValue "value" -< e
+  eeComment <- optionalAttrValueT "comment" -< e
+  returnA -< EnumElement{..}
+
+enumAlias :: IOStateArrow s XmlTree EnumElement
+enumAlias = proc e -> do
+  hasAttr "alias" -< e
+  eeName    <- requiredAttrValueT "name" -< e
+  eeValue   <- Right . pack ^<< requiredAttrValue "alias" -< e
   eeComment <- optionalAttrValueT "comment" -< e
   returnA -< EnumElement{..}
 

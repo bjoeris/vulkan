@@ -7,6 +7,7 @@ module Spec.Savvy.Enum
   , EnumType(..)
   , EnumElement(..)
   , EnumExtension(..)
+  , EnumValue(..)
   , specEnums
   ) where
 
@@ -14,6 +15,7 @@ import           Control.Applicative
 import           Control.Monad
 import           Data.Bits
 import           Data.Closure
+import           Data.Either              (either)
 import           Data.Either.Validation
 import           Data.Foldable
 import           Data.Int
@@ -59,10 +61,19 @@ data EnumType
     -- ^ Enum enums are backed by Int32
   deriving (Show)
 
+data EnumValue
+  = Int32EnumValue Int32
+    -- ^ Signed enum value
+  | Word32EnumValue Word32
+    -- ^ Unsigned bitmask value
+  | AliasEnumValue Text
+    -- ^ Name of aliased enum entry
+  deriving (Eq, Show)
+
 data EnumElement = EnumElement
   { eeName    :: Text
     -- ^ The name of this enumerant
-  , eeValue   :: Either Int32 Word32
+  , eeValue   :: EnumValue
     -- ^ The numeric value of this enumerant
   , eeComment :: Maybe Text
     -- ^ A comment from the XML specification
@@ -121,7 +132,7 @@ specEnumEnums spec@P.Spec {..} =
           pure
             $ let eName = etName
                   eElements =
-                    [ EnumElement {eeValue = Left (P.eeValue el), ..}
+                    [ EnumElement {eeValue = either Int32EnumValue AliasEnumValue (P.eeValue el), ..}
                     | el@P.EnumElement {..} <- P.eElements ee
                     ]
                   eAliases    = closeNonReflexive (`MultiMap.lookup` aliasMap) [etName]
@@ -198,13 +209,13 @@ specBitmasks spec@P.Spec {..}
                         [ EnumElement {..}
                           | P.BitmaskBitPosition {..} <- bmBitPositions
                           , let eeName    = bmbpName
-                                eeValue   = Right (0x1 `shiftL` bmbpBitPos)
+                                eeValue   = Word32EnumValue (0x1 `shiftL` bmbpBitPos)
                                 eeComment = bmbpComment
                           ]
                           ++ [ EnumElement {..}
                              | P.BitmaskValue {..} <- bmValues
                              , let eeName    = bmvName
-                                   eeValue   = Right bmvValue
+                                   eeValue   = Word32EnumValue bmvValue
                                    eeComment = bmvComment
                              ]
                       eAliases =

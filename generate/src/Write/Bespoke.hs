@@ -98,8 +98,8 @@ bools = writeEnum
        , eType = EnumTypeEnum
        , eAliases = []
        , eComment = Just "Note that VkBool32 is not strongly typed in the specification"
-       , eElements = [EnumElement "VK_FALSE" (Left 0) Nothing
-                     ,EnumElement "VK_TRUE" (Left 1) Nothing
+       , eElements = [EnumElement "VK_FALSE" (Int32EnumValue 0) Nothing
+                     ,EnumElement "VK_TRUE" (Int32EnumValue 1) Nothing
                      ]
        , eExtensions = []
        }

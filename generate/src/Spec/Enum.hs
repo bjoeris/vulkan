@@ -12,7 +12,7 @@ data Enum = Enum { eName        :: Text
   deriving (Show)
 
 data EnumElement = EnumElement { eeName    :: Text
-                               , eeValue   :: !Int32
+                               , eeValue   :: Either Int32 Text
                                , eeComment :: Maybe Text
                                }
   deriving (Show)

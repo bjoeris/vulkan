@@ -91,8 +91,18 @@ writeElement :: DocMap -> Enum -> EnumElement -> Doc ()
 writeElement getDoc Enum{..} EnumElement{..} = [qci|
   {document getDoc (Nested eName eeName)}
   pattern {eeName} :: {eName}
-  pattern {eeName} = {eName} {writeValue eeValue}
+  pattern {eeName} = {constructor} {writeEnumValue eeValue}
 |]
+  where
+    constructor = case eeValue of
+      AliasEnumValue _ -> ""
+      _ -> eName
+
+writeEnumValue :: EnumValue -> String
+writeEnumValue = \case
+  Int32EnumValue i -> showsPrec 10 i ""
+  Word32EnumValue i -> printf "0x%08x" i
+  AliasEnumValue v -> T.unpack v
 
 writeElementShowsPrec :: EnumElement -> Doc ()
 writeElementShowsPrec EnumElement{..} = [qci|
