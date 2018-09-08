@@ -13,17 +13,17 @@ import           Text.XML.HXT.Core
 -- TODO: refactor to use allChildren
 parseVendorIDs :: IOStateArrow s XmlTree [VendorID]
 parseVendorIDs = extractFields "VendorIDs"
-                               (hasName "vendorids")
+                               (hasName "enums" >>> hasAttrValue "name" (== "VkVendorId"))
                                extract
   where extract = listA (parseVendorID <<< getChildren)
 
 parseVendorID :: IOStateArrow s XmlTree VendorID
 parseVendorID = extractFields "VendorID"
-                              (hasName "vendorid")
+                              (hasName "enum")
                               extract
   where extract = proc vendorid -> do
           viName <- required "stringToExtensionTag" stringToExtensionTag <<<
                     requiredAttrValue "name" -< vendorid
-          viID <- requiredRead <<< requiredAttrValue "id" -< vendorid
+          viID <- requiredRead <<< requiredAttrValue "value" -< vendorid
           viComment <- optionalAttrValue "comment" -< vendorid
           returnA -< VendorID{..}
